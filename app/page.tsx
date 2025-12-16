@@ -10,7 +10,7 @@ import {
   fadeIn,
   staggerContainer,
 } from "./components/motion";
-import { motion, useScroll, useSpring, useCycle } from "framer-motion";
+import { motion, Variants,useScroll, useSpring, useCycle } from "framer-motion";
 import { useEffect } from "react";
 
 const services = [
@@ -46,7 +46,7 @@ const projects = [
     description: "Licensing & legal solutions for medical professionals.",
     image: "/images/MednLaw.png",
     link: "https://mednlaw.com/",
-    tag: "Healthcare law",
+    tag: "Flagship • Healthcare law",
   },
   {
     title: "Unsaathi",
@@ -132,6 +132,19 @@ function useTimedCycle(length: number, delayMs: number) {
   return index as number;
 }
 
+// subtle page-enter wrapper
+const pageEnter: Variants = {
+  hidden: { opacity: 0, y: 14 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.7,
+      ease: [0.16, 1, 0.3, 1], // standard easeOut curve
+    },
+  },
+};
+
 export default function Home() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -169,9 +182,23 @@ export default function Home() {
         className="fixed left-0 top-0 z-40 h-[2px] w-full origin-left bg-gradient-to-r from-emerald-400 via-cyan-400 to-violet-400"
       />
 
+      {/* Studio status badge */}
+      <motion.div
+        initial={{ opacity: 0, y: -8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.9, duration: 0.6, ease: "easeOut" }}
+        className="fixed right-5 top-5 z-40 hidden items-center gap-2 rounded-full border border-emerald-300/40 bg-slate-900/80 px-3 py-1.5 text-[0.7rem] text-slate-50 shadow-lg backdrop-blur-xl sm:flex"
+      >
+        <span className="relative flex h-2 w-2">
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/60" />
+          <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-300" />
+        </span>
+        Accepting 1 new project for Q1
+      </motion.div>
+
       {/* Fixed sidebar on desktop */}
       <aside className="fixed left-0 top-1/2 z-30 hidden -translate-y-1/2 transform lg:block">
-        <div className="relative ml-8 flex h-[80vh] w-64 flex-col rounded-3xl border border-white/20 bg-white/20 px-5 py-6 shadow-xl backdrop-blur-xl">
+        <div className="relative ml-8 flex h-[95vh] w-64 flex-col rounded-3xl border border-white/20 bg-white/20 px-5 py-6 shadow-xl backdrop-blur-xl">
           {/* subtle glow */}
           <motion.div
             aria-hidden
@@ -295,31 +322,36 @@ export default function Home() {
       </aside>
 
       {/* Main content shifted right of fixed sidebar on desktop */}
-      <div className="min-h-screen">
+      <motion.div
+        variants={pageEnter}
+        initial="hidden"
+        animate="show"
+        className="min-h-screen"
+      >
         <div className="min-h-screen pb-20 pt-4 lg:pb-16 lg:pt-10 lg:pl-[20rem] lg:pr-10 px-4">
-          <div className="space-y-8">
-            {/* HERO ROW */}
-            <MotionSection
+          <div className="space-y-10">
+            {/* FULL-WIDTH HERO BAND */}
+            <section
               id="hero"
-              variants={staggerContainer}
-              initial="hidden"
-              animate="show"
-              className="grid gap-4 md:grid-cols-12"
+              className="relative overflow-hidden rounded-3xl border border-slate-100/25 bg-white/20 px-6 py-10 shadow-md backdrop-blur-xl lg:px-10 lg:py-16"
             >
-              {/* Hero – translucent card */}
-              <MotionDiv
-                variants={fadeInUp}
-                className="relative col-span-12 overflow-hidden rounded-3xl border border-slate-100/25 bg-white/20 px-6 py-9 shadow-md backdrop-blur-xl md:col-span-8 lg:px-8 lg:py-12"
-              >
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 bg-cover bg-center opacity-35 mix-blend-soft-light"
-                  style={{
-                    backgroundImage: "url('/images/hero-card-bg.jpg')",
-                  }}
-                />
+              {/* hero background texture */}
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 bg-[url('/images/hero-card-bg.jpg')] bg-cover bg-center opacity-30 mix-blend-soft-light"
+              />
+              {/* rotating gradient halo behind text */}
+              <motion.div
+                aria-hidden
+                className="pointer-events-none absolute -left-24 top-10 h-64 w-64 rounded-full bg-emerald-400/25 blur-3xl"
+                style={{ opacity: 0.8 }}
+                animate={{ y: [0, 10, 0] }}
+                transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
+              />
 
-                <div className="relative">
+              <div className="relative grid gap-10 md:grid-cols-3 md:items-end">
+                {/* Left: label + main copy */}
+                <div className="md:col-span-2">
                   <MotionSpan
                     variants={fadeIn}
                     className="inline-flex items-center gap-2 rounded-full border border-slate-100/40 bg-slate-950/40 px-3 py-1 text-[0.6rem] uppercase tracking-[0.25em] text-slate-50"
@@ -331,105 +363,137 @@ export default function Home() {
 
                   <motion.h1
                     variants={fadeInUp}
-                    className="mt-6 text-3xl font-semibold leading-tight text-slate-50 md:text-4xl lg:text-[2.6rem]"
+                    initial="hidden"
+                    animate="show"
+                    className="mt-6 max-w-3xl text-[2.5rem] font-semibold leading-tight text-slate-50 md:text-[3rem] lg:text-[3.25rem]"
                   >
                     Web services for{" "}
                     <span className="bg-gradient-to-r from-emerald-300 via-cyan-300 to-violet-300 bg-clip-text text-transparent">
-                      thoughtful, high‑trust work
+                      thoughtful, high‑trust work.
                     </span>
-                    .
                   </motion.h1>
 
                   <motion.p
                     variants={fadeInUp}
-                    className="mt-4 max-w-xl text-[0.9rem] text-slate-100/90"
+                    initial="hidden"
+                    animate="show"
+                    transition={{ delay: 0.1 }}
+                    className="mt-4 max-w-xl text-[0.95rem] text-slate-100/90"
                   >
-                    StudiYo Miyawaki crafts digital front doors for law
-                    practices, health platforms, and expert businesses that need
-                    more than another template.
+                    Digital front doors for law practices, health platforms, and
+                    expert businesses that need more than another template.
                   </motion.p>
 
                   <motion.div
                     variants={fadeInUp}
-                    className="mt-6 flex flex-wrap items-center gap-3 text-xs"
+                    initial="hidden"
+                    animate="show"
+                    transition={{ delay: 0.18 }}
+                    className="mt-7 flex flex-wrap items-center gap-3 text-xs"
                   >
-                    <Link
-                      href="#services"
-                      className="rounded-full bg-slate-950/90 px-4 py-2 text-[0.7rem] font-semibold text-white transition hover:bg-slate-900"
+                    <motion.button
+                      whileHover={{ y: -2, scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="rounded-full bg-slate-950/90 px-5 py-2.5 text-[0.75rem] font-semibold text-white shadow-md shadow-slate-950/40"
                     >
-                      Explore services
-                    </Link>
-                    <Link
-                      href="#projects"
-                      className="inline-flex items-center gap-2 rounded-full border border-slate-100/40 bg-slate-900/40 px-4 py-2 text-[0.7rem] text-slate-50 transition hover:border-slate-50/70 hover:bg-slate-900/60"
+                      <Link href="#services">Explore services</Link>
+                    </motion.button>
+                    <motion.button
+                      whileHover={{ y: -2, scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="inline-flex items-center gap-2 rounded-full border border-slate-100/40 bg-slate-900/40 px-5 py-2.5 text-[0.75rem] text-slate-50 transition hover:border-slate-50/70 hover:bg-slate-900/60"
                     >
-                      View studio websites <span>↗</span>
-                    </Link>
+                      <Link href="#projects">View studio websites</Link>
+                      <span>↗</span>
+                    </motion.button>
+                  </motion.div>
+
+                  {/* mini trust row */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.32, duration: 0.5 }}
+                    className="mt-6 flex flex-wrap items-center gap-4 text-[0.7rem] text-slate-100/80"
+                  >
+                    <span className="flex items-center gap-1">
+                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                      Built on Next.js & Tailwind
+                    </span>
+                    <span className="h-3 w-px bg-slate-100/40 hidden md:block" />
+                    <span>One project at a time • Founder‑direct</span>
                   </motion.div>
                 </div>
 
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.7, rotate: -8 }}
-                  animate={{
-                    opacity: 1,
-                    scale: 1,
-                    rotate: 0,
-                    transition: { delay: 0.5, duration: 0.9, ease: "easeOut" },
-                  }}
-                  className="pointer-events-none absolute -right-8 bottom-4 hidden h-32 w-32 items-center justify-center rounded-full border border-slate-100/30 bg-slate-900/40 backdrop-blur-xl md:flex lg:h-40 lg:w-40"
-                >
+                {/* Right: snapshot / badge cluster */}
+                <div className="relative md:col-span-1 md:justify-self-end">
+                  {/* rotating circle */}
                   <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{
-                      duration: 18,
-                      repeat: Infinity,
-                      ease: "linear",
+                    initial={{ opacity: 0, scale: 0.7, rotate: -8 }}
+                    animate={{
+                      opacity: 1,
+                      scale: 1,
+                      rotate: 0,
+                      transition: { delay: 0.4, duration: 0.9, ease: "easeOut" },
                     }}
-                    className="flex h-24 w-24 items-center justify-center rounded-full border border-slate-100/50 text-[0.55rem] tracking-[0.24em] text-slate-100"
+                    className="pointer-events-none mb-5 flex h-28 w-28 items-center justify-center rounded-full border border-slate-100/40 bg-slate-900/60 backdrop-blur-xl md:h-32 md:w-32 lg:h-36 lg:w-36"
                   >
-                    STUDIYO • MIYAWAKI • DIGITAL •
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{
+                        duration: 18,
+                        repeat: Infinity,
+                        ease: "linear",
+                      }}
+                      className="flex h-20 w-20 items-center justify-center rounded-full border border-slate-100/50 text-[0.55rem] tracking-[0.24em] text-slate-100"
+                    >
+                      STUDIYO • MIYAWAKI • DIGITAL •
+                    </motion.div>
                   </motion.div>
-                </motion.div>
-              </MotionDiv>
 
-              {/* Snapshot card */}
-              <MotionDiv
-                variants={fadeInUp}
-                className="relative col-span-12 flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-100/25 bg-white/20 p-5 shadow-md backdrop-blur-xl md:col-span-4"
-              >
-                {heroBgImages.map((src, i) => (
+                  {/* snapshot pill */}
                   <motion.div
-                    key={src}
-                    aria-hidden
-                    className="pointer-events-none absolute inset-0 bg-cover bg-center"
-                    style={{ backgroundImage: `url('${src}')` }}
-                    animate={{ opacity: heroBgIndex === i ? 0.6 : 0 }}
-                    transition={{ duration: 1.2, ease: "easeInOut" }}
-                  />
-                ))}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.55, duration: 0.5 }}
+                    className="overflow-hidden rounded-2xl border border-slate-100/30 bg-slate-950/50 p-4 text-[0.75rem] shadow-lg backdrop-blur-xl"
+                  >
+                    <p className="text-xs uppercase tracking-[0.25em] text-slate-100/80">
+                      Snapshot
+                    </p>
+                    <p className="mt-2 text-sm font-medium text-slate-50">
+                      A compact studio treating every site like a product, not a brochure.
+                    </p>
+                    <p className="mt-2 text-[0.78rem] text-slate-100/85">
+                      Design and engineering at the same table, from first call to launch.
+                    </p>
+                  </motion.div>
+                </div>
+              </div>
+            </section>
 
-                <div className="relative space-y-2">
-                  <p className="text-xs uppercase tracking-[0.25em] text-slate-100/90">
-                    Snapshot
-                  </p>
-                  <p className="text-sm font-medium text-slate-50">
-                    Built around deep conversations and precise execution.
-                  </p>
-                  <p className="text-[0.8rem] text-slate-100/90">
-                    A compact team of designers and engineers working directly
-                    with founders—no noisy handoffs, no layers of project
-                    management.
-                  </p>
-                </div>
-                <div className="relative mt-4 flex flex-wrap gap-3 text-[0.7rem] text-slate-50">
-                  <span className="rounded-full bg-slate-950/40 px-3 py-1 border border-slate-100/40">
-                    Remote‑first
+            {/* HERO METRICS STRIP */}
+            <MotionSection
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.3 }}
+              className="grid gap-4 rounded-3xl border border-slate-100/25 bg-slate-950/50 px-5 py-4 shadow-md backdrop-blur-xl md:grid-cols-4"
+            >
+              {metrics.map((metric) => (
+                <MotionDiv
+                  key={metric.label}
+                  variants={fadeInUp}
+                  whileHover={{ y: -3, scale: 1.02 }}
+                  className="flex items-center justify-between rounded-2xl border border-slate-100/25 bg-white/5 px-4 py-3 text-sm text-slate-100"
+                >
+                  <span className="text-[0.7rem] text-slate-100/80">
+                    {metric.label}
                   </span>
-                  <span className="rounded-full bg-slate-950/40 px-3 py-1 border border-slate-100/40">
-                    One project at a time
+                  <span className="text-[0.95rem] font-semibold text-emerald-300">
+                    {metric.value}
                   </span>
-                </div>
-              </MotionDiv>
+                </MotionDiv>
+              ))}
             </MotionSection>
 
             {/* SERVICES */}
@@ -469,14 +533,18 @@ export default function Home() {
                   <MotionDiv
                     key={service.title}
                     variants={fadeInUp}
-                    whileHover={{ y: -5, scale: 1.02 }}
+                    whileHover={{
+                      y: -5,
+                      scale: 1.02,
+                    }}
+                    transition={{ type: "spring", stiffness: 220, damping: 22 }}
                     className={`relative flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-100/25 bg-white/20 p-5 shadow-md backdrop-blur-xl ${
                       index % 2 === 0 ? "min-h-[220px]" : "min-h-[260px]"
                     }`}
                   >
                     <div
                       aria-hidden
-                      className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.3),_transparent_55%)] opacity-80"
+                      className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.25),_transparent_55%)] opacity-80"
                     />
                     <div className="relative">
                       <p className="text-sm font-medium text-slate-50">
@@ -497,7 +565,7 @@ export default function Home() {
               </div>
             </MotionSection>
 
-            {/* PROCESS + METRICS */}
+            {/* PROCESS + METRICS (TIMELINE STYLE) */}
             <MotionSection
               id="process"
               variants={staggerContainer}
@@ -508,7 +576,7 @@ export default function Home() {
             >
               <MotionDiv
                 variants={fadeInUp}
-                className="relative col-span-12 md:col-span-7 flex flex-col gap-3 overflow-hidden rounded-3xl border border-slate-100/25 bg-white/20 p-5 shadow-md backdrop-blur-xl md:p-6"
+                className="relative col-span-12 md:col-span-7 flex flex-col gap-4 overflow-hidden rounded-3xl border border-slate-100/25 bg-white/20 p-5 shadow-md backdrop-blur-xl md:p-6"
               >
                 <div
                   aria-hidden
@@ -521,31 +589,45 @@ export default function Home() {
                   <h2 className="mt-3 text-lg font-medium text-slate-50">
                     A quiet, four‑step rhythm from idea to interface.
                   </h2>
-                  <div className="mt-3 grid gap-3 md:grid-cols-2">
+                </div>
+
+                {/* timeline rail */}
+                <div className="relative mt-4">
+                  <div className="absolute left-3 top-4 bottom-4 w-px bg-slate-100/40 md:left-4" />
+                  <div className="space-y-4 md:space-y-3">
                     {processSteps.map((step, i) => (
                       <MotionDiv
                         key={step.label}
                         variants={fadeInUp}
-                        whileHover={{ y: -3, rotate: -0.25 }}
-                        className="relative overflow-hidden rounded-2xl border border-slate-100/25 bg-white/20 p-4 backdrop-blur-xl"
+                        whileHover={{ y: -2 }}
+                        className="relative flex gap-4 pl-9 md:pl-10"
                       >
                         <motion.div
-                          aria-hidden
-                          initial={{ opacity: 0, scale: 0.6 }}
-                          whileInView={{ opacity: 0.3, scale: 1 }}
-                          transition={{ duration: 0.7, delay: 0.06 * i }}
-                          viewport={{ once: true }}
-                          className="pointer-events-none absolute -right-6 -top-8 h-16 w-16 rounded-full bg-emerald-400/35 blur-2xl"
-                        />
-                        <p className="text-[0.7rem] text-slate-100/90">
+                          className="absolute left-0 top-1 flex h-6 w-6 items-center justify-center rounded-full border border-emerald-300/70 bg-slate-950/60 text-[0.65rem] text-emerald-200 md:left-1"
+                          animate={{
+                            backgroundColor: [
+                              "rgba(15,23,42,0.8)",
+                              "rgba(16,185,129,0.18)",
+                              "rgba(15,23,42,0.8)",
+                            ],
+                          }}
+                          transition={{
+                            duration: 6,
+                            repeat: Infinity,
+                            delay: i * 0.4,
+                            ease: "easeInOut",
+                          }}
+                        >
                           {step.label}
-                        </p>
-                        <p className="mt-1 text-sm font-medium text-slate-50">
-                          {step.title}
-                        </p>
-                        <p className="mt-2 text-[0.75rem] text-slate-100/90">
-                          {step.copy}
-                        </p>
+                        </motion.div>
+                        <div>
+                          <p className="text-sm font-medium text-slate-50">
+                            {step.title}
+                          </p>
+                          <p className="mt-1 text-[0.78rem] text-slate-100/90">
+                            {step.copy}
+                          </p>
+                        </div>
                       </MotionDiv>
                     ))}
                   </div>
@@ -594,46 +676,97 @@ export default function Home() {
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, amount: 0.25 }}
-              className="grid gap-4 md:grid-cols-12"
+              className="space-y-5"
             >
-              <MotionDiv
-                variants={fadeInUp}
-                className="relative col-span-12 md:col-span-4 overflow-hidden rounded-3xl border border-slate-100/25 bg-white/20 p-5 shadow-md backdrop-blur-xl"
-              >
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 bg-[url('/images/projects-bg.jpg')] bg-cover bg-center opacity-30 mix-blend-soft-light"
-                />
-                <div className="relative">
-                  <p className="text-xs uppercase tracking-[0.25em] text-slate-100/90">
-                    Studio websites
-                  </p>
-                  <h2 className="mt-3 text-lg font-medium text-slate-50">
-                    A small constellation of service‑driven sites.
-                  </h2>
-                  <p className="mt-3 text-[0.8rem] text-slate-100/90">
-                    From MedNLaw to Unsaathi, StudiYo Miyawaki shapes legal‑tech,
-                    support platforms, and personal brands into web experiences
-                    that feel composed and trustworthy.
-                  </p>
-                </div>
-              </MotionDiv>
+              {/* Header + highlight project in a band */}
+              <div className="grid gap-4 md:grid-cols-12">
+                <MotionDiv
+                  variants={fadeInUp}
+                  className="relative col-span-12 md:col-span-4 overflow-hidden rounded-3xl border border-slate-100/25 bg-white/20 p-5 shadow-md backdrop-blur-xl"
+                >
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0 bg-[url('/images/projects-bg.jpg')] bg-cover bg-center opacity-30 mix-blend-soft-light"
+                  />
+                  <div className="relative">
+                    <p className="text-xs uppercase tracking-[0.25em] text-slate-100/90">
+                      Studio websites
+                    </p>
+                    <h2 className="mt-3 text-lg font-medium text-slate-50">
+                      A small constellation of service‑driven sites.
+                    </h2>
+                    <p className="mt-3 text-[0.8rem] text-slate-100/90">
+                      From MedNLaw to Unsaathi, StudiYo Miyawaki shapes legal‑tech,
+                      support platforms, and personal brands into web experiences
+                      that feel composed and trustworthy.
+                    </p>
+                  </div>
+                </MotionDiv>
 
-              <div className="col-span-12 grid gap-4 md:col-span-8 md:grid-cols-2">
-                {projects.map((project, index) => (
+                {/* Highlight project (MedNLaw) */}
+                <MotionDiv
+                  variants={fadeInUp}
+                  className="relative col-span-12 md:col-span-8 overflow-hidden rounded-3xl border border-slate-100/30 bg-slate-950/60 p-4 shadow-md backdrop-blur-xl"
+                >
+                  <div className="grid gap-4 md:grid-cols-2 md:items-center">
+                    <div className="relative h-40 w-full overflow-hidden rounded-2xl bg-slate-900/50">
+                      <motion.div
+                        initial={{ scale: 1.03, y: 8 }}
+                        whileInView={{ scale: 1.02, y: 0 }}
+                        transition={{ duration: 0.7, ease: "easeOut" }}
+                        viewport={{ once: true }}
+                        className="h-full w-full"
+                      >
+                        <Image
+                          src={projects[0].image}
+                          alt={projects[0].title}
+                          width={600}
+                          height={320}
+                          className="h-full w-full object-cover"
+                        />
+                      </motion.div>
+                      <span className="absolute left-3 top-3 rounded-full bg-emerald-500/80 px-3 py-1 text-[0.65rem] font-medium text-slate-950">
+                        Flagship build
+                      </span>
+                    </div>
+                    <div className="space-y-2">
+                      <p className="text-sm font-semibold text-slate-50">
+                        {projects[0].title}
+                      </p>
+                      <p className="text-[0.8rem] text-slate-100/90">
+                        Licensing & legal solutions for medical professionals,
+                        redesigned around clarity and calm for anxious visitors.
+                      </p>
+                      <p className="text-[0.75rem] text-slate-100/75">
+                        “They treated our platform like a product, not a brochure.”
+                      </p>
+                      <a
+                        href={projects[0].link}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1 text-[0.7rem] text-emerald-300 hover:text-emerald-200"
+                      >
+                        Visit website <span>↗</span>
+                      </a>
+                    </div>
+                  </div>
+                </MotionDiv>
+              </div>
+
+              {/* Remaining projects grid */}
+              <div className="grid gap-4 md:grid-cols-3">
+                {projects.slice(1).map((project) => (
                   <MotionDiv
                     key={project.title}
                     variants={fadeInUp}
-                    whileHover={{ y: -5 }}
-                    className={`group relative flex flex-col overflow-hidden rounded-3xl border border-slate-100/25 bg-white/20 shadow-md backdrop-blur-xl ${
-                      index % 2 === 0 ? "min-h-[260px]" : "min-h-[220px]"
-                    }`}
+                    whileHover={{ y: -5, scale: 1.01 }}
+                    className="group relative flex flex-col overflow-hidden rounded-3xl border border-slate-100/25 bg-white/20 shadow-md backdrop-blur-xl"
                   >
                     <div className="relative h-32 w-full overflow-hidden bg-slate-900/40">
                       <motion.div
                         initial={{ scale: 1.03, y: 8 }}
                         whileInView={{ scale: 1.02, y: 0 }}
-                        whileHover={{ scale: 1.07 }}
+                        whileHover={{ scale: 1.06 }}
                         transition={{ duration: 0.7, ease: "easeOut" }}
                         viewport={{ once: true }}
                         className="h-full w-full"
@@ -671,69 +804,64 @@ export default function Home() {
                   </MotionDiv>
                 ))}
               </div>
-            </MotionSection>
 
-            <MotionSection
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.25 }}
-              className="grid gap-4 md:grid-cols-12"
-            >
-              <MotionDiv
-                variants={fadeInUp}
-                className="relative col-span-12 md:col-span-5 flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-100/25 bg-white/20 px-5 py-6 shadow-md backdrop-blur-xl"
-              >
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(16,185,129,0.35),_transparent_60%)]"
-                />
-                <div className="relative">
-                  <p className="text-xs uppercase tracking-[0.25em] text-slate-100/90">
-                    Philosophy
-                  </p>
-                  <h2 className="mt-3 text-lg font-medium text-slate-50">
-                    Interfaces that feel like your practice, not the latest
-                    trend.
-                  </h2>
-                  <p className="mt-3 text-[0.8rem] text-slate-100/90">
-                    StudiYo Miyawaki favors timeless layouts, readable type, and
-                    motion that whispers instead of shouts. The goal is quiet
-                    confidence, not visual noise.
-                  </p>
-                </div>
-                <p className="relative mt-4 text-[0.78rem] text-slate-100/90">
-                  Every decision is filtered through three lenses:{" "}
-                  <span className="text-slate-50">
-                    clarity, calm, and credibility
-                  </span>
-                  .
-                </p>
-              </MotionDiv>
-
-              <div className="col-span-12 grid gap-4 md:col-span-7 md:grid-cols-2">
-                {testimonials.map((t, i) => (
-                  <MotionDiv
-                    key={t.name}
-                    variants={fadeInUp}
-                    whileHover={{ y: -4 }}
-                    className={`relative flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-100/25 bg-white/20 p-5 shadow-md backdrop-blur-xl ${
-                      i === 0 ? "min-h-[210px]" : "min-h-[260px]"
-                    }`}
-                  >
-                    <div
-                      aria-hidden
-                      className="pointer-events-none absolute inset-0 bg-[url('/images/testimonials-bg.jpg')] bg-cover bg-center opacity-25 mix-blend-soft-light"
-                    />
-                    <p className="relative text-[0.8rem] text-slate-100/90">
-                      “{t.quote}”
+              {/* Philosophy + Testimonials */}
+              <div className="grid gap-4 md:grid-cols-12">
+                <MotionDiv
+                  variants={fadeInUp}
+                  className="relative col-span-12 md:col-span-5 flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-100/25 bg-white/20 px-5 py-6 shadow-md backdrop-blur-xl"
+                >
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(16,185,129,0.35),_transparent_60%)]"
+                  />
+                  <div className="relative">
+                    <p className="text-xs uppercase tracking-[0.25em] text-slate-100/90">
+                      Philosophy
                     </p>
-                    <div className="relative mt-4 text-[0.7rem] text-slate-100/80">
-                      <p className="font-medium text-slate-50">{t.name}</p>
-                      <p>{t.role}</p>
-                    </div>
-                  </MotionDiv>
-                ))}
+                    <h2 className="mt-3 text-lg font-medium text-slate-50">
+                      Interfaces that feel like your practice, not the latest
+                      trend.
+                    </h2>
+                    <p className="mt-3 text-[0.8rem] text-slate-100/90">
+                      StudiYo Miyawaki favors timeless layouts, readable type, and
+                      motion that whispers instead of shouts. The goal is quiet
+                      confidence, not visual noise.
+                    </p>
+                  </div>
+                  <p className="relative mt-4 text-[0.78rem] text-slate-100/90">
+                    Every decision is filtered through three lenses:{" "}
+                    <span className="text-slate-50">
+                      clarity, calm, and credibility
+                    </span>
+                    .
+                  </p>
+                </MotionDiv>
+
+                <div className="col-span-12 grid gap-4 md:col-span-7 md:grid-cols-2">
+                  {testimonials.map((t, i) => (
+                    <MotionDiv
+                      key={t.name}
+                      variants={fadeInUp}
+                      whileHover={{ y: -4 }}
+                      className={`relative flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-100/25 bg-white/20 p-5 shadow-md backdrop-blur-xl ${
+                        i === 0 ? "min-h-[210px]" : "min-h-[260px]"
+                      }`}
+                    >
+                      <div
+                        aria-hidden
+                        className="pointer-events-none absolute inset-0 bg-[url('/images/testimonials-bg.jpg')] bg-cover bg-center opacity-25 mix-blend-soft-light"
+                      />
+                      <p className="relative text-[0.8rem] text-slate-100/90">
+                        “{t.quote}”
+                      </p>
+                      <div className="relative mt-4 text-[0.7rem] text-slate-100/80">
+                        <p className="font-medium text-slate-50">{t.name}</p>
+                        <p>{t.role}</p>
+                      </div>
+                    </MotionDiv>
+                  ))}
+                </div>
               </div>
             </MotionSection>
 
@@ -761,8 +889,7 @@ export default function Home() {
                   </h3>
                   <p className="text-[0.8rem] text-slate-100/90">
                     Share links, context, or even a messy doc. StudiYo Miyawaki
-                    replies within 48 hours with a lean, actionable path
-                    forward.
+                    replies within 48 hours with a lean, actionable path forward.
                   </p>
                   <p className="pt-1 text-[0.75rem] text-slate-100/80">
                     Prefer email?{" "}
@@ -878,7 +1005,7 @@ export default function Home() {
             </MotionSection>
           </div>
         </div>
-      </div>
+      </motion.div>
     </main>
   );
 }
