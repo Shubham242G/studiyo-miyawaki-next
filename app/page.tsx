@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
+import Image from "next/image"; 
 import {
   MotionDiv,
   MotionSection,
@@ -10,8 +10,8 @@ import {
   fadeIn,
   staggerContainer,
 } from "./components/motion";
-import { motion, Variants,useScroll, useSpring, useCycle } from "framer-motion";
-import { useEffect } from "react";
+import { motion, Variants, useScroll, useSpring, useCycle } from "framer-motion";
+import { useEffect, useState } from "react";
 
 const services = [
   {
@@ -44,28 +44,28 @@ const projects = [
   {
     title: "MedNLaw",
     description: "Licensing & legal solutions for medical professionals.",
-    image: "/images/MednLaw.png",
+    image: "/assets/images/mednlaw.png",
     link: "https://mednlaw.com/",
     tag: "Flagship • Healthcare law",
   },
   {
     title: "Unsaathi",
     description: "A supportive platform for divorce and legal guidance.",
-    image: "/images/unsaathi.png",
+    image: "/assets/images/Unsaathi-logo1.png",
     link: "https://unsaathi.com/",
     tag: "Support platform",
   },
   {
     title: "GSLO",
     description: "Comprehensive legal services for the modern enterprise.",
-    image: "/images/GSLO.jpg",
+    image: "/assets/images/GSLO-black.png",
     link: "https://gslo.in/",
     tag: "Corporate law",
   },
   {
     title: "Gaurav Sharma",
     description: "A personal hub for legal expertise and thought leadership.",
-    image: "/images/gaurav-sharma-white.png",
+    image: "/assets/images/gaurav-sharma-white.png",
     link: "https://gauravsharma.org/",
     tag: "Personal brand",
   },
@@ -145,6 +145,46 @@ const pageEnter: Variants = {
   },
 };
 
+// scramble numbers hook for metrics
+function useScrambledMetrics(durationMs = 2500, intervalMs = 80) {
+  const [displayValues, setDisplayValues] = useState<string[]>(
+    metrics.map((m) => m.value)
+  );
+  const [done, setDone] = useState(false);
+
+  useEffect(() => {
+    const start = performance.now();
+
+    const randomDigit = () => Math.floor(Math.random() * 10).toString();
+
+    const id = setInterval(() => {
+      const now = performance.now();
+      const elapsed = now - start;
+      if (elapsed >= durationMs) {
+        setDisplayValues(metrics.map((m) => m.value));
+        setDone(true);
+        clearInterval(id);
+        return;
+      }
+
+      setDisplayValues((prev) =>
+        metrics.map((metric, idx) => {
+          const original = metric.value;
+          // only scramble numeric characters; keep +, %, dash, etc
+          return original
+            .split("")
+            .map((ch) => (/\d/.test(ch) ? randomDigit() : ch))
+            .join("");
+        })
+      );
+    }, intervalMs);
+
+    return () => clearInterval(id);
+  }, [durationMs, intervalMs]);
+
+  return { displayValues, done };
+}
+
 export default function Home() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -154,28 +194,16 @@ export default function Home() {
   });
 
   const heroBgImages = [
-    "/images/hero-bg-1.jpg",
+    "/images/hero-card-bg.jpg", // use existing hero texture
     "/images/hero-bg-2.jpg",
     "/images/hero-bg-3.jpg",
   ];
   const heroBgIndex = useTimedCycle(heroBgImages.length, 7000);
 
+  const { displayValues } = useScrambledMetrics();
+
   return (
-    <main className="relative min-h-screen text-slate-50">
-      {/* Background video */}
-      <video
-        className="fixed inset-0 -z-50 h-full w-full object-cover"
-        autoPlay
-        muted
-        loop
-        playsInline
-      >
-        <source src="/assets/videos/miyawaki.mp4" type="video/mp4" />
-      </video>
-
-      {/* Dark overlay */}
-      <div className="fixed inset-0 -z-40 bg-black/70" />
-
+    <main className="relative min-h-screen text-slate-900 bg-white">
       {/* Scroll progress */}
       <motion.div
         style={{ scaleX }}
@@ -187,7 +215,7 @@ export default function Home() {
         initial={{ opacity: 0, y: -8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.9, duration: 0.6, ease: "easeOut" }}
-        className="fixed right-5 top-5 z-40 hidden items-center gap-2 rounded-full border border-emerald-300/40 bg-slate-900/80 px-3 py-1.5 text-[0.7rem] text-slate-50 shadow-lg backdrop-blur-xl sm:flex"
+        className="fixed right-5 top-5 z-40 hidden items-center gap-2 rounded-full border border-emerald-300/40 bg-white/80 px-3 py-1.5 text-[0.7rem] text-slate-900 shadow-lg backdrop-blur-xl sm:flex"
       >
         <span className="relative flex h-2 w-2">
           <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/60" />
@@ -197,124 +225,109 @@ export default function Home() {
       </motion.div>
 
       {/* Fixed sidebar on desktop */}
-      <aside className="fixed left-0 top-1/2 z-30 hidden -translate-y-1/2 transform lg:block">
-        <div className="relative ml-8 flex h-[95vh] w-64 flex-col rounded-3xl border border-white/20 bg-white/20 px-5 py-6 shadow-xl backdrop-blur-xl">
-          {/* subtle glow */}
-          <motion.div
-            aria-hidden
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 0.25, scale: 1 }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
-            className="pointer-events-none absolute inset-0 rounded-3xl bg-[radial-gradient(circle_at_top,_rgba(16,185,129,0.35),_transparent_60%)]"
-          />
+      <aside className="fixed left-0 top-0 z-30 hidden h-screen w-64 lg:block">
+  <div className="relative h-full w-full overflow-hidden">
+    {/* white gradient + bg image */}
+    <div className="absolute inset-0 bg-gradient-to-b from-white via-white/95 to-white/90" />
+    <div className="absolute inset-0 bg-[url('/images/sidebar-bg.jpg')] bg-cover bg-center opacity-20 mix-blend-normal" />
 
-          {/* Top: logo + short copy */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="relative space-y-3"
-          >
-            <div className="flex items-center gap-3">
-              <div className="flex h-9 w-9 items-center justify-center rounded-full border border-emerald-200/80 bg-emerald-500/40 text-[0.6rem] font-semibold tracking-[0.28em] text-emerald-100">
-                SM
-              </div>
-              <div>
-                <p className="text-[0.75rem] tracking-[0.25em] text-slate-50">
-                  STUDIYO MIYAWAKI
-                </p>
-                <p className="text-[0.65rem] text-slate-200">
-                  Web • SEO • Brand
-                </p>
-              </div>
-            </div>
-            <p className="text-[0.7rem] text-slate-100">
-              Calm, premium web experiences for law, health, and expert‑led
-              practices.
-            </p>
-          </motion.div>
+    {/* Main sidebar content */}
+    <div className="relative flex h-full flex-col px-4 py-6">
+      {/* vertical brand text - inside content, no clipping */}
+      <div className="flex h-full flex-col items-center justify-center">
+        <p className="-rotate-90 text-[1.3rem] mb-[150px] font-black tracking-[0.6em] text-slate-900 whitespace-nowrap">
+          STUDIO&nbsp;MIYAWAKI
+        </p>
+      </div>
 
-          {/* Middle: navigation */}
-          <motion.nav
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15, duration: 0.5 }}
-            className="relative mt-6 flex flex-col gap-1.5 text-[0.68rem] uppercase tracking-[0.16em] text-slate-200"
-          >
-            <Link href="#hero" className="hover:text-emerald-300">
-              Overview
-            </Link>
-            <Link href="#services" className="hover:text-emerald-300">
-              Services
-            </Link>
-            <Link href="#process" className="hover:text-emerald-300">
-              Process
-            </Link>
-            <Link href="#projects" className="hover:text-emerald-300">
-              Studio sites
-            </Link>
-            <Link href="#contact" className="hover:text-emerald-300">
-              Contact
-            </Link>
-          </motion.nav>
+      {/* Navigation + footer pinned to bottom, not overlapping */}
+      <div className="pointer-events-none absolute inset-x-4 bottom-4 flex flex-col">
+        {/* Middle: navigation */}
+        <motion.nav
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15, duration: 0.5 }}
+          className="flex flex-col gap-1.5 text-[0.68rem] uppercase tracking-[0.16em] text-slate-600 pointer-events-auto"
+        >
+          <Link href="#hero" className="hover:text-emerald-500">
+            Overview
+          </Link>
+          <Link href="#services" className="hover:text-emerald-500">
+            Services
+          </Link>
+          <Link href="#process" className="hover:text-emerald-500">
+            Process
+          </Link>
+          <Link href="#projects" className="hover:text-emerald-500">
+            Studio sites
+          </Link>
+          <Link href="#contact" className="hover:text-emerald-500">
+            Contact
+          </Link>
+        </motion.nav>
 
-          {/* Bottom: brand + CTA */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.25, duration: 0.5 }}
-            className="relative mt-8 flex flex-1 flex-col justify-end space-y-3 text-[0.65rem] text-slate-200"
+        {/* Bottom: brand + CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.25, duration: 0.5 }}
+          className="mt-4 flex flex-col justify-end space-y-3 text-[0.65rem] text-slate-500 pointer-events-auto"
+        >
+          <div className="flex items-center justify-between text-[0.6rem] uppercase tracking-[0.18em]">
+            <span>Remote‑first</span>
+            <span>India‑based</span>
+          </div>
+          <div className="h-px w-full bg-slate-200" />
+          <Link
+            href="#contact"
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-emerald-300/70 bg-emerald-500/10 px-4 py-1.5 text-[0.65rem] font-medium text-emerald-700 transition hover:bg-emerald-500/20"
           >
-            <div className="flex items-center justify-between text-[0.6rem] uppercase tracking-[0.18em]">
-              <span>Remote‑first</span>
-              <span>India‑based</span>
-            </div>
-            <div className="h-px w-full bg-slate-100/40" />
-            <Link
-              href="#contact"
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-emerald-300/70 bg-emerald-500/25 px-4 py-1.5 text-[0.65rem] font-medium text-emerald-100 transition hover:bg-emerald-500/35"
-            >
-              Start a project
-              <span className="text-xs">↗</span>
-            </Link>
-          </motion.div>
-        </div>
-      </aside>
+            Start a project
+            <span className="text-xs">↗</span>
+          </Link>
+        </motion.div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+
+
 
       {/* Mobile sidebar (scrolls with content) */}
       <aside className="px-4 pt-6 pb-4 lg:hidden">
-        <div className="relative flex flex-col rounded-3xl border border-white/20 bg-white/20 px-5 py-5 shadow-xl backdrop-blur-xl">
+        <div className="relative flex flex-col rounded-3xl border border-slate-200 bg-white px-5 py-5 shadow-xl">
           <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-full border border-emerald-200/80 bg-emerald-500/40 text-[0.6rem] font-semibold tracking-[0.28em] text-emerald-100">
+            <div className="flex h-9 w-9 items-center justify-center rounded-full border border-emerald-200/80 bg-emerald-500/10 text-[0.6rem] font-semibold tracking-[0.28em] text-emerald-700">
               SM
             </div>
             <div>
-              <p className="text-[0.75rem] tracking-[0.25em] text-slate-50">
+              <p className="text-[0.75rem] tracking-[0.25em] text-slate-900">
                 STUDIYO MIYAWAKI
               </p>
-              <p className="text-[0.65rem] text-slate-200">
+              <p className="text-[0.65rem] text-slate-500">
                 Web • SEO • Brand
               </p>
             </div>
           </div>
-          <p className="mt-3 text-[0.7rem] text-slate-100">
+          <p className="mt-3 text-[0.7rem] text-slate-600">
             Calm, premium web experiences for law, health, and expert‑led
             practices.
           </p>
-          <nav className="mt-4 flex flex-wrap gap-3 text-[0.7rem] uppercase tracking-[0.16em] text-slate-200">
-            <Link href="#hero" className="hover:text-emerald-300">
+          <nav className="mt-4 flex flex-wrap gap-3 text-[0.7rem] uppercase tracking-[0.16em] text-slate-600">
+            <Link href="#hero" className="hover:text-emerald-500">
               Overview
             </Link>
-            <Link href="#services" className="hover:text-emerald-300">
+            <Link href="#services" className="hover:text-emerald-500">
               Services
             </Link>
-            <Link href="#process" className="hover:text-emerald-300">
+            <Link href="#process" className="hover:text-emerald-500">
               Process
             </Link>
-            <Link href="#projects" className="hover:text-emerald-300">
+            <Link href="#projects" className="hover:text-emerald-500">
               Studio sites
             </Link>
-            <Link href="#contact" className="hover:text-emerald-300">
+            <Link href="#contact" className="hover:text-emerald-500">
               Contact
             </Link>
           </nav>
@@ -332,165 +345,169 @@ export default function Home() {
           <div className="space-y-10">
             {/* FULL-WIDTH HERO BAND */}
             <section
-              id="hero"
-              className="relative overflow-hidden rounded-3xl border border-slate-100/25 bg-white/20 px-6 py-10 shadow-md backdrop-blur-xl lg:px-10 lg:py-16"
-            >
-              {/* hero background texture */}
-              <div
-                aria-hidden
-                className="pointer-events-none absolute inset-0 bg-[url('/images/hero-card-bg.jpg')] bg-cover bg-center opacity-30 mix-blend-soft-light"
-              />
-              {/* rotating gradient halo behind text */}
-              <motion.div
-                aria-hidden
-                className="pointer-events-none absolute -left-24 top-10 h-64 w-64 rounded-full bg-emerald-400/25 blur-3xl"
-                style={{ opacity: 0.8 }}
-                animate={{ y: [0, 10, 0] }}
-                transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
-              />
+  id="hero"
+  className="relative overflow-hidden rounded-3xl border border-slate-200 px-6 py-10 shadow-md lg:px-10 lg:py-16"
+>
+  {/* Background video */}
+  <video
+    className="pointer-events-none absolute inset-0 h-full w-full object-cover z-0"
+    autoPlay
+    muted
+    loop
+    playsInline
+  >
+    <source src="/assets/videos/miyawaki.mp4" type="video/mp4" />
+  </video>
 
-              <div className="relative grid gap-10 md:grid-cols-3 md:items-end">
-                {/* Left: label + main copy */}
-                <div className="md:col-span-2">
-                  <MotionSpan
-                    variants={fadeIn}
-                    className="inline-flex items-center gap-2 rounded-full border border-slate-100/40 bg-slate-950/40 px-3 py-1 text-[0.6rem] uppercase tracking-[0.25em] text-slate-50"
-                  >
-                    StudiYo Miyawaki
-                    <span className="h-1 w-1 rounded-full bg-emerald-400" />
-                    Web • SEO • Brand
-                  </MotionSpan>
+<div className="pointer-events-none absolute inset-0 bg-black/30 z-10" />
+ 
 
-                  <motion.h1
-                    variants={fadeInUp}
-                    initial="hidden"
-                    animate="show"
-                    className="mt-6 max-w-3xl text-[2.5rem] font-semibold leading-tight text-slate-50 md:text-[3rem] lg:text-[3.25rem]"
-                  >
-                    Web services for{" "}
-                    <span className="bg-gradient-to-r from-emerald-300 via-cyan-300 to-violet-300 bg-clip-text text-transparent">
-                      thoughtful, high‑trust work.
-                    </span>
-                  </motion.h1>
+  {/* Content wrapper – must sit ABOVE video and overlay */}
+  <div className="relative z-20 grid gap-10 md:grid-cols-3 md:items-end">
+    {/* Left: label + main copy */}
+    <div className="md:col-span-2">
+      <MotionSpan
+        variants={fadeIn}
+        className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/90 px-3 py-1 text-[0.6rem] uppercase tracking-[0.25em] text-slate-900"
+      >
+        StudiYo Miyawaki
+        <span className="h-1 w-1 rounded-full bg-emerald-400" />
+        Web • SEO • Brand
+      </MotionSpan>
 
-                  <motion.p
-                    variants={fadeInUp}
-                    initial="hidden"
-                    animate="show"
-                    transition={{ delay: 0.1 }}
-                    className="mt-4 max-w-xl text-[0.95rem] text-slate-100/90"
-                  >
-                    Digital front doors for law practices, health platforms, and
-                    expert businesses that need more than another template.
-                  </motion.p>
+      <motion.h1
+        variants={fadeInUp}
+        initial="hidden"
+        animate="show"
+        className="mt-6 max-w-3xl text-[2.5rem] font-semibold leading-tight text-slate-50 md:text-[3rem] lg:text-[3.25rem]"
+      >
+        Web services for{" "}
+        <span className="bg-gradient-to-r from-emerald-400 via-cyan-400 to-violet-400 bg-clip-text text-transparent">
+          thoughtful, high‑trust work.
+        </span>
+      </motion.h1>
 
-                  <motion.div
-                    variants={fadeInUp}
-                    initial="hidden"
-                    animate="show"
-                    transition={{ delay: 0.18 }}
-                    className="mt-7 flex flex-wrap items-center gap-3 text-xs"
-                  >
-                    <motion.button
-                      whileHover={{ y: -2, scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="rounded-full bg-slate-950/90 px-5 py-2.5 text-[0.75rem] font-semibold text-white shadow-md shadow-slate-950/40"
-                    >
-                      <Link href="#services">Explore services</Link>
-                    </motion.button>
-                    <motion.button
-                      whileHover={{ y: -2, scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="inline-flex items-center gap-2 rounded-full border border-slate-100/40 bg-slate-900/40 px-5 py-2.5 text-[0.75rem] text-slate-50 transition hover:border-slate-50/70 hover:bg-slate-900/60"
-                    >
-                      <Link href="#projects">View studio websites</Link>
-                      <span>↗</span>
-                    </motion.button>
-                  </motion.div>
+      <motion.p
+        variants={fadeInUp}
+        initial="hidden"
+        animate="show"
+        transition={{ delay: 0.1 }}
+        className="mt-4 max-w-xl text-[0.95rem] text-slate-100/90"
+      >
+        Digital front doors for law practices, health platforms, and
+        expert businesses that need more than another template.
+      </motion.p>
 
-                  {/* mini trust row */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.32, duration: 0.5 }}
-                    className="mt-6 flex flex-wrap items-center gap-4 text-[0.7rem] text-slate-100/80"
-                  >
-                    <span className="flex items-center gap-1">
-                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                      Built on Next.js & Tailwind
-                    </span>
-                    <span className="h-3 w-px bg-slate-100/40 hidden md:block" />
-                    <span>One project at a time • Founder‑direct</span>
-                  </motion.div>
-                </div>
+      <motion.div
+        variants={fadeInUp}
+        initial="hidden"
+        animate="show"
+        transition={{ delay: 0.18 }}
+        className="mt-7 flex flex-wrap items-center gap-3 text-xs"
+      >
+        <motion.button
+          whileHover={{ y: -2, scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="rounded-full bg-slate-950 px-5 py-2.5 text-[0.75rem] font-semibold text-white shadow-md shadow-slate-950/40"
+        >
+          <Link href="#services">Explore services</Link>
+        </motion.button>
+        <motion.button
+          whileHover={{ y: -2, scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-5 py-2.5 text-[0.75rem] text-slate-900 transition hover:border-slate-300 hover:bg-white"
+        >
+          <Link href="#projects">View studio websites</Link>
+          <span>↗</span>
+        </motion.button>
+      </motion.div>
 
-                {/* Right: snapshot / badge cluster */}
-                <div className="relative md:col-span-1 md:justify-self-end">
-                  {/* rotating circle */}
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.7, rotate: -8 }}
-                    animate={{
-                      opacity: 1,
-                      scale: 1,
-                      rotate: 0,
-                      transition: { delay: 0.4, duration: 0.9, ease: "easeOut" },
-                    }}
-                    className="pointer-events-none mb-5 flex h-28 w-28 items-center justify-center rounded-full border border-slate-100/40 bg-slate-900/60 backdrop-blur-xl md:h-32 md:w-32 lg:h-36 lg:w-36"
-                  >
-                    <motion.div
-                      animate={{ rotate: 360 }}
-                      transition={{
-                        duration: 18,
-                        repeat: Infinity,
-                        ease: "linear",
-                      }}
-                      className="flex h-20 w-20 items-center justify-center rounded-full border border-slate-100/50 text-[0.55rem] tracking-[0.24em] text-slate-100"
-                    >
-                      STUDIYO • MIYAWAKI • DIGITAL •
-                    </motion.div>
-                  </motion.div>
+      {/* mini trust row */}
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.32, duration: 0.5 }}
+        className="mt-6 flex flex-wrap items-center gap-4 text-[0.7rem] text-slate-100/90"
+      >
+        <span className="flex items-center gap-1">
+          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+          Built on Next.js & Tailwind
+        </span>
+        <span className="hidden h-3 w-px bg-slate-200 md:block" />
+        <span>One project at a time • Founder‑direct</span>
+      </motion.div>
+    </div>
 
-                  {/* snapshot pill */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.55, duration: 0.5 }}
-                    className="overflow-hidden rounded-2xl border border-slate-100/30 bg-slate-950/50 p-4 text-[0.75rem] shadow-lg backdrop-blur-xl"
-                  >
-                    <p className="text-xs uppercase tracking-[0.25em] text-slate-100/80">
-                      Snapshot
-                    </p>
-                    <p className="mt-2 text-sm font-medium text-slate-50">
-                      A compact studio treating every site like a product, not a brochure.
-                    </p>
-                    <p className="mt-2 text-[0.78rem] text-slate-100/85">
-                      Design and engineering at the same table, from first call to launch.
-                    </p>
-                  </motion.div>
-                </div>
-              </div>
-            </section>
+    {/* Right: snapshot / badge cluster */}
+    <div className="relative md:col-span-1 md:justify-self-end ml-10">
+      {/* rotating circle */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.7, rotate: -8 }}
+        animate={{
+          opacity: 1,
+          scale: 1,
+          rotate: 0,
+          transition: { delay: 0.4, duration: 0.9, ease: "easeOut" },
+        }}
+        className="pointer-events-none mb-5 flex h-28 w-28 items-center justify-center rounded-full border border-slate-200 bg-black/40 backdrop-blur-xl md:h-32 md:w-32 lg:h-36 lg:w-36"
+      >
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{
+            duration: 18,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+          className="flex h-20 w-20 items-center justify-center rounded-full border border-slate-200 text-[0.55rem] tracking-[0.24em] text-slate-100"
+        >
+          STUDIYO • MIYAWAKI • DIGITAL •
+        </motion.div>
+      </motion.div>
 
-            {/* HERO METRICS STRIP */}
+      {/* snapshot pill */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.55, duration: 0.5 }}
+        className="overflow-hidden rounded-2xl border border-slate-200 bg-black/40 p-4 text-[0.75rem] shadow-lg backdrop-blur-xl"
+      >
+        <p className="text-xs uppercase tracking-[0.25em] text-slate-100">
+          Snapshot
+        </p>
+        <p className="mt-2 text-sm font-medium text-slate-50">
+          A compact studio treating every site like a product, not a brochure.
+        </p>
+        <p className="mt-2 text-[0.78rem] text-slate-100/90">
+          Design and engineering at the same table, from first call to launch.
+        </p>
+      </motion.div>
+    </div>
+  </div>
+</section>
+
+
+
+
+            {/* HERO METRICS STRIP – text only + shuffle animation */}
             <MotionSection
               variants={staggerContainer}
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, amount: 0.3 }}
-              className="grid gap-4 rounded-3xl border border-slate-100/25 bg-slate-950/50 px-5 py-4 shadow-md backdrop-blur-xl md:grid-cols-4"
+              className="grid gap-4 md:grid-cols-4"
             >
-              {metrics.map((metric) => (
+              {metrics.map((metric, idx) => (
                 <MotionDiv
                   key={metric.label}
                   variants={fadeInUp}
                   whileHover={{ y: -3, scale: 1.02 }}
-                  className="flex items-center justify-between rounded-2xl border border-slate-100/25 bg-white/5 px-4 py-3 text-sm text-slate-100"
+                  className="flex flex-col gap-1"
                 >
-                  <span className="text-[0.7rem] text-slate-100/80">
+                  <span className="text-[0.7rem] uppercase tracking-[0.16em] text-slate-600">
                     {metric.label}
                   </span>
-                  <span className="text-[0.95rem] font-semibold text-emerald-300">
-                    {metric.value}
+                  <span className="text-[1.1rem] font-semibold text-emerald-500 tabular-nums">
+                    {displayValues[idx]}
                   </span>
                 </MotionDiv>
               ))}
@@ -507,20 +524,20 @@ export default function Home() {
             >
               <MotionDiv
                 variants={fadeInUp}
-                className="relative col-span-12 md:col-span-4 flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-100/25 bg-white/20 p-5 shadow-md backdrop-blur-xl"
+                className="relative col-span-12 md:col-span-4 flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 shadow-md"
               >
                 <div
                   aria-hidden
-                  className="pointer-events-none absolute inset-0 bg-[url('/images/services-bg.jpg')] bg-cover bg-center opacity-30 mix-blend-soft-light"
+                  className="pointer-events-none absolute inset-0 bg-[url('/images/services-bg.jpg')] bg-cover bg-center opacity-20 mix-blend-soft-light"
                 />
                 <div className="relative">
-                  <p className="text-xs uppercase tracking-[0.25em] text-slate-100/90">
+                  <p className="text-xs uppercase tracking-[0.25em] text-slate-700">
                     Services
                   </p>
-                  <h2 className="mt-3 text-lg font-medium text-slate-50">
+                  <h2 className="mt-3 text-lg font-medium text-slate-900">
                     From story to system to stewardship.
                   </h2>
-                  <p className="mt-3 text-[0.8rem] text-slate-100/90">
+                  <p className="mt-3 text-[0.8rem] text-slate-700">
                     StudiYo Miyawaki blends strategy, interface design, and
                     engineering so your website behaves like an ongoing asset,
                     not a one‑off launch.
@@ -538,25 +555,25 @@ export default function Home() {
                       scale: 1.02,
                     }}
                     transition={{ type: "spring", stiffness: 220, damping: 22 }}
-                    className={`relative flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-100/25 bg-white/20 p-5 shadow-md backdrop-blur-xl ${
+                    className={`relative flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 shadow-md ${
                       index % 2 === 0 ? "min-h-[220px]" : "min-h-[260px]"
                     }`}
                   >
                     <div
                       aria-hidden
-                      className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.25),_transparent_55%)] opacity-80"
+                      className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.15),_transparent_55%)]"
                     />
                     <div className="relative">
-                      <p className="text-sm font-medium text-slate-50">
+                      <p className="text-sm font-medium text-slate-900">
                         {service.title}
                       </p>
-                      <p className="mt-2 text-[0.75rem] text-slate-100/90">
+                      <p className="mt-2 text-[0.75rem] text-slate-700">
                         {service.description}
                       </p>
                     </div>
                     <Link
                       href={service.route}
-                      className="relative mt-4 inline-flex items-center gap-1 text-[0.7rem] text-emerald-300 hover:text-emerald-200"
+                      className="relative mt-4 inline-flex items-center gap-1 text-[0.7rem] text-emerald-600 hover:text-emerald-500"
                     >
                       Learn more <span>↗</span>
                     </Link>
@@ -576,24 +593,24 @@ export default function Home() {
             >
               <MotionDiv
                 variants={fadeInUp}
-                className="relative col-span-12 md:col-span-7 flex flex-col gap-4 overflow-hidden rounded-3xl border border-slate-100/25 bg-white/20 p-5 shadow-md backdrop-blur-xl md:p-6"
+                className="relative col-span-12 md:col-span-7 flex flex-col gap-4 overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 shadow-md md:p-6"
               >
                 <div
                   aria-hidden
-                  className="pointer-events-none absolute inset-0 bg-[url('/images/process-bg.jpg')] bg-cover bg-center opacity-30 mix-blend-soft-light"
+                  className="pointer-events-none absolute inset-0 bg-[url('/images/process-bg.jpg')] bg-cover bg-center opacity-25 mix-blend-soft-light"
                 />
                 <div className="relative">
-                  <p className="text-xs uppercase tracking-[0.25em] text-slate-100/90">
+                  <p className="text-xs uppercase tracking-[0.25em] text-slate-700">
                     Process
                   </p>
-                  <h2 className="mt-3 text-lg font-medium text-slate-50">
+                  <h2 className="mt-3 text-lg font-medium text-slate-900">
                     A quiet, four‑step rhythm from idea to interface.
                   </h2>
                 </div>
 
                 {/* timeline rail */}
                 <div className="relative mt-4">
-                  <div className="absolute left-3 top-4 bottom-4 w-px bg-slate-100/40 md:left-4" />
+                  <div className="absolute left-3 top-4 bottom-4 w-px bg-slate-200 md:left-4" />
                   <div className="space-y-4 md:space-y-3">
                     {processSteps.map((step, i) => (
                       <MotionDiv
@@ -603,12 +620,12 @@ export default function Home() {
                         className="relative flex gap-4 pl-9 md:pl-10"
                       >
                         <motion.div
-                          className="absolute left-0 top-1 flex h-6 w-6 items-center justify-center rounded-full border border-emerald-300/70 bg-slate-950/60 text-[0.65rem] text-emerald-200 md:left-1"
+                          className="absolute left-0 top-1 flex h-6 w-6 items-center justify-center rounded-full border border-emerald-300/70 bg-white text-[0.65rem] text-emerald-600 md:left-1"
                           animate={{
                             backgroundColor: [
-                              "rgba(15,23,42,0.8)",
-                              "rgba(16,185,129,0.18)",
-                              "rgba(15,23,42,0.8)",
+                              "rgba(255,255,255,0.9)",
+                              "rgba(16,185,129,0.08)",
+                              "rgba(255,255,255,0.9)",
                             ],
                           }}
                           transition={{
@@ -621,10 +638,10 @@ export default function Home() {
                           {step.label}
                         </motion.div>
                         <div>
-                          <p className="text-sm font-medium text-slate-50">
+                          <p className="text-sm font-medium text-slate-900">
                             {step.title}
                           </p>
-                          <p className="mt-1 text-[0.78rem] text-slate-100/90">
+                          <p className="mt-1 text-[0.78rem] text-slate-700">
                             {step.copy}
                           </p>
                         </div>
@@ -636,17 +653,17 @@ export default function Home() {
 
               <MotionDiv
                 variants={fadeInUp}
-                className="relative col-span-12 md:col-span-5 flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-100/25 bg-white/20 px-5 py-5 shadow-md backdrop-blur-xl"
+                className="relative col-span-12 md:col-span-5 flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-200 bg-white px-5 py-5 shadow-md"
               >
                 <div
                   aria-hidden
-                  className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_bottom,_rgba(139,92,246,0.3),_transparent_60%)]"
+                  className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_bottom,_rgba(139,92,246,0.18),_transparent_60%)]"
                 />
                 <div className="relative">
-                  <p className="text-xs uppercase tracking-[0.25em] text-slate-100/90">
+                  <p className="text-xs uppercase tracking-[0.25em] text-slate-700">
                     Numbers
                   </p>
-                  <p className="mt-2 text-sm font-medium text-slate-50">
+                  <p className="mt-2 text-sm font-medium text-slate-900">
                     Calm studio, sharp outcomes.
                   </p>
                 </div>
@@ -655,12 +672,12 @@ export default function Home() {
                     <motion.div
                       key={metric.label}
                       whileHover={{ scale: 1.03, y: -2 }}
-                      className="rounded-2xl border border-slate-100/25 bg-white/10 px-3 py-3 shadow-sm backdrop-blur-xl"
+                      className="rounded-2xl border border-slate-200 bg-white/80 px-3 py-3 shadow-sm"
                     >
-                      <p className="text-[0.65rem] text-slate-100/90">
+                      <p className="text-[0.65rem] text-slate-700">
                         {metric.label}
                       </p>
-                      <p className="mt-1 text-[0.95rem] font-semibold text-emerald-300">
+                      <p className="mt-1 text-[0.95rem] font-semibold text-emerald-500">
                         {metric.value}
                       </p>
                     </motion.div>
@@ -682,20 +699,20 @@ export default function Home() {
               <div className="grid gap-4 md:grid-cols-12">
                 <MotionDiv
                   variants={fadeInUp}
-                  className="relative col-span-12 md:col-span-4 overflow-hidden rounded-3xl border border-slate-100/25 bg-white/20 p-5 shadow-md backdrop-blur-xl"
+                  className="relative col-span-12 md:col-span-4 overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 shadow-md"
                 >
                   <div
                     aria-hidden
-                    className="pointer-events-none absolute inset-0 bg-[url('/images/projects-bg.jpg')] bg-cover bg-center opacity-30 mix-blend-soft-light"
+                    className="pointer-events-none absolute inset-0 bg-[url('/images/projects-bg.jpg')] bg-cover bg-center opacity-25 mix-blend-soft-light"
                   />
                   <div className="relative">
-                    <p className="text-xs uppercase tracking-[0.25em] text-slate-100/90">
+                    <p className="text-xs uppercase tracking-[0.25em] text-slate-700">
                       Studio websites
                     </p>
-                    <h2 className="mt-3 text-lg font-medium text-slate-50">
+                    <h2 className="mt-3 text-lg font-medium text-slate-900">
                       A small constellation of service‑driven sites.
                     </h2>
-                    <p className="mt-3 text-[0.8rem] text-slate-100/90">
+                    <p className="mt-3 text-[0.8rem] text-slate-700">
                       From MedNLaw to Unsaathi, StudiYo Miyawaki shapes legal‑tech,
                       support platforms, and personal brands into web experiences
                       that feel composed and trustworthy.
@@ -706,45 +723,45 @@ export default function Home() {
                 {/* Highlight project (MedNLaw) */}
                 <MotionDiv
                   variants={fadeInUp}
-                  className="relative col-span-12 md:col-span-8 overflow-hidden rounded-3xl border border-slate-100/30 bg-slate-950/60 p-4 shadow-md backdrop-blur-xl"
+                  className="relative col-span-12 md:col-span-8 overflow-hidden rounded-3xl border border-slate-200 bg-white p-4 shadow-md"
                 >
                   <div className="grid gap-4 md:grid-cols-2 md:items-center">
-                    <div className="relative h-40 w-full overflow-hidden rounded-2xl bg-slate-900/50">
+                    <div className="relative h-48 w-full overflow-hidden rounded-2xl bg-slate-100 flex items-center justify-center">
                       <motion.div
-                        initial={{ scale: 1.03, y: 8 }}
+                        initial={{ scale: 1.02, y: 4 }}
                         whileInView={{ scale: 1.02, y: 0 }}
                         transition={{ duration: 0.7, ease: "easeOut" }}
                         viewport={{ once: true }}
-                        className="h-full w-full"
+                        className="h-full w-full flex items-center justify-center"
                       >
                         <Image
                           src={projects[0].image}
                           alt={projects[0].title}
                           width={600}
                           height={320}
-                          className="h-full w-full object-cover"
+                          className="max-h-full max-w-full object-contain"
                         />
                       </motion.div>
-                      <span className="absolute left-3 top-3 rounded-full bg-emerald-500/80 px-3 py-1 text-[0.65rem] font-medium text-slate-950">
+                      <span className="absolute left-3 top-3 rounded-full bg-emerald-500/90 px-3 py-1 text-[0.65rem] font-medium text-white">
                         Flagship build
                       </span>
                     </div>
                     <div className="space-y-2">
-                      <p className="text-sm font-semibold text-slate-50">
+                      <p className="text-sm font-semibold text-slate-900">
                         {projects[0].title}
                       </p>
-                      <p className="text-[0.8rem] text-slate-100/90">
+                      <p className="text-[0.8rem] text-slate-700">
                         Licensing & legal solutions for medical professionals,
                         redesigned around clarity and calm for anxious visitors.
                       </p>
-                      <p className="text-[0.75rem] text-slate-100/75">
+                      <p className="text-[0.75rem] text-slate-600">
                         “They treated our platform like a product, not a brochure.”
                       </p>
                       <a
                         href={projects[0].link}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center gap-1 text-[0.7rem] text-emerald-300 hover:text-emerald-200"
+                        className="inline-flex items-center gap-1 text-[0.7rem] text-emerald-600 hover:text-emerald-500"
                       >
                         Visit website <span>↗</span>
                       </a>
@@ -760,35 +777,35 @@ export default function Home() {
                     key={project.title}
                     variants={fadeInUp}
                     whileHover={{ y: -5, scale: 1.01 }}
-                    className="group relative flex flex-col overflow-hidden rounded-3xl border border-slate-100/25 bg-white/20 shadow-md backdrop-blur-xl"
+                    className="group relative flex flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-md"
                   >
-                    <div className="relative h-32 w-full overflow-hidden bg-slate-900/40">
+                    <div className="relative h-40 w-full overflow-hidden bg-slate-100 flex items-center justify-center">
                       <motion.div
-                        initial={{ scale: 1.03, y: 8 }}
+                        initial={{ scale: 1.02, y: 4 }}
                         whileInView={{ scale: 1.02, y: 0 }}
                         whileHover={{ scale: 1.06 }}
                         transition={{ duration: 0.7, ease: "easeOut" }}
                         viewport={{ once: true }}
-                        className="h-full w-full"
+                        className="h-full w-full flex items-center justify-center"
                       >
                         <Image
                           src={project.image}
                           alt={project.title}
                           width={600}
                           height={320}
-                          className="h-full w-full object-cover"
+                          className="max-h-full max-w-full object-contain"
                         />
                       </motion.div>
-                      <span className="absolute left-3 top-3 rounded-full bg-slate-950/60 px-2 py-1 text-[0.6rem] text-slate-50 border border-slate-100/40">
+                      <span className="absolute left-3 top-3 rounded-full bg-slate-900/70 px-2 py-1 text-[0.6rem] text-white border border-white/40">
                         {project.tag}
                       </span>
                     </div>
                     <div className="flex flex-1 flex-col justify-between p-4">
                       <div>
-                        <p className="text-sm font-medium text-slate-50">
+                        <p className="text-sm font-medium text-slate-900">
                           {project.title}
                         </p>
-                        <p className="mt-1 text-[0.75rem] text-slate-100/90">
+                        <p className="mt-1 text-[0.75rem] text-slate-700">
                           {project.description}
                         </p>
                       </div>
@@ -796,7 +813,7 @@ export default function Home() {
                         href={project.link}
                         target="_blank"
                         rel="noreferrer"
-                        className="mt-3 inline-flex items-center gap-1 text-[0.7rem] text-slate-100/90 group-hover:text-white"
+                        className="mt-3 inline-flex items-center gap-1 text-[0.7rem] text-slate-700 group-hover:text-slate-900"
                       >
                         Visit website <span>↗</span>
                       </a>
@@ -809,29 +826,29 @@ export default function Home() {
               <div className="grid gap-4 md:grid-cols-12">
                 <MotionDiv
                   variants={fadeInUp}
-                  className="relative col-span-12 md:col-span-5 flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-100/25 bg-white/20 px-5 py-6 shadow-md backdrop-blur-xl"
+                  className="relative col-span-12 md:col-span-5 flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-200 bg-white px-5 py-6 shadow-md"
                 >
                   <div
                     aria-hidden
-                    className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(16,185,129,0.35),_transparent_60%)]"
+                    className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(16,185,129,0.2),_transparent_60%)]"
                   />
                   <div className="relative">
-                    <p className="text-xs uppercase tracking-[0.25em] text-slate-100/90">
+                    <p className="text-xs uppercase tracking-[0.25em] text-slate-700">
                       Philosophy
                     </p>
-                    <h2 className="mt-3 text-lg font-medium text-slate-50">
+                    <h2 className="mt-3 text-lg font-medium text-slate-900">
                       Interfaces that feel like your practice, not the latest
                       trend.
                     </h2>
-                    <p className="mt-3 text-[0.8rem] text-slate-100/90">
+                    <p className="mt-3 text-[0.8rem] text-slate-700">
                       StudiYo Miyawaki favors timeless layouts, readable type, and
                       motion that whispers instead of shouts. The goal is quiet
                       confidence, not visual noise.
                     </p>
                   </div>
-                  <p className="relative mt-4 text-[0.78rem] text-slate-100/90">
+                  <p className="relative mt-4 text-[0.78rem] text-slate-700">
                     Every decision is filtered through three lenses:{" "}
-                    <span className="text-slate-50">
+                    <span className="text-slate-900">
                       clarity, calm, and credibility
                     </span>
                     .
@@ -844,19 +861,19 @@ export default function Home() {
                       key={t.name}
                       variants={fadeInUp}
                       whileHover={{ y: -4 }}
-                      className={`relative flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-100/25 bg-white/20 p-5 shadow-md backdrop-blur-xl ${
+                      className={`relative flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 shadow-md ${
                         i === 0 ? "min-h-[210px]" : "min-h-[260px]"
                       }`}
                     >
                       <div
                         aria-hidden
-                        className="pointer-events-none absolute inset-0 bg-[url('/images/testimonials-bg.jpg')] bg-cover bg-center opacity-25 mix-blend-soft-light"
+                        className="pointer-events-none absolute inset-0 bg-[url('/images/testimonials-bg.jpg')] bg-cover bg-center opacity-20 mix-blend-soft-light"
                       />
-                      <p className="relative text-[0.8rem] text-slate-100/90">
+                      <p className="relative text-[0.8rem] text-slate-700">
                         “{t.quote}”
                       </p>
-                      <div className="relative mt-4 text-[0.7rem] text-slate-100/80">
-                        <p className="font-medium text-slate-50">{t.name}</p>
+                      <div className="relative mt-4 text-[0.7rem] text-slate-600">
+                        <p className="font-medium text-slate-900">{t.name}</p>
                         <p>{t.role}</p>
                       </div>
                     </MotionDiv>
@@ -872,30 +889,30 @@ export default function Home() {
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, amount: 0.3 }}
-              className="relative overflow-hidden rounded-3xl border border-slate-100/25 bg-white/20 px-5 py-8 shadow-md backdrop-blur-xl md:px-8 md:py-10"
+              className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white px-5 py-8 shadow-md md:px-8 md:py-10"
             >
               <div
                 aria-hidden
-                className="pointer-events-none absolute inset-0 bg-[url('/images/contact-bg.jpg')] bg-cover bg-center opacity-30 mix-blend-soft-light"
+                className="pointer-events-none absolute inset-0 bg-[url('/images/contact-bg.jpg')] bg-cover bg-center opacity-20 mix-blend-soft-light"
               />
               <div className="relative flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
                 <div className="md:w-1/3 space-y-3">
-                  <p className="text-xs uppercase tracking-[0.25em] text-slate-100/90">
+                  <p className="text-xs uppercase tracking-[0.25em] text-slate-700">
                     Contact
                   </p>
-                  <h3 className="text-lg font-medium text-slate-50">
+                  <h3 className="text-lg font-medium text-slate-900">
                     Bring us the tangled version. We&apos;ll return with a clean
                     web shape.
                   </h3>
-                  <p className="text-[0.8rem] text-slate-100/90">
+                  <p className="text-[0.8rem] text-slate-700">
                     Share links, context, or even a messy doc. StudiYo Miyawaki
                     replies within 48 hours with a lean, actionable path forward.
                   </p>
-                  <p className="pt-1 text-[0.75rem] text-slate-100/80">
+                  <p className="pt-1 text-[0.75rem] text-slate-600">
                     Prefer email?{" "}
                     <a
                       href="mailto:hello@studiomiyawaki.com"
-                      className="text-emerald-300 hover:text-emerald-200"
+                      className="text-emerald-600 hover:text-emerald-500"
                     >
                       hello@studiomiyawaki.com
                     </a>
@@ -907,7 +924,7 @@ export default function Home() {
                     <div>
                       <label
                         htmlFor="name"
-                        className="block text-[0.75rem] text-slate-100/90"
+                        className="block text-[0.75rem] text-slate-700"
                       >
                         Name
                       </label>
@@ -916,14 +933,14 @@ export default function Home() {
                         name="name"
                         type="text"
                         placeholder="How should we address you?"
-                        className="mt-2 w-full rounded-2xl border border-slate-100/40 bg-slate-950/30 px-3 py-2 text-sm text-slate-50 outline-none transition focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/70"
+                        className="mt-2 w-full rounded-2xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/70"
                       />
                     </div>
 
                     <div>
                       <label
                         htmlFor="email"
-                        className="block text-[0.75rem] text-slate-100/90"
+                        className="block text-[0.75rem] text-slate-700"
                       >
                         Email
                       </label>
@@ -932,14 +949,14 @@ export default function Home() {
                         name="email"
                         type="email"
                         placeholder="Where can we reply?"
-                        className="mt-2 w-full rounded-2xl border border-slate-100/40 bg-slate-950/30 px-3 py-2 text-sm text-slate-50 outline-none transition focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/70"
+                        className="mt-2 w-full rounded-2xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/70"
                       />
                     </div>
 
                     <div>
                       <label
                         htmlFor="company"
-                        className="block text-[0.75rem] text-slate-100/90"
+                        className="block text-[0.75rem] text-slate-700"
                       >
                         Company / project
                       </label>
@@ -948,21 +965,21 @@ export default function Home() {
                         name="company"
                         type="text"
                         placeholder="Firm, platform, or idea name"
-                        className="mt-2 w-full rounded-2xl border border-slate-100/40 bg-slate-950/30 px-3 py-2 text-sm text-slate-50 outline-none transition focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/70"
+                        className="mt-2 w-full rounded-2xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/70"
                       />
                     </div>
 
                     <div>
                       <label
                         htmlFor="budget"
-                        className="block text-[0.75rem] text-slate-100/90"
+                        className="block text-[0.75rem] text-slate-700"
                       >
                         Approx. budget
                       </label>
                       <select
                         id="budget"
                         name="budget"
-                        className="mt-2 w-full rounded-2xl border border-slate-100/40 bg-slate-950/30 px-3 py-2 text-sm text-slate-50 outline-none transition focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/70"
+                        className="mt-2 w-full rounded-2xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/70"
                       >
                         <option value="">Select a range</option>
                         <option value="1">Exploratory / phased</option>
@@ -974,7 +991,7 @@ export default function Home() {
                     <div className="md:col-span-2">
                       <label
                         htmlFor="message"
-                        className="block text-[0.75rem] text-slate-100/90"
+                        className="block text-[0.75rem] text-slate-700"
                       >
                         What would you like to build together?
                       </label>
@@ -983,19 +1000,19 @@ export default function Home() {
                         name="message"
                         rows={4}
                         placeholder="Share where you are, what you&apos;re aiming for, and any links we should see."
-                        className="mt-2 w-full rounded-2xl border border-slate-100/40 bg-slate-950/30 px-3 py-2 text-sm text-slate-50 outline-none transition focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/70"
+                        className="mt-2 w-full rounded-2xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/70"
                       />
                     </div>
 
                     <div className="md:col-span-2 flex flex-wrap items-center justify-between gap-3">
                       <button
                         type="submit"
-                        className="inline-flex items-center gap-2 rounded-full bg-emerald-400 px-5 py-2.5 text-[0.75rem] font-semibold text-slate-950 shadow-sm transition hover:bg-emerald-300"
+                        className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-5 py-2.5 text-[0.75rem] font-semibold text-white shadow-sm transition hover:bg-emerald-400"
                       >
                         Send request
                         <span>↗</span>
                       </button>
-                      <p className="text-[0.7rem] text-slate-100/80">
+                      <p className="text-[0.7rem] text-slate-600">
                         Expect a thoughtful reply within 1–2 business days.
                       </p>
                     </div>
