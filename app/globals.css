@@ -1,9 +1,35 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* ===== Base ===== */
+  --bg-base: 255 255 255;
+  --bg-muted: 248 250 252; /* slate-50 */
+  --border: 226 232 240;   /* slate-200 */
+
+  /* ===== Text ===== */
+  --text-primary: 15 23 42;   /* slate-900 */
+  --text-secondary: 51 65 85; /* slate-600 */
+  --text-muted: 100 116 139; /* slate-500 */
+  --text-inverse: 255 255 255;
+
+  /* ===== Brand (Primary) ===== */
+  --brand-emerald: 16 185 129;
+  --brand-cyan: 56 189 248;
+
+  /* ===== Depth / Premium ===== */
+  --brand-indigo: 99 102 241;
+  --brand-violet: 139 92 246;
+
+  /* ===== Warm Accents ===== */
+  --brand-amber: 251 191 36;
+  --brand-rose: 244 63 94;
+
+  /* ===== Overlays ===== */
+  --overlay-dark-strong: 0 0 0 / 0.7;
+  --overlay-dark-medium: 0 0 0 / 0.55;
+  --overlay-dark-soft: 0 0 0 / 0.35;
 }
+
 
 @theme inline {
   --color-background: var(--background);

@@ -441,69 +441,25 @@ export default function Home() {
 
       {/* CTA – bottom center on lg+, upper center on md and below */}
       <motion.div
-        variants={fadeInUp}
-        initial="hidden"
-        animate="show"
-        transition={{ delay: 0.22 }}
-        className="
-          mt-6 flex justify-center
-          md:static md:mt-6
-          lg:absolute lg:top-[280px] lg:ml-100 lg:-translate-x-1/2
-        "
-      >
-        <motion.button
-          whileHover={{ y: -2, scale: 1.03 }}
-          whileTap={{ scale: 0.98 }}
-          className="inline-flex items-center gap-2 rounded-full bg-white/95 px-6 py-2.5 text-[0.8rem] font-semibold text-slate-900 shadow-md shadow-slate-900/30"
-        >
-          <span>Start my project with StudiYo Miyawaki</span>
-          <span className="text-xs">↗</span>
-        </motion.button>
-      </motion.div>
+  variants={fadeInUp}
+  initial="hidden"
+  animate="show"
+  transition={{ delay: 0.22 }}
+  className="mt-6 lg:ml-72 flex justify-center"
+>
+  <motion.button
+    whileHover={{ y: -2, scale: 1.03 }}
+    whileTap={{ scale: 0.98 }}
+    className="inline-flex items-center gap-2 rounded-full bg-white/95 px-6 py-2.5 text-[0.8rem] font-semibold text-slate-900 shadow-md shadow-slate-900/30"
+  >
+    <span>Start my project with StudiYo Miyawaki</span>
+    <span className="text-xs">↗</span>
+  </motion.button>
+</motion.div>
+
     </div>
 
-    {/* Right: unchanged circle + snapshot */}
-    <div className="relative md:col-span-1 md:justify-self-end ml-10">
-      <motion.div
-        initial={{ opacity: 0, scale: 0.7, rotate: -8 }}
-        animate={{
-          opacity: 1,
-          scale: 1,
-          rotate: 0,
-          transition: { delay: 0.4, duration: 0.9, ease: "easeOut" },
-        }}
-        className="pointer-events-none mb-5 flex h-28 w-28 items-center justify-center rounded-full border border-slate-200 bg-black/40 backdrop-blur-xl md:h-32 md:w-32 lg:h-36 lg:w-36"
-      >
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{
-            duration: 18,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-          className="flex h-20 w-20 items-center justify-center rounded-full border border-slate-200 text-[0.55rem] tracking-[0.24em] text-slate-100"
-        >
-          STUDIYO • MIYAWAKI • DIGITAL •
-        </motion.div>
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.55, duration: 0.5 }}
-        className="overflow-hidden rounded-2xl border border-slate-200 bg-black/40 p-4 text-[0.75rem] shadow-lg backdrop-blur-xl"
-      >
-        <p className="text-xs uppercase tracking-[0.25em] text-slate-100">
-          Snapshot
-        </p>
-        <p className="mt-2 text-sm font-medium text-slate-50">
-          A compact studio treating every site like a product, not a brochure.
-        </p>
-        <p className="mt-2 text-[0.78rem] text-slate-100/90">
-          Design and engineering at the same table, from first call to launch.
-        </p>
-      </motion.div>
-    </div>
+    
   </div>
 </section>
 
@@ -542,28 +498,45 @@ export default function Home() {
               viewport={{ once: true, amount: 0.2 }}
               className="grid gap-4 md:grid-cols-12"
             >
-              <MotionDiv
-                variants={fadeInUp}
-                className="relative col-span-12 md:col-span-4 flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 shadow-md"
-              >
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 bg-[url('/images/services-bg.jpg')] bg-cover bg-center opacity-20 mix-blend-soft-light"
-                />
-                <div className="relative">
-                  <p className="text-xs uppercase tracking-[0.25em] text-slate-700">
-                    Services
-                  </p>
-                  <h2 className="mt-3 text-lg font-medium text-slate-900">
-                    From story to system to stewardship.
-                  </h2>
-                  <p className="mt-3 text-[0.8rem] text-slate-700">
-                    StudiYo Miyawaki blends strategy, interface design, and
-                    engineering so your website behaves like an ongoing asset,
-                    not a one‑off launch.
-                  </p>
-                </div>
-              </MotionDiv>
+             <MotionDiv
+  variants={fadeInUp}
+  className="
+    relative col-span-12 md:col-span-4
+    flex flex-col justify-between
+    overflow-hidden rounded-3xl
+    border border-slate-200
+    p-5 shadow-md
+  "
+>
+  {/* Background image layer */}
+  <div
+    className="absolute inset-0 z-0 bg-cover bg-center"
+    style={{
+      backgroundImage: "url('/assets/images/image_1.jpeg')",
+    }}
+  />
+
+  {/* Optional dark overlay */}
+  <div className="absolute inset-0 z-0 bg-white/60" />
+
+  {/* Content */}
+  <div className="relative z-10">
+    <p className="text-xs uppercase tracking-[0.25em] text-slate-700">
+      Services
+    </p>
+    <h2 className="mt-3 text-lg font-medium text-slate-900">
+      From story to system to stewardship.
+    </h2>
+    <p className="mt-3 text-[0.8rem] text-slate-700">
+      StudiYo Miyawaki blends strategy, interface design, and
+      engineering so your website behaves like an ongoing asset,
+      not a one-off launch.
+    </p>
+  </div>
+</MotionDiv>
+
+
+
 
               <div className="col-span-12 grid gap-4 md:col-span-8 md:grid-cols-2">
                 {services.map((service, index) => (
@@ -601,189 +574,184 @@ export default function Home() {
 
             {/* PROCESS – REPLACED WITH SLIDER + DARKER UNIQUE COLORS */}
             <MotionSection
-              id="process"
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.25 }}
-              className="grid gap-4 md:grid-cols-12"
-            >
-              <MotionDiv
-                variants={fadeInUp}
-                className="relative col-span-12 md:col-span-7 flex flex-col gap-4 overflow-hidden rounded-3xl border border-slate-200 shadow-md"
-              >
-                <div
-                  className={`
-                    absolute inset-0 transition-colors duration-400
-                    ${
-                      processIndex === 0
-                        ? "bg-sky-200"
-                        : processIndex === 1
-                        ? "bg-emerald-200"
-                        : processIndex === 2
-                        ? "bg-indigo-200"
-                        : processIndex === 3
-                        ? "bg-amber-200"
-                        : "bg-rose-200"
-                    }
-                  `}
-                />
-                <div className="relative z-10 p-5 md:p-6 h-full flex flex-col">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <p className="text-xs uppercase tracking-[0.25em] text-slate-700">
-                        Process
-                      </p>
-                      <h2 className="mt-3 text-lg font-medium text-slate-900">
-                        A clear, four‑step rhythm from idea to interface.
-                      </h2>
-                    </div>
-                    <div className="flex gap-1.5 mt-1">
-                      {processSlides.map((slide, idx) => (
-                        <button
-                          key={slide.id}
-                          type="button"
-                          className={`h-1.5 w-1.5 rounded-full transition ${
-                            processIndex === idx
-                              ? "bg-slate-900"
-                              : "bg-slate-500/70"
-                          }`}
-                        />
-                      ))}
-                    </div>
-                  </div>
+  id="process"
+  variants={staggerContainer}
+  initial="hidden"
+  whileInView="show"
+  viewport={{ once: true, amount: 0.25 }}
+  className="grid gap-4 md:grid-cols-12"
+>
+  <MotionDiv
+    variants={fadeInUp}
+    className="relative col-span-12 flex flex-col gap-4 overflow-hidden rounded-3xl border border-slate-200 shadow-md"
+  >
+    {/* Background gradient */}
+    <div
+      className={`
+        absolute inset-0 transition-all duration-500
+        ${
+          processIndex === 0
+            ? "bg-gradient-to-br from-sky-300 via-cyan-200 to-sky-400"
+            : processIndex === 1
+            ? "bg-gradient-to-br from-emerald-300 via-lime-200 to-emerald-400"
+            : processIndex === 2
+            ? "bg-gradient-to-br from-indigo-300 via-violet-200 to-indigo-400"
+            : processIndex === 3
+            ? "bg-gradient-to-br from-amber-300 via-orange-200 to-amber-400"
+            : "bg-gradient-to-br from-rose-300 via-pink-200 to-rose-400"
+        }
+      `}
+    />
 
-                  <div className="relative mt-4 flex-1 min-h-[150px]">
-                    {processSlides.map((slide, idx) => (
-                      <motion.div
-                        key={slide.id}
-                        className="absolute inset-0 flex flex-col justify-center px-4 py-3"
-                        animate={{
-                          opacity: processIndex === idx ? 1 : 0,
-                          x: processIndex === idx ? 0 : 40,
-                          pointerEvents:
-                            processIndex === idx ? "auto" : "none",
-                        }}
-                        transition={{ duration: 0.45, ease: "easeOut" }}
-                      >
-                        <p className="text-sm font-semibold text-slate-900">
-                          {slide.title}
-                        </p>
-                        <p className="mt-2 text-[0.8rem] text-slate-800">
-                          {slide.body}
-                        </p>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-              </MotionDiv>
+    {/* Soft light overlay for depth */}
+    <div
+      aria-hidden
+      className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.35),_transparent_60%)]"
+    />
 
-              {/* Numbers side card unchanged */}
-              <MotionDiv
-                variants={fadeInUp}
-                className="relative col-span-12 md:col-span-5 flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-200 bg-white px-5 py-5 shadow-md"
-              >
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_bottom,_rgba(139,92,246,0.18),_transparent_60%)]"
-                />
-                <div className="relative">
-                  <p className="text-xs uppercase tracking-[0.25em] text-slate-700">
-                    Numbers
-                  </p>
-                  <p className="mt-2 text-sm font-medium text-slate-900">
-                    Calm studio, sharp outcomes.
-                  </p>
-                </div>
-                <div className="relative mt-4 grid grid-cols-2 gap-3 text-center">
-                  {metrics.map((metric) => (
-                    <motion.div
-                      key={metric.label}
-                      whileHover={{ scale: 1.03, y: -2 }}
-                      className="rounded-2xl border border-slate-200 bg-white/80 px-3 py-3 shadow-sm"
-                    >
-                      <p className="text-[0.65rem] text-slate-700">
-                        {metric.label}
-                      </p>
-                      <p className="mt-1 text-[0.95rem] font-semibold text-emerald-500">
-                        {metric.value}
-                      </p>
-                    </motion.div>
-                  ))}
-                </div>
-              </MotionDiv>
-            </MotionSection>
+    {/* Content */}
+    <div className="relative z-10 p-5 md:p-6 h-full flex flex-col">
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <p className="text-xs uppercase tracking-[0.25em] text-slate-700">
+            Process
+          </p>
+          <h2 className="mt-3 text-lg font-medium text-slate-900">
+            A clear, four-step rhythm from idea to interface.
+          </h2>
+        </div>
 
+        {/* Indicators */}
+        <div className="flex gap-1.5 mt-1">
+          {processSlides.map((slide, idx) => (
+            <button
+              key={slide.id}
+              type="button"
+              className={`h-1.5 w-1.5 rounded-full transition ${
+                processIndex === idx
+                  ? "bg-slate-900"
+                  : "bg-slate-700/70"
+              }`}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Slides */}
+      <div className="relative mt-4 flex-1 min-h-[150px]">
+        {processSlides.map((slide, idx) => (
+          <motion.div
+            key={slide.id}
+            className="absolute inset-0 flex flex-col justify-center px-4 py-3"
+            animate={{
+              opacity: processIndex === idx ? 1 : 0,
+              x: processIndex === idx ? 0 : 40,
+              pointerEvents:
+                processIndex === idx ? "auto" : "none",
+            }}
+            transition={{ duration: 0.45, ease: "easeOut" }}
+          >
+            <p className="text-sm font-semibold text-slate-900">
+              {slide.title}
+            </p>
+            <p className="mt-2 text-[0.8rem] text-slate-800">
+              {slide.body}
+            </p>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  </MotionDiv>
+</MotionSection>
+
+
+            
             {/* ABOUT – BIGGER, DEDICATED SECTION AFTER PROCESS */}
-            <MotionSection
-              id="about"
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.25 }}
-              className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white px-5 py-8 shadow-md md:px-8"
-            >
-              <div
-                aria-hidden
-                className="pointer-events-none absolute inset-0 bg-[url('/images/about-bg.jpg')] bg-cover bg-center opacity-20 mix-blend-soft-light"
-              />
-              <div className="relative grid gap-6 md:grid-cols-12 items-start">
-                <MotionDiv
-                  variants={fadeInUp}
-                  className="col-span-12 md:col-span-4 space-y-3"
-                >
-                  <p className="text-xs uppercase tracking-[0.25em] text-slate-700">
-                    About us
-                  </p>
-                  <h2 className="text-xl font-medium text-slate-900">
-                    The small team behind StudiYo Miyawaki.
-                  </h2>
-                  <p className="text-[0.85rem] text-slate-700">
-                    The studio is built around a handful of people who stay close
-                    to each project from first call to launch. No hand‑offs
-                    between anonymous departments, no disappearing act after launch.
-                  </p>
-                  <p className="text-[0.85rem] text-slate-700">
-                    Each site is treated like a product: design, copy, motion, and
-                    technical decisions are all made together so the final thing
-                    feels like one coherent practice instead of a stack of pages.
-                  </p>
-                </MotionDiv>
+<MotionSection
+  id="about"
+  variants={staggerContainer}
+  initial="hidden"
+  whileInView="show"
+  viewport={{ once: true, amount: 0.25 }}
+  className="relative overflow-hidden rounded-3xl border border-slate-200 shadow-md"
+>
+  {/* Background image */}
+  <div
+    aria-hidden
+    className="absolute inset-0 z-0 bg-[url('/assets/images/image_2.jpeg')] bg-cover bg-center"
+  />
 
-                <div className="col-span-12 md:col-span-8 grid gap-4 md:grid-cols-2">
-                  {teamSlides.map((member) => (
-                    <MotionDiv
-                      key={member.id}
-                      variants={fadeInUp}
-                      className="relative flex flex-col gap-3 rounded-3xl border border-slate-200 bg-white/95 px-4 py-4 shadow-sm"
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className="h-14 w-14 overflow-hidden rounded-2xl bg-slate-200 flex items-center justify-center">
-                          <Image
-                            src={member.image}
-                            alt={member.name}
-                            width={80}
-                            height={80}
-                            className="h-full w-full object-cover"
-                          />
-                        </div>
-                        <div>
-                          <p className="text-sm font-semibold text-slate-900">
-                            {member.name}
-                          </p>
-                          <p className="text-[0.72rem] uppercase tracking-[0.16em] text-slate-600">
-                            {member.role}
-                          </p>
-                        </div>
-                      </div>
-                      <p className="text-[0.8rem] text-slate-700">
-                        {member.bio}
-                      </p>
-                    </MotionDiv>
-                  ))}
-                </div>
+  {/* Strong dark overlay (for text readability) */}
+  <div
+    aria-hidden
+    className="absolute inset-0 z-[1] bg-gradient-to-b from-black/70 via-black/55 to-black/35"
+  />
+
+  {/* Content */}
+  <div className="relative z-10 px-5 py-8 md:px-8">
+    <div className="grid gap-6 md:grid-cols-12 items-start">
+      <MotionDiv
+        variants={fadeInUp}
+        className="col-span-12 md:col-span-4 space-y-3"
+      >
+        <p className="text-xs uppercase tracking-[0.25em] text-slate-200">
+          About us
+        </p>
+        <h2 className="text-xl font-medium text-white">
+          The small team behind StudiYo Miyawaki.
+        </h2>
+        <p className="text-[0.85rem] text-slate-200">
+          The studio is built around a handful of people who stay close
+          to each project from first call to launch. No hand-offs
+          between anonymous departments, no disappearing act after launch.
+        </p>
+        <p className="text-[0.85rem] text-slate-200">
+          Each site is treated like a product: design, copy, motion, and
+          technical decisions are all made together so the final thing
+          feels like one coherent practice instead of a stack of pages.
+        </p>
+      </MotionDiv>
+
+      <div className="col-span-12 md:col-span-8 grid gap-4 md:grid-cols-2">
+        {teamSlides.map((member) => (
+          <MotionDiv
+            key={member.id}
+            variants={fadeInUp}
+            className="relative flex flex-col gap-3 rounded-3xl border border-slate-200 bg-white px-4 py-4 shadow-md"
+          >
+            <div className="flex items-center gap-3">
+              <div className="h-14 w-14 overflow-hidden rounded-2xl bg-slate-200">
+                <Image
+                  src={member.image}
+                  alt={member.name}
+                  width={80}
+                  height={80}
+                  className="h-full w-full object-cover"
+                />
               </div>
-            </MotionSection>
+              <div>
+                <p className="text-sm font-semibold text-slate-900">
+                  {member.name}
+                </p>
+                <p className="text-[0.72rem] uppercase tracking-[0.16em] text-slate-600">
+                  {member.role}
+                </p>
+              </div>
+            </div>
+
+            <p className="text-[0.8rem] text-slate-700">
+              {member.bio}
+            </p>
+          </MotionDiv>
+        ))}
+      </div>
+    </div>
+  </div>
+</MotionSection>
+
+
+
+
 
             {/* PROJECTS (unchanged) */}
             <MotionSection
