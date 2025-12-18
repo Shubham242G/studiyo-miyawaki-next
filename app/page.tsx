@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image"; 
+import Image from "next/image";
 import {
   MotionDiv,
   MotionSection,
@@ -94,6 +94,74 @@ const processSteps = [
   },
 ];
 
+const processSlides = [
+  {
+    id: 0,
+    title: "How the process feels",
+    body:
+      "One clear owner on your side, one on ours. You always know what week you are in, what we are working on, and what decisions are in front of you.",
+  },
+  {
+    id: 1,
+    title: "01. Sense & frame",
+    body:
+      "A focused discovery sprint to understand your practice, constraints, and where a sharper web experience will actually move the needle.",
+  },
+  {
+    id: 2,
+    title: "02. Structure & story",
+    body:
+      "Sitemaps, flows, and content prompts so no page is random. You know what belongs where, and what each section is supposed to say.",
+  },
+  {
+    id: 3,
+    title: "03. Interface & motion",
+    body:
+      "Interfaces, typography, and motion details that feel calm and premium, with just enough movement to guide attention—not distract from the work.",
+  },
+  {
+    id: 4,
+    title: "04. Launch & steward",
+    body:
+      "A measured launch and light‑touch performance + SEO stewardship so the site stays healthy after day one without heavy retainers.",
+  },
+];
+
+const teamSlides = [
+  {
+    id: 0,
+    name: "Shubham Godiyal",
+    role: "Developer",
+    bio:
+      "Shubham leads development at StudiYo Miyawaki, turning messy ideas into fast, maintainable Next.js builds that feel calm to use and easy to extend.",
+    image: "/assets/images/team-shubham.jpg",
+  },
+  {
+    id: 1,
+    name: "Vatsala Singh",
+    role: "Content & SEO",
+    bio:
+      "Vatsala shapes the words and search strategy so every page speaks clearly to humans while quietly pulling in the right kind of traffic from search.",
+    image: "/assets/images/team-vatsala.jpg",
+  },
+  {
+    id: 2,
+    name: "Ekumpreet Singh",
+    role: "Graphic Designer",
+    bio:
+      "Ekumpreet builds the visual language—logomarks, palettes, and layout details—so your site looks like one cohesive brand, not a stitched‑together template.",
+    image: "/assets/images/team-ekumpreet.jpg",
+  },
+  {
+    id: 3,
+    name: "Manan Kapoor",
+    role: "Content Uploader",
+    bio:
+      "Manan keeps launches smooth by preparing, structuring, and uploading content with care, so what goes live matches what was planned.",
+    image: "/assets/images/team-manan.jpg",
+  },
+];
+
 const metrics = [
   { label: "Projects shipped", value: "20+" },
   { label: "Typical build window", value: "4–8 weeks" },
@@ -140,7 +208,7 @@ const pageEnter: Variants = {
     y: 0,
     transition: {
       duration: 0.7,
-      ease: [0.16, 1, 0.3, 1], // standard easeOut curve
+      ease: [0.16, 1, 0.3, 1],
     },
   },
 };
@@ -154,7 +222,6 @@ function useScrambledMetrics(durationMs = 2500, intervalMs = 80) {
 
   useEffect(() => {
     const start = performance.now();
-
     const randomDigit = () => Math.floor(Math.random() * 10).toString();
 
     const id = setInterval(() => {
@@ -167,10 +234,9 @@ function useScrambledMetrics(durationMs = 2500, intervalMs = 80) {
         return;
       }
 
-      setDisplayValues((prev) =>
-        metrics.map((metric, idx) => {
+      setDisplayValues(() =>
+        metrics.map((metric) => {
           const original = metric.value;
-          // only scramble numeric characters; keep +, %, dash, etc
           return original
             .split("")
             .map((ch) => (/\d/.test(ch) ? randomDigit() : ch))
@@ -194,13 +260,15 @@ export default function Home() {
   });
 
   const heroBgImages = [
-    "/images/hero-card-bg.jpg", // use existing hero texture
+    "/images/hero-card-bg.jpg",
     "/images/hero-bg-2.jpg",
     "/images/hero-bg-3.jpg",
   ];
   const heroBgIndex = useTimedCycle(heroBgImages.length, 7000);
 
   const { displayValues } = useScrambledMetrics();
+  const processIndex = useTimedCycle(processSlides.length, 3000);
+  const teamIndex = useTimedCycle(teamSlides.length, 3000);
 
   return (
     <main className="relative min-h-screen text-slate-900 bg-white">
@@ -226,75 +294,69 @@ export default function Home() {
 
       {/* Fixed sidebar on desktop */}
       <aside className="fixed left-0 top-0 z-30 hidden h-screen w-64 lg:block">
-  <div className="relative h-full w-full overflow-hidden">
-    {/* white gradient + bg image */}
-    <div className="absolute inset-0 bg-gradient-to-b from-white via-white/95 to-white/90" />
-    <div className="absolute inset-0 bg-[url('/images/sidebar-bg.jpg')] bg-cover bg-center opacity-20 mix-blend-normal" />
+        <div className="relative h-full w-full overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-b from-white via-white/95 to-white/90" />
+          <div className="absolute inset-0 bg-[url('/images/sidebar-bg.jpg')] bg-cover bg-center opacity-20 mix-blend-normal" />
 
-    {/* Main sidebar content */}
-    <div className="relative flex h-full flex-col px-4 py-6">
-      {/* vertical brand text - inside content, no clipping */}
-      <div className="flex h-full flex-col items-center justify-center">
-        <p className="-rotate-90 text-[1.3rem] mb-[150px] font-black tracking-[0.6em] text-slate-900 whitespace-nowrap">
-          STUDIO&nbsp;MIYAWAKI
-        </p>
-      </div>
+          <div className="relative flex h-full flex-col px-4 py-6">
+            <div className="flex h-full flex-col items-center justify-center">
+              <p className="-rotate-90 text-[1.3rem] mb-[150px] font-black tracking-[0.6em] text-slate-900 whitespace-nowrap">
+                STUDIO&nbsp;MIYAWAKI
+              </p>
+            </div>
 
-      {/* Navigation + footer pinned to bottom, not overlapping */}
-      <div className="pointer-events-none absolute inset-x-4 bottom-4 flex flex-col">
-        {/* Middle: navigation */}
-        <motion.nav
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15, duration: 0.5 }}
-          className="flex flex-col gap-1.5 text-[0.68rem] uppercase tracking-[0.16em] text-slate-600 pointer-events-auto"
-        >
-          <Link href="#hero" className="hover:text-emerald-500">
-            Overview
-          </Link>
-          <Link href="#services" className="hover:text-emerald-500">
-            Services
-          </Link>
-          <Link href="#process" className="hover:text-emerald-500">
-            Process
-          </Link>
-          <Link href="#projects" className="hover:text-emerald-500">
-            Studio sites
-          </Link>
-          <Link href="#contact" className="hover:text-emerald-500">
-            Contact
-          </Link>
-        </motion.nav>
+            <div className="pointer-events-none absolute inset-x-4 bottom-4 flex flex-col">
+              <motion.nav
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.15, duration: 0.5 }}
+                className="flex flex-col gap-1.5 text-[0.68rem] uppercase tracking-[0.16em] text-slate-600 pointer-events-auto"
+              >
+                <Link href="#hero" className="hover:text-emerald-500">
+                  Overview
+                </Link>
+                <Link href="#services" className="hover:text-emerald-500">
+                  Services
+                </Link>
+                <Link href="#process" className="hover:text-emerald-500">
+                  Process
+                </Link>
+                <Link href="#about" className="hover:text-emerald-500">
+                  About
+                </Link>
+                <Link href="#projects" className="hover:text-emerald-500">
+                  Studio sites
+                </Link>
+                <Link href="#contact" className="hover:text-emerald-500">
+                  Contact
+                </Link>
+              </motion.nav>
 
-        {/* Bottom: brand + CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.25, duration: 0.5 }}
-          className="mt-4 flex flex-col justify-end space-y-3 text-[0.65rem] text-slate-500 pointer-events-auto"
-        >
-          <div className="flex items-center justify-between text-[0.6rem] uppercase tracking-[0.18em]">
-            <span>Remote‑first</span>
-            <span>India‑based</span>
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.25, duration: 0.5 }}
+                className="mt-4 flex flex-col justify-end space-y-3 text-[0.65rem] text-slate-500 pointer-events-auto"
+              >
+                <div className="flex items-center justify-between text-[0.6rem] uppercase tracking-[0.18em]">
+                  <span>Remote‑first</span>
+                  <span>India‑based</span>
+                </div>
+                <div className="h-px w-full bg-slate-200" />
+                <Link
+                  href="#contact"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-emerald-300/70 bg-emerald-500/10 px-4 py-1.5 text-[0.65rem] font-medium text-emerald-700 transition hover:bg-emerald-500/20"
+                >
+                  Start a project
+                  <span className="text-xs">↗</span>
+                </Link>
+              </motion.div>
+            </div>
           </div>
-          <div className="h-px w-full bg-slate-200" />
-          <Link
-            href="#contact"
-            className="inline-flex items-center justify-center gap-2 rounded-full border border-emerald-300/70 bg-emerald-500/10 px-4 py-1.5 text-[0.65rem] font-medium text-emerald-700 transition hover:bg-emerald-500/20"
-          >
-            Start a project
-            <span className="text-xs">↗</span>
-          </Link>
-        </motion.div>
-      </div>
-    </div>
-  </div>
-</aside>
+        </div>
+      </aside>
 
-
-
-
-      {/* Mobile sidebar (scrolls with content) */}
+      {/* Mobile sidebar */}
       <aside className="px-4 pt-6 pb-4 lg:hidden">
         <div className="relative flex flex-col rounded-3xl border border-slate-200 bg-white px-5 py-5 shadow-xl">
           <div className="flex items-center gap-3">
@@ -324,6 +386,9 @@ export default function Home() {
             <Link href="#process" className="hover:text-emerald-500">
               Process
             </Link>
+            <Link href="#about" className="hover:text-emerald-500">
+              About
+            </Link>
             <Link href="#projects" className="hover:text-emerald-500">
               Studio sites
             </Link>
@@ -334,7 +399,7 @@ export default function Home() {
         </div>
       </aside>
 
-      {/* Main content shifted right of fixed sidebar on desktop */}
+      {/* Main content */}
       <motion.div
         variants={pageEnter}
         initial="hidden"
@@ -343,12 +408,11 @@ export default function Home() {
       >
         <div className="min-h-screen pb-20 pt-4 lg:pb-16 lg:pt-10 lg:pl-[20rem] lg:pr-10 px-4">
           <div className="space-y-10">
-            {/* FULL-WIDTH HERO BAND */}
+            {/* HERO WITH BACKGROUND VIDEO + STRONG CTA NEAR BOTTOM */}
             <section
   id="hero"
   className="relative overflow-hidden rounded-3xl border border-slate-200 px-6 py-10 shadow-md lg:px-10 lg:py-16"
 >
-  {/* Background video */}
   <video
     className="pointer-events-none absolute inset-0 h-full w-full object-cover z-0"
     autoPlay
@@ -359,88 +423,47 @@ export default function Home() {
     <source src="/assets/videos/miyawaki.mp4" type="video/mp4" />
   </video>
 
-<div className="pointer-events-none absolute inset-0 bg-black/30 z-10" />
- 
+  <div className="pointer-events-none absolute inset-0 bg-black/30 z-10" />
 
-  {/* Content wrapper – must sit ABOVE video and overlay */}
   <div className="relative z-20 grid gap-10 md:grid-cols-3 md:items-end">
-    {/* Left: label + main copy */}
-    <div className="md:col-span-2">
-      <MotionSpan
-        variants={fadeIn}
-        className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/90 px-3 py-1 text-[0.6rem] uppercase tracking-[0.25em] text-slate-900"
-      >
-        StudiYo Miyawaki
-        <span className="h-1 w-1 rounded-full bg-emerald-400" />
-        Web • SEO • Brand
-      </MotionSpan>
+    {/* Left: original content */}
+    <div className="md:col-span-2 flex flex-col justify-between min-h-[280px] md:min-h-[340px] relative">
+      <div>
+        <MotionSpan
+          variants={fadeIn}
+          className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/90 px-3 py-1 text-[0.6rem] uppercase tracking-[0.25em] text-slate-900"
+        >
+          StudiYo Miyawaki
+          <span className="h-1 w-1 rounded-full bg-emerald-400" />
+          Web • SEO • Brand
+        </MotionSpan>
+      </div>
 
-      <motion.h1
-        variants={fadeInUp}
-        initial="hidden"
-        animate="show"
-        className="mt-6 max-w-3xl text-[2.5rem] font-semibold leading-tight text-slate-50 md:text-[3rem] lg:text-[3.25rem]"
-      >
-        Web services for{" "}
-        <span className="bg-gradient-to-r from-emerald-400 via-cyan-400 to-violet-400 bg-clip-text text-transparent">
-          thoughtful, high‑trust work.
-        </span>
-      </motion.h1>
-
-      <motion.p
-        variants={fadeInUp}
-        initial="hidden"
-        animate="show"
-        transition={{ delay: 0.1 }}
-        className="mt-4 max-w-xl text-[0.95rem] text-slate-100/90"
-      >
-        Digital front doors for law practices, health platforms, and
-        expert businesses that need more than another template.
-      </motion.p>
-
+      {/* CTA – bottom center on lg+, upper center on md and below */}
       <motion.div
         variants={fadeInUp}
         initial="hidden"
         animate="show"
-        transition={{ delay: 0.18 }}
-        className="mt-7 flex flex-wrap items-center gap-3 text-xs"
+        transition={{ delay: 0.22 }}
+        className="
+          mt-6 flex justify-center
+          md:static md:mt-6
+          lg:absolute lg:top-[280px] lg:ml-100 lg:-translate-x-1/2
+        "
       >
         <motion.button
-          whileHover={{ y: -2, scale: 1.02 }}
+          whileHover={{ y: -2, scale: 1.03 }}
           whileTap={{ scale: 0.98 }}
-          className="rounded-full bg-slate-950 px-5 py-2.5 text-[0.75rem] font-semibold text-white shadow-md shadow-slate-950/40"
+          className="inline-flex items-center gap-2 rounded-full bg-white/95 px-6 py-2.5 text-[0.8rem] font-semibold text-slate-900 shadow-md shadow-slate-900/30"
         >
-          <Link href="#services">Explore services</Link>
+          <span>Start my project with StudiYo Miyawaki</span>
+          <span className="text-xs">↗</span>
         </motion.button>
-        <motion.button
-          whileHover={{ y: -2, scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-5 py-2.5 text-[0.75rem] text-slate-900 transition hover:border-slate-300 hover:bg-white"
-        >
-          <Link href="#projects">View studio websites</Link>
-          <span>↗</span>
-        </motion.button>
-      </motion.div>
-
-      {/* mini trust row */}
-      <motion.div
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.32, duration: 0.5 }}
-        className="mt-6 flex flex-wrap items-center gap-4 text-[0.7rem] text-slate-100/90"
-      >
-        <span className="flex items-center gap-1">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-          Built on Next.js & Tailwind
-        </span>
-        <span className="hidden h-3 w-px bg-slate-200 md:block" />
-        <span>One project at a time • Founder‑direct</span>
       </motion.div>
     </div>
 
-    {/* Right: snapshot / badge cluster */}
+    {/* Right: unchanged circle + snapshot */}
     <div className="relative md:col-span-1 md:justify-self-end ml-10">
-      {/* rotating circle */}
       <motion.div
         initial={{ opacity: 0, scale: 0.7, rotate: -8 }}
         animate={{
@@ -464,7 +487,6 @@ export default function Home() {
         </motion.div>
       </motion.div>
 
-      {/* snapshot pill */}
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
@@ -486,9 +508,7 @@ export default function Home() {
 </section>
 
 
-
-
-            {/* HERO METRICS STRIP – text only + shuffle animation */}
+            {/* METRICS STRIP (unchanged) */}
             <MotionSection
               variants={staggerContainer}
               initial="hidden"
@@ -513,7 +533,7 @@ export default function Home() {
               ))}
             </MotionSection>
 
-            {/* SERVICES */}
+            {/* SERVICES (unchanged) */}
             <MotionSection
               id="services"
               variants={staggerContainer}
@@ -550,10 +570,7 @@ export default function Home() {
                   <MotionDiv
                     key={service.title}
                     variants={fadeInUp}
-                    whileHover={{
-                      y: -5,
-                      scale: 1.02,
-                    }}
+                    whileHover={{ y: -5, scale: 1.02 }}
                     transition={{ type: "spring", stiffness: 220, damping: 22 }}
                     className={`relative flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 shadow-md ${
                       index % 2 === 0 ? "min-h-[220px]" : "min-h-[260px]"
@@ -582,7 +599,7 @@ export default function Home() {
               </div>
             </MotionSection>
 
-            {/* PROCESS + METRICS (TIMELINE STYLE) */}
+            {/* PROCESS – REPLACED WITH SLIDER + DARKER UNIQUE COLORS */}
             <MotionSection
               id="process"
               variants={staggerContainer}
@@ -593,64 +610,75 @@ export default function Home() {
             >
               <MotionDiv
                 variants={fadeInUp}
-                className="relative col-span-12 md:col-span-7 flex flex-col gap-4 overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 shadow-md md:p-6"
+                className="relative col-span-12 md:col-span-7 flex flex-col gap-4 overflow-hidden rounded-3xl border border-slate-200 shadow-md"
               >
                 <div
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 bg-[url('/images/process-bg.jpg')] bg-cover bg-center opacity-25 mix-blend-soft-light"
+                  className={`
+                    absolute inset-0 transition-colors duration-400
+                    ${
+                      processIndex === 0
+                        ? "bg-sky-200"
+                        : processIndex === 1
+                        ? "bg-emerald-200"
+                        : processIndex === 2
+                        ? "bg-indigo-200"
+                        : processIndex === 3
+                        ? "bg-amber-200"
+                        : "bg-rose-200"
+                    }
+                  `}
                 />
-                <div className="relative">
-                  <p className="text-xs uppercase tracking-[0.25em] text-slate-700">
-                    Process
-                  </p>
-                  <h2 className="mt-3 text-lg font-medium text-slate-900">
-                    A quiet, four‑step rhythm from idea to interface.
-                  </h2>
-                </div>
+                <div className="relative z-10 p-5 md:p-6 h-full flex flex-col">
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.25em] text-slate-700">
+                        Process
+                      </p>
+                      <h2 className="mt-3 text-lg font-medium text-slate-900">
+                        A clear, four‑step rhythm from idea to interface.
+                      </h2>
+                    </div>
+                    <div className="flex gap-1.5 mt-1">
+                      {processSlides.map((slide, idx) => (
+                        <button
+                          key={slide.id}
+                          type="button"
+                          className={`h-1.5 w-1.5 rounded-full transition ${
+                            processIndex === idx
+                              ? "bg-slate-900"
+                              : "bg-slate-500/70"
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  </div>
 
-                {/* timeline rail */}
-                <div className="relative mt-4">
-                  <div className="absolute left-3 top-4 bottom-4 w-px bg-slate-200 md:left-4" />
-                  <div className="space-y-4 md:space-y-3">
-                    {processSteps.map((step, i) => (
-                      <MotionDiv
-                        key={step.label}
-                        variants={fadeInUp}
-                        whileHover={{ y: -2 }}
-                        className="relative flex gap-4 pl-9 md:pl-10"
+                  <div className="relative mt-4 flex-1 min-h-[150px]">
+                    {processSlides.map((slide, idx) => (
+                      <motion.div
+                        key={slide.id}
+                        className="absolute inset-0 flex flex-col justify-center px-4 py-3"
+                        animate={{
+                          opacity: processIndex === idx ? 1 : 0,
+                          x: processIndex === idx ? 0 : 40,
+                          pointerEvents:
+                            processIndex === idx ? "auto" : "none",
+                        }}
+                        transition={{ duration: 0.45, ease: "easeOut" }}
                       >
-                        <motion.div
-                          className="absolute left-0 top-1 flex h-6 w-6 items-center justify-center rounded-full border border-emerald-300/70 bg-white text-[0.65rem] text-emerald-600 md:left-1"
-                          animate={{
-                            backgroundColor: [
-                              "rgba(255,255,255,0.9)",
-                              "rgba(16,185,129,0.08)",
-                              "rgba(255,255,255,0.9)",
-                            ],
-                          }}
-                          transition={{
-                            duration: 6,
-                            repeat: Infinity,
-                            delay: i * 0.4,
-                            ease: "easeInOut",
-                          }}
-                        >
-                          {step.label}
-                        </motion.div>
-                        <div>
-                          <p className="text-sm font-medium text-slate-900">
-                            {step.title}
-                          </p>
-                          <p className="mt-1 text-[0.78rem] text-slate-700">
-                            {step.copy}
-                          </p>
-                        </div>
-                      </MotionDiv>
+                        <p className="text-sm font-semibold text-slate-900">
+                          {slide.title}
+                        </p>
+                        <p className="mt-2 text-[0.8rem] text-slate-800">
+                          {slide.body}
+                        </p>
+                      </motion.div>
                     ))}
                   </div>
                 </div>
               </MotionDiv>
 
+              {/* Numbers side card unchanged */}
               <MotionDiv
                 variants={fadeInUp}
                 className="relative col-span-12 md:col-span-5 flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-200 bg-white px-5 py-5 shadow-md"
@@ -686,7 +714,78 @@ export default function Home() {
               </MotionDiv>
             </MotionSection>
 
-            {/* PROJECTS + PHILOSOPHY + TESTIMONIALS */}
+            {/* ABOUT – BIGGER, DEDICATED SECTION AFTER PROCESS */}
+            <MotionSection
+              id="about"
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.25 }}
+              className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white px-5 py-8 shadow-md md:px-8"
+            >
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 bg-[url('/images/about-bg.jpg')] bg-cover bg-center opacity-20 mix-blend-soft-light"
+              />
+              <div className="relative grid gap-6 md:grid-cols-12 items-start">
+                <MotionDiv
+                  variants={fadeInUp}
+                  className="col-span-12 md:col-span-4 space-y-3"
+                >
+                  <p className="text-xs uppercase tracking-[0.25em] text-slate-700">
+                    About us
+                  </p>
+                  <h2 className="text-xl font-medium text-slate-900">
+                    The small team behind StudiYo Miyawaki.
+                  </h2>
+                  <p className="text-[0.85rem] text-slate-700">
+                    The studio is built around a handful of people who stay close
+                    to each project from first call to launch. No hand‑offs
+                    between anonymous departments, no disappearing act after launch.
+                  </p>
+                  <p className="text-[0.85rem] text-slate-700">
+                    Each site is treated like a product: design, copy, motion, and
+                    technical decisions are all made together so the final thing
+                    feels like one coherent practice instead of a stack of pages.
+                  </p>
+                </MotionDiv>
+
+                <div className="col-span-12 md:col-span-8 grid gap-4 md:grid-cols-2">
+                  {teamSlides.map((member) => (
+                    <MotionDiv
+                      key={member.id}
+                      variants={fadeInUp}
+                      className="relative flex flex-col gap-3 rounded-3xl border border-slate-200 bg-white/95 px-4 py-4 shadow-sm"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="h-14 w-14 overflow-hidden rounded-2xl bg-slate-200 flex items-center justify-center">
+                          <Image
+                            src={member.image}
+                            alt={member.name}
+                            width={80}
+                            height={80}
+                            className="h-full w-full object-cover"
+                          />
+                        </div>
+                        <div>
+                          <p className="text-sm font-semibold text-slate-900">
+                            {member.name}
+                          </p>
+                          <p className="text-[0.72rem] uppercase tracking-[0.16em] text-slate-600">
+                            {member.role}
+                          </p>
+                        </div>
+                      </div>
+                      <p className="text-[0.8rem] text-slate-700">
+                        {member.bio}
+                      </p>
+                    </MotionDiv>
+                  ))}
+                </div>
+              </div>
+            </MotionSection>
+
+            {/* PROJECTS (unchanged) */}
             <MotionSection
               id="projects"
               variants={staggerContainer}
@@ -695,7 +794,6 @@ export default function Home() {
               viewport={{ once: true, amount: 0.25 }}
               className="space-y-5"
             >
-              {/* Header + highlight project in a band */}
               <div className="grid gap-4 md:grid-cols-12">
                 <MotionDiv
                   variants={fadeInUp}
@@ -720,7 +818,6 @@ export default function Home() {
                   </div>
                 </MotionDiv>
 
-                {/* Highlight project (MedNLaw) */}
                 <MotionDiv
                   variants={fadeInUp}
                   className="relative col-span-12 md:col-span-8 overflow-hidden rounded-3xl border border-slate-200 bg-white p-4 shadow-md"
@@ -770,7 +867,6 @@ export default function Home() {
                 </MotionDiv>
               </div>
 
-              {/* Remaining projects grid */}
               <div className="grid gap-4 md:grid-cols-3">
                 {projects.slice(1).map((project) => (
                   <MotionDiv
@@ -821,8 +917,16 @@ export default function Home() {
                   </MotionDiv>
                 ))}
               </div>
+            </MotionSection>
 
-              {/* Philosophy + Testimonials */}
+            {/* PHILOSOPHY + TESTIMONIALS (unchanged) */}
+            <MotionSection
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.25 }}
+              className="space-y-5"
+            >
               <div className="grid gap-4 md:grid-cols-12">
                 <MotionDiv
                   variants={fadeInUp}
@@ -837,8 +941,7 @@ export default function Home() {
                       Philosophy
                     </p>
                     <h2 className="mt-3 text-lg font-medium text-slate-900">
-                      Interfaces that feel like your practice, not the latest
-                      trend.
+                      Interfaces that feel like your practice, not the latest trend.
                     </h2>
                     <p className="mt-3 text-[0.8rem] text-slate-700">
                       StudiYo Miyawaki favors timeless layouts, readable type, and
@@ -882,7 +985,7 @@ export default function Home() {
               </div>
             </MotionSection>
 
-            {/* CONTACT */}
+            {/* CONTACT (unchanged) */}
             <MotionSection
               id="contact"
               variants={fadeInUp}
