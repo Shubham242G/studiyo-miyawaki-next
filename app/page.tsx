@@ -127,6 +127,45 @@ const processSlides = [
   },
 ];
 
+const aboutSlides = [
+  {
+    id: 0,
+    tagline: "Studio",
+    title: "A small team, on purpose.",
+    body:
+      "StudiYo Miyawaki is a compact studio that prefers a few deep projects over a crowded pipeline. The same people who join your first call stay with you through launch.",
+  },
+  {
+    id: 1,
+    tagline: "Miyawaki method",
+    title: "Grow like a mini‑forest, not a single tree.",
+    body:
+      "The studio borrows from the Miyawaki method: build dense, healthy systems, not fragile one‑offs. Sites are designed to mature over time as new pages and products are added.",
+  },
+  {
+    id: 2,
+    tagline: "Ma (間)",
+    title: "Space that lets work breathe.",
+    body:
+      "Ma is the Japanese idea of purposeful empty space. Interfaces use it to lower anxiety, highlight what matters, and give serious decisions room to land.",
+  },
+  {
+    id: 3,
+    tagline: "Ikigai",
+    title: "A site with a reason for being.",
+    body:
+      "Ikigai is the intersection of what you love, what you are good at, and what the world needs. Each project starts by finding that overlap and designing the site around it.",
+  },
+  {
+    id: 4,
+    tagline: "Kaizen",
+    title: "Small, steady improvements by design.",
+    body:
+      "Kaizen is continuous improvement through tiny, consistent changes. After launch, the studio favours light recurring passes over big, stressful rebuilds every few years.",
+  },
+];
+
+
 const teamSlides = [
   {
     id: 0,
@@ -270,6 +309,25 @@ export default function Home() {
   const processIndex = useTimedCycle(processSlides.length, 3000);
   const teamIndex = useTimedCycle(teamSlides.length, 3000);
 
+    const [activeAboutIndex, setActiveAboutIndex] = useState(0);
+  const [activeTeamIndex, setActiveTeamIndex] = useState(0);
+
+  // autoplay for About / Japanese concepts
+  useEffect(() => {
+    const id = setInterval(() => {
+      setActiveAboutIndex((prev) => (prev + 1) % aboutSlides.length);
+    }, 4000); // 4s
+    return () => clearInterval(id);
+  }, []);
+
+  // autoplay for Team slider
+  useEffect(() => {
+    const id = setInterval(() => {
+      setActiveTeamIndex((prev) => (prev + 1) % teamSlides.length);
+    }, 4000); // 4s
+    return () => clearInterval(id);
+  }, []);
+
   return (
     <main className="relative min-h-screen text-slate-900 bg-white">
       {/* Scroll progress */}
@@ -312,20 +370,12 @@ export default function Home() {
                 transition={{ delay: 0.15, duration: 0.5 }}
                 className="flex flex-col gap-1.5 text-[0.68rem] uppercase tracking-[0.16em] text-slate-600 pointer-events-auto"
               >
-                <Link href="#hero" className="hover:text-emerald-500">
-                  Overview
-                </Link>
+
                 <Link href="/pages/services" className="hover:text-emerald-500">
                   Services
                 </Link>
-                <Link href="#process" className="hover:text-emerald-500">
-                  Process
-                </Link>
                 <Link href="/pages/aboutUs" className="hover:text-emerald-500">
                   About
-                </Link>
-                <Link href="#projects" className="hover:text-emerald-500">
-                  Studio sites
                 </Link>
                 <Link href="#contact" className="hover:text-emerald-500">
                   Contact
@@ -377,20 +427,11 @@ export default function Home() {
             practices.
           </p>
           <nav className="mt-4 flex flex-wrap gap-3 text-[0.7rem] uppercase tracking-[0.16em] text-slate-600">
-            <Link href="#hero" className="hover:text-emerald-500">
-              Overview
-            </Link>
-            <Link href="#services" className="hover:text-emerald-500">
+            <Link href="/pages/services" className="hover:text-emerald-500">
               Services
             </Link>
-            <Link href="#process" className="hover:text-emerald-500">
-              Process
-            </Link>
-            <Link href="#about" className="hover:text-emerald-500">
+            <Link href="/pages/aboutUs" className="hover:text-emerald-500">
               About
-            </Link>
-            <Link href="#projects" className="hover:text-emerald-500">
-              Studio sites
             </Link>
             <Link href="#contact" className="hover:text-emerald-500">
               Contact
@@ -410,58 +451,58 @@ export default function Home() {
           <div className="space-y-10">
             {/* HERO WITH BACKGROUND VIDEO + STRONG CTA NEAR BOTTOM */}
             <section
-  id="hero"
-  className="relative overflow-hidden rounded-3xl border border-slate-200 px-6 py-10 shadow-md lg:px-10 lg:py-16"
->
-  <video
-    className="pointer-events-none absolute inset-0 h-full w-full object-cover z-0"
-    autoPlay
-    muted
-    loop
-    playsInline
-  >
-    <source src="/assets/videos/miyawaki.mp4" type="video/mp4" />
-  </video>
+              id="hero"
+              className="relative overflow-hidden rounded-3xl border border-slate-200 px-6 py-10 shadow-md lg:px-10 lg:py-16"
+            >
+              <video
+                className="pointer-events-none absolute inset-0 h-full w-full object-cover z-0"
+                autoPlay
+                muted
+                loop
+                playsInline
+              >
+                <source src="/assets/videos/miyawaki.mp4" type="video/mp4" />
+              </video>
 
-  <div className="pointer-events-none absolute inset-0 bg-black/30 z-10" />
+              <div className="pointer-events-none absolute inset-0 bg-black/30 z-10" />
 
-  <div className="relative z-20 grid gap-10 md:grid-cols-3 md:items-end">
-    {/* Left: original content */}
-    <div className="md:col-span-2 flex flex-col justify-between min-h-[280px] md:min-h-[340px] relative">
-      <div>
-        <MotionSpan
-          variants={fadeIn}
-          className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/90 px-3 py-1 text-[0.6rem] uppercase tracking-[0.25em] text-slate-900"
-        >
-          StudiYo Miyawaki
-          <span className="h-1 w-1 rounded-full bg-emerald-400" />
-          Web • SEO • Brand
-        </MotionSpan>
-      </div>
+              <div className="relative z-20 grid gap-10 md:grid-cols-3 md:items-end">
+                {/* Left: original content */}
+                <div className="md:col-span-2 flex flex-col justify-between min-h-[280px] md:min-h-[340px] relative">
+                  <div>
+                    <MotionSpan
+                      variants={fadeIn}
+                      className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/90 px-3 py-1 text-[0.6rem] uppercase tracking-[0.25em] text-slate-900"
+                    >
+                      StudiYo Miyawaki
+                      <span className="h-1 w-1 rounded-full bg-emerald-400" />
+                      Web • SEO • Brand
+                    </MotionSpan>
+                  </div>
 
-      {/* CTA – bottom center on lg+, upper center on md and below */}
-      <motion.div
-  variants={fadeInUp}
-  initial="hidden"
-  animate="show"
-  transition={{ delay: 0.22 }}
-  className="mt-6 lg:ml-72 flex justify-center"
->
-  <motion.button
-    whileHover={{ y: -2, scale: 1.03 }}
-    whileTap={{ scale: 0.98 }}
-    className="inline-flex items-center gap-2 rounded-full bg-white/95 px-6 py-2.5 text-[0.8rem] font-semibold text-slate-900 shadow-md shadow-slate-900/30"
-  >
-    <span>Start my project with StudiYo Miyawaki</span>
-    <span className="text-xs">↗</span>
-  </motion.button>
-</motion.div>
+                  {/* CTA – bottom center on lg+, upper center on md and below */}
+                  <motion.div
+                    variants={fadeInUp}
+                    initial="hidden"
+                    animate="show"
+                    transition={{ delay: 0.22 }}
+                    className="mt-6 lg:ml-72 flex justify-center"
+                  >
+                    <motion.button
+                      whileHover={{ y: -2, scale: 1.03 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="inline-flex items-center gap-2 rounded-full bg-white/95 px-6 py-2.5 text-[0.8rem] font-semibold text-slate-900 shadow-md shadow-slate-900/30"
+                    >
+                      <span>Start my project with StudiYo Miyawaki</span>
+                      <span className="text-xs">↗</span>
+                    </motion.button>
+                  </motion.div>
 
-    </div>
+                </div>
 
-    
-  </div>
-</section>
+
+              </div>
+            </section>
 
 
             {/* METRICS STRIP (unchanged) */}
@@ -498,42 +539,41 @@ export default function Home() {
               viewport={{ once: true, amount: 0.2 }}
               className="grid gap-4 md:grid-cols-12"
             >
-             <MotionDiv
-  variants={fadeInUp}
-  className="
-    relative col-span-12 md:col-span-4
-    flex flex-col justify-between
-    overflow-hidden rounded-3xl
-    border border-slate-200
-    p-5 shadow-md
-  "
->
-  {/* Background image layer */}
-  <div
-    className="absolute inset-0 z-0 bg-cover bg-center"
-    style={{
-      backgroundImage: "url('/assets/images/image_1.jpeg')",
-    }}
-  />
+              <MotionDiv
+                variants={fadeInUp}
+                className="
+                  relative col-span-12 md:col-span-4
+                  flex flex-col justify-between
+                  overflow-hidden rounded-3xl
+                  border border-slate-200
+                  p-5 shadow-md"
+              >
+                {/* Background image layer */}
+                <div
+                  className="absolute inset-0 z-0 bg-cover bg-center"
+                  style={{
+                    backgroundImage: "url('/assets/images/image_1.jpeg')",
+                  }}
+                />
 
-  {/* Optional dark overlay */}
-  <div className="absolute inset-0 z-0 bg-white/60" />
+                {/* Optional dark overlay */}
+                <div className="absolute inset-0 z-0 bg-white/60" />
 
-  {/* Content */}
-  <div className="relative z-10">
-    <p className="text-xs uppercase tracking-[0.25em] text-slate-700">
-      Services
-    </p>
-    <h2 className="mt-3 text-lg font-medium text-slate-900">
-      From story to system to stewardship.
-    </h2>
-    <p className="mt-3 text-[0.8rem] text-slate-700">
-      StudiYo Miyawaki blends strategy, interface design, and
-      engineering so your website behaves like an ongoing asset,
-      not a one-off launch.
-    </p>
-  </div>
-</MotionDiv>
+                {/* Content */}
+                <div className="relative z-10">
+                  <p className="text-xs uppercase tracking-[0.25em] text-slate-700">
+                    Services
+                  </p>
+                  <h2 className="mt-3 text-lg font-medium text-slate-900">
+                    From story to system to stewardship.
+                  </h2>
+                  <p className="mt-3 text-[0.8rem] text-slate-700">
+                    StudiYo Miyawaki blends strategy, interface design, and
+                    engineering so your website behaves like an ongoing asset,
+                    not a one-off launch.
+                  </p>
+                </div>
+              </MotionDiv>
 
 
 
@@ -545,9 +585,8 @@ export default function Home() {
                     variants={fadeInUp}
                     whileHover={{ y: -5, scale: 1.02 }}
                     transition={{ type: "spring", stiffness: 220, damping: 22 }}
-                    className={`relative flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 shadow-md ${
-                      index % 2 === 0 ? "min-h-[220px]" : "min-h-[260px]"
-                    }`}
+                    className={`relative flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 shadow-md ${index % 2 === 0 ? "min-h-[220px]" : "min-h-[260px]"
+                      }`}
                   >
                     <div
                       aria-hidden
@@ -574,180 +613,237 @@ export default function Home() {
 
             {/* PROCESS – REPLACED WITH SLIDER + DARKER UNIQUE COLORS */}
             <MotionSection
-  id="process"
-  variants={staggerContainer}
-  initial="hidden"
-  whileInView="show"
-  viewport={{ once: true, amount: 0.25 }}
-  className="grid gap-4 md:grid-cols-12"
->
-  <MotionDiv
-    variants={fadeInUp}
-    className="relative col-span-12 flex flex-col gap-4 overflow-hidden rounded-3xl border border-slate-200 shadow-md"
-  >
-    {/* Background gradient */}
-    <div
-      className={`
+              id="process"
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.25 }}
+              className="grid gap-4 md:grid-cols-12"
+            >
+              <MotionDiv
+                variants={fadeInUp}
+                className="relative col-span-12 flex flex-col gap-4 overflow-hidden rounded-3xl border border-slate-200 shadow-md"
+              >
+                {/* Background gradient */}
+                <div
+                  className={`
         absolute inset-0 transition-all duration-500
-        ${
-          processIndex === 0
-            ? "bg-gradient-to-br from-sky-300 via-cyan-200 to-sky-400"
-            : processIndex === 1
-            ? "bg-gradient-to-br from-emerald-300 via-lime-200 to-emerald-400"
-            : processIndex === 2
-            ? "bg-gradient-to-br from-indigo-300 via-violet-200 to-indigo-400"
-            : processIndex === 3
-            ? "bg-gradient-to-br from-amber-300 via-orange-200 to-amber-400"
-            : "bg-gradient-to-br from-rose-300 via-pink-200 to-rose-400"
-        }
+        ${processIndex === 0
+                      ? "bg-gradient-to-br from-sky-300 via-cyan-200 to-sky-400"
+                      : processIndex === 1
+                        ? "bg-gradient-to-br from-emerald-300 via-lime-200 to-emerald-400"
+                        : processIndex === 2
+                          ? "bg-gradient-to-br from-indigo-300 via-violet-200 to-indigo-400"
+                          : processIndex === 3
+                            ? "bg-gradient-to-br from-amber-300 via-orange-200 to-amber-400"
+                            : "bg-gradient-to-br from-rose-300 via-pink-200 to-rose-400"
+                    }
       `}
-    />
+                />
 
-    {/* Soft light overlay for depth */}
-    <div
-      aria-hidden
-      className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.35),_transparent_60%)]"
-    />
+                {/* Soft light overlay for depth */}
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.35),_transparent_60%)]"
+                />
 
-    {/* Content */}
-    <div className="relative z-10 p-5 md:p-6 h-full flex flex-col">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <p className="text-xs uppercase tracking-[0.25em] text-slate-700">
-            Process
-          </p>
-          <h2 className="mt-3 text-lg font-medium text-slate-900">
-            A clear, four-step rhythm from idea to interface.
-          </h2>
-        </div>
+                {/* Content */}
+                <div className="relative z-10 p-5 md:p-6 h-full flex flex-col">
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.25em] text-slate-700">
+                        Process
+                      </p>
+                      <h2 className="mt-3 text-lg font-medium text-slate-900">
+                        A clear, four-step rhythm from idea to interface.
+                      </h2>
+                    </div>
 
-        {/* Indicators */}
-        <div className="flex gap-1.5 mt-1">
-          {processSlides.map((slide, idx) => (
-            <button
-              key={slide.id}
-              type="button"
-              className={`h-1.5 w-1.5 rounded-full transition ${
-                processIndex === idx
-                  ? "bg-slate-900"
-                  : "bg-slate-700/70"
-              }`}
-            />
-          ))}
-        </div>
-      </div>
+                    {/* Indicators */}
+                    <div className="flex gap-1.5 mt-1">
+                      {processSlides.map((slide, idx) => (
+                        <button
+                          key={slide.id}
+                          type="button"
+                          className={`h-1.5 w-1.5 rounded-full transition ${processIndex === idx
+                            ? "bg-slate-900"
+                            : "bg-slate-700/70"
+                            }`}
+                        />
+                      ))}
+                    </div>
+                  </div>
 
-      {/* Slides */}
-      <div className="relative mt-4 flex-1 min-h-[150px]">
-        {processSlides.map((slide, idx) => (
-          <motion.div
-            key={slide.id}
-            className="absolute inset-0 flex flex-col justify-center px-4 py-3"
-            animate={{
-              opacity: processIndex === idx ? 1 : 0,
-              x: processIndex === idx ? 0 : 40,
-              pointerEvents:
-                processIndex === idx ? "auto" : "none",
-            }}
-            transition={{ duration: 0.45, ease: "easeOut" }}
-          >
-            <p className="text-sm font-semibold text-slate-900">
-              {slide.title}
-            </p>
-            <p className="mt-2 text-[0.8rem] text-slate-800">
-              {slide.body}
-            </p>
-          </motion.div>
-        ))}
-      </div>
-    </div>
-  </MotionDiv>
-</MotionSection>
+                  {/* Slides */}
+                  <div className="relative mt-4 flex-1 min-h-[150px]">
+                    {processSlides.map((slide, idx) => (
+                      <motion.div
+                        key={slide.id}
+                        className="absolute inset-0 flex flex-col justify-center px-4 py-3"
+                        animate={{
+                          opacity: processIndex === idx ? 1 : 0,
+                          x: processIndex === idx ? 0 : 40,
+                          pointerEvents:
+                            processIndex === idx ? "auto" : "none",
+                        }}
+                        transition={{ duration: 0.45, ease: "easeOut" }}
+                      >
+                        <p className="text-sm font-semibold text-slate-900">
+                          {slide.title}
+                        </p>
+                        <p className="mt-2 text-[0.8rem] text-slate-800">
+                          {slide.body}
+                        </p>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+              </MotionDiv>
+            </MotionSection>
 
 
-            
+
             {/* ABOUT – BIGGER, DEDICATED SECTION AFTER PROCESS */}
-<MotionSection
-  id="about"
-  variants={staggerContainer}
-  initial="hidden"
-  whileInView="show"
-  viewport={{ once: true, amount: 0.25 }}
-  className="relative overflow-hidden rounded-3xl border border-slate-200 shadow-md"
->
-  {/* Background image */}
-  <div
-    aria-hidden
-    className="absolute inset-0 z-0 bg-[url('/assets/images/image_2.jpeg')] bg-cover bg-center"
-  />
+            <MotionSection
+              id="about"
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.25 }}
+              className="relative overflow-hidden rounded-3xl border border-slate-200 shadow-md"
+            >
+             
+              <p className="text-xs uppercase tracking-[0.25em] text-slate-700 m-5">
+                        About Us
+              </p>
+            
 
-  {/* Strong dark overlay (for text readability) */}
-  <div
-    aria-hidden
-    className="absolute inset-0 z-[1] bg-gradient-to-b from-black/70 via-black/55 to-black/35"
-  />
-
-  {/* Content */}
-  <div className="relative z-10 px-5 py-8 md:px-8">
-    <div className="grid gap-6 md:grid-cols-12 items-start">
-      <MotionDiv
-        variants={fadeInUp}
-        className="col-span-12 md:col-span-4 space-y-3"
-      >
-        <p className="text-xs uppercase tracking-[0.25em] text-slate-200">
-          About us
+              {/* Content */}
+              <div className="relative z-10 px-5 py-8 md:px-8">
+  <div className="grid gap-6 md:grid-cols-12 items-start">
+    {/* Card 1: About + Japanese concepts slider */}
+    <MotionDiv
+      variants={fadeInUp}
+      className="col-span-12 md:col-span-6 space-y-4 rounded-3xl border border-slate-700/60 bg-slate-900/80 px-5 py-5 shadow-md"
+    >
+      <div className="space-y-2">
+        <p className="text-xs uppercase tracking-[0.25em] text-emerald-200">
+          About & concepts
         </p>
         <h2 className="text-xl font-medium text-white">
-          The small team behind StudiYo Miyawaki.
+          The thinking behind StudiYo Miyawaki.
         </h2>
-        <p className="text-[0.85rem] text-slate-200">
-          The studio is built around a handful of people who stay close
-          to each project from first call to launch. No hand-offs
-          between anonymous departments, no disappearing act after launch.
-        </p>
-        <p className="text-[0.85rem] text-slate-200">
-          Each site is treated like a product: design, copy, motion, and
-          technical decisions are all made together so the final thing
-          feels like one coherent practice instead of a stack of pages.
-        </p>
-      </MotionDiv>
+      </div>
 
-      <div className="col-span-12 md:col-span-8 grid gap-4 md:grid-cols-2">
-        {teamSlides.map((member) => (
-          <MotionDiv
-            key={member.id}
-            variants={fadeInUp}
-            className="relative flex flex-col gap-3 rounded-3xl border border-slate-200 bg-white px-4 py-4 shadow-md"
-          >
-            <div className="flex items-center gap-3">
-              <div className="h-14 w-14 overflow-hidden rounded-2xl bg-slate-200">
-                <Image
-                  src={member.image}
-                  alt={member.name}
-                  width={80}
-                  height={80}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-slate-900">
-                  {member.name}
-                </p>
-                <p className="text-[0.72rem] uppercase tracking-[0.16em] text-slate-600">
-                  {member.role}
-                </p>
-              </div>
-            </div>
+      <div className="mt-2">
+        {aboutSlides.map((slide, index) =>
+          index === activeAboutIndex ? (
+            <motion.div
+              key={slide.id}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="space-y-2"
+            >
+              <p className="text-[0.7rem] uppercase tracking-[0.2em] text-emerald-200">
+                {slide.tagline}
+              </p>
+              <p className="text-sm font-semibold text-slate-50">
+                {slide.title}
+              </p>
+              <p className="text-[0.85rem] text-slate-200">
+                {slide.body}
+              </p>
+            </motion.div>
+          ) : null
+        )}
+      </div>
 
-            <p className="text-[0.8rem] text-slate-700">
-              {member.bio}
-            </p>
-          </MotionDiv>
+      <div className="mt-4 flex justify-center gap-1.5">
+        {aboutSlides.map((_, idx) => (
+          <button
+            key={idx}
+            type="button"
+            onClick={() => setActiveAboutIndex(idx)}
+            className={`h-1.5 w-1.5 rounded-full transition ${
+              idx === activeAboutIndex ? "bg-emerald-300" : "bg-slate-500/60"
+            }`}
+          />
         ))}
       </div>
-    </div>
+    </MotionDiv>
+
+    {/* Card 2: Team slider */}
+    <MotionDiv
+      variants={fadeInUp}
+      className="col-span-12 md:col-span-6 rounded-3xl border border-slate-200 bg-white px-5 py-5 shadow-md"
+    >
+      <div className="mb-3 space-y-1">
+        <p className="text-xs uppercase tracking-[0.25em] text-slate-600">
+          Team
+        </p>
+        <h2 className="text-sm font-semibold text-slate-900">
+          The people you&apos;ll work with.
+        </h2>
+      </div>
+
+      <div className="relative">
+        {teamSlides.map((member, index) =>
+          index === activeTeamIndex ? (
+            <motion.div
+              key={member.id}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="flex flex-col gap-3"
+            >
+              <div className="flex items-center gap-3">
+                <div className="h-14 w-14 overflow-hidden rounded-2xl bg-slate-200">
+                  <Image
+                    src={member.image}
+                    alt={member.name}
+                    width={80}
+                    height={80}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-slate-900">
+                    {member.name}
+                  </p>
+                  <p className="text-[0.72rem] uppercase tracking-[0.16em] text-slate-600">
+                    {member.role}
+                  </p>
+                </div>
+              </div>
+
+              <p className="text-[0.8rem] text-slate-700">
+                {member.bio}
+              </p>
+            </motion.div>
+          ) : null
+        )}
+      </div>
+
+      <div className="mt-4 flex justify-center gap-1.5">
+        {teamSlides.map((_, idx) => (
+          <button
+            key={idx}
+            type="button"
+            onClick={() => setActiveTeamIndex(idx)}
+            className={`h-1.5 w-1.5 rounded-full transition ${
+              idx === activeTeamIndex ? "bg-slate-900" : "bg-slate-400/70"
+            }`}
+          />
+        ))}
+      </div>
+    </MotionDiv>
   </div>
-</MotionSection>
+</div>
+
+            </MotionSection>
 
 
 
@@ -932,9 +1028,8 @@ export default function Home() {
                       key={t.name}
                       variants={fadeInUp}
                       whileHover={{ y: -4 }}
-                      className={`relative flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 shadow-md ${
-                        i === 0 ? "min-h-[210px]" : "min-h-[260px]"
-                      }`}
+                      className={`relative flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 shadow-md ${i === 0 ? "min-h-[210px]" : "min-h-[260px]"
+                        }`}
                     >
                       <div
                         aria-hidden
@@ -966,19 +1061,32 @@ export default function Home() {
                 aria-hidden
                 className="pointer-events-none absolute inset-0 bg-[url('/images/contact-bg.jpg')] bg-cover bg-center opacity-20 mix-blend-soft-light"
               />
+
               <div className="relative flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
-                <div className="md:w-1/3 space-y-3">
+                {/* Left: copy + trust */}
+                <div className="md:w-1/3 space-y-4">
                   <p className="text-xs uppercase tracking-[0.25em] text-slate-700">
                     Contact
                   </p>
                   <h3 className="text-lg font-medium text-slate-900">
-                    Bring us the tangled version. We&apos;ll return with a clean
-                    web shape.
+                    Bring us the tangled version. We&apos;ll reply with a clear, written plan.
                   </h3>
                   <p className="text-[0.8rem] text-slate-700">
-                    Share links, context, or even a messy doc. StudiYo Miyawaki
-                    replies within 48 hours with a lean, actionable path forward.
+                    You don&apos;t need a perfect brief. Share links, context, or even a messy doc.
+                    The studio replies within 48 hours with next steps, ballpark budget, and timing.
                   </p>
+
+                  <div className="rounded-2xl border border-emerald-200 bg-emerald-50/80 px-4 py-3 text-[0.75rem] text-emerald-900">
+                    <p className="text-[0.7rem] uppercase tracking-[0.18em]">
+                      What happens after you hit send?
+                    </p>
+                    <ul className="mt-2 space-y-1">
+                      <li>• A real person reads your note (no bots, no ticket system).</li>
+                      <li>• You get a thoughtful reply, not a template, within 1–2 business days.</li>
+                      <li>• If it&apos;s not a fit, you still leave with honest pointers.</li>
+                    </ul>
+                  </div>
+
                   <p className="pt-1 text-[0.75rem] text-slate-600">
                     Prefer email?{" "}
                     <a
@@ -990,6 +1098,7 @@ export default function Home() {
                   </p>
                 </div>
 
+                {/* Right: form */}
                 <div className="md:w-2/3">
                   <form className="grid gap-4 md:grid-cols-2">
                     <div>
@@ -1070,7 +1179,7 @@ export default function Home() {
                         id="message"
                         name="message"
                         rows={4}
-                        placeholder="Share where you are, what you&apos;re aiming for, and any links we should see."
+                        placeholder="Share where you are, what you’re aiming for, and any deadlines or links we should see."
                         className="mt-2 w-full rounded-2xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/70"
                       />
                     </div>
@@ -1078,19 +1187,23 @@ export default function Home() {
                     <div className="md:col-span-2 flex flex-wrap items-center justify-between gap-3">
                       <button
                         type="submit"
-                        className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-5 py-2.5 text-[0.75rem] font-semibold text-white shadow-sm transition hover:bg-emerald-400"
+                        className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-5 py-2.5 text-[0.8rem] font-semibold text-white shadow-sm transition hover:bg-emerald-400"
                       >
-                        Send request
+                        Send a project inquiry
                         <span>↗</span>
                       </button>
-                      <p className="text-[0.7rem] text-slate-600">
-                        Expect a thoughtful reply within 1–2 business days.
-                      </p>
+                      <div className="space-y-0.5 text-[0.7rem] text-slate-600">
+                        <p>Typical reply time: within 24–48 hours on business days.</p>
+                        <p className="text-slate-500">
+                          Your details are used only to respond to this inquiry.
+                        </p>
+                      </div>
                     </div>
                   </form>
                 </div>
               </div>
             </MotionSection>
+
           </div>
         </div>
       </motion.div>
