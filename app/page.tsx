@@ -65,7 +65,7 @@ const projects = [
   {
     title: "Gaurav Sharma",
     description: "A personal hub for legal expertise and thought leadership.",
-    image: "/assets/images/gaurav-sharma-white.png",
+    image: "/assets/images/gaurav_sharma.png",
     link: "https://gauravsharma.org/",
     tag: "Personal brand",
   },
@@ -166,7 +166,7 @@ const metrics = [
   { label: "Projects shipped", value: "20+" },
   { label: "Typical build window", value: "4–8 weeks" },
   { label: "Lighthouse score", value: "95+" },
-  { label: "Return clients", value: "70%" },
+  { label: "Return clients", value: "92%" },
 ];
 
 const testimonials = [
@@ -315,13 +315,13 @@ export default function Home() {
                 <Link href="#hero" className="hover:text-emerald-500">
                   Overview
                 </Link>
-                <Link href="#services" className="hover:text-emerald-500">
+                <Link href="/pages/services" className="hover:text-emerald-500">
                   Services
                 </Link>
                 <Link href="#process" className="hover:text-emerald-500">
                   Process
                 </Link>
-                <Link href="#about" className="hover:text-emerald-500">
+                <Link href="/pages/aboutUs" className="hover:text-emerald-500">
                   About
                 </Link>
                 <Link href="#projects" className="hover:text-emerald-500">
