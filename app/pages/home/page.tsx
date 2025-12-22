@@ -10,62 +10,45 @@ import {
   fadeIn,
   staggerContainer,
 } from "../../components/motion";
-import { motion, Variants, useScroll, useSpring, useCycle } from "framer-motion";
+import { motion, Variants, useScroll, useSpring, useCycle, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 
-const services = [
-  {
-    title: "Web Development",
-    description:
-      "Flagship marketing sites and founder hubs engineered on Next.js with performance, security, and long‑term maintainability in mind.",
-    route: "/services/webDevelopment",
-  },
-  {
-    title: "SEO Optimization",
-    description:
-      "Technical SEO, information architecture, and on‑page systems that keep you discoverable and relevant in the right searches.",
-    route: "/services/seoOptimzation",
-  },
-  {
-    title: "Personal Branding",
-    description:
-      "Signature personal sites for practitioners and founders where story, visuals, and content cadence feel like one voice.",
-    route: "/services/personalBranding",
-  },
-  {
-    title: "Performance Management",
-    description:
-      "Ongoing audits, dashboards, and iteration cycles that keep speed, UX, and conversion sharp as your brand scales.",
-    route: "/services/performanceManagement",
-  },
-];
+interface Project {
+  title: string;
+  description: string;
+  gif: string;
+  link: string;
+  tag: string;
+}
 
-const projects = [
+
+
+const projects: Project[] = [
   {
     title: "MedNLaw",
     description: "Licensing & legal solutions for medical professionals.",
-    image: "/assets/images/mednlaw.png",
+    gif: "/assets/images/mednlaw.png",
     link: "https://mednlaw.com/",
     tag: "Flagship • Healthcare law",
   },
   {
     title: "Unsaathi",
     description: "A supportive platform for divorce and legal guidance.",
-    image: "/assets/images/Unsaathi-logo1.png",
+    gif: "/assets/images/Unsaathi-logo1.png",
     link: "https://unsaathi.com/",
     tag: "Support platform",
   },
   {
     title: "GSLO",
     description: "Comprehensive legal services for the modern enterprise.",
-    image: "/assets/images/GSLO-black.png",
+    gif: "/assets/images/GSLO-black.png",
     link: "https://gslo.in/",
     tag: "Corporate law",
   },
   {
     title: "Gaurav Sharma",
     description: "A personal hub for legal expertise and thought leadership.",
-    image: "/assets/images/gaurav_sharma.png",
+    gif: "/assets/images/gaurav_sharma.png",
     link: "https://gauravsharma.org/",
     tag: "Personal brand",
   },
@@ -124,6 +107,39 @@ const processSlides = [
     title: "04. Launch & steward",
     body:
       "A measured launch and light‑touch performance + SEO stewardship so the site stays healthy after day one without heavy retainers.",
+  },
+];
+
+const testimonials = [
+  {
+    name: "Adv. Rohit Malhotra",
+    role: "Litigation Partner, GSLO",
+    quote:
+      "They understood litigation workflows deeply. The site feels calm, credible, and purpose-built for serious clients.",
+  },
+  {
+    name: "Dr. Ananya Verma",
+    role: "Founder, MedNLaw",
+    quote:
+      "The redesign removed anxiety from the experience. Patients and doctors both trust the platform more now.",
+  },
+  {
+    name: "Kunal Sharma",
+    role: "Startup Consultant",
+    quote:
+      "Nothing flashy, nothing forced. Just clarity. Exactly what service businesses need.",
+  },
+  {
+    name: "Neha Kapoor",
+    role: "Legal Ops Manager",
+    quote:
+      "Every screen felt intentional. It didn’t feel like a template — it felt like us.",
+  },
+  {
+    name: "Amit Jain",
+    role: "Founder, Unsaathi",
+    quote:
+      "They think like product people, not designers chasing trends.",
   },
 ];
 
@@ -208,20 +224,7 @@ const metrics = [
   { label: "Return clients", value: "92%" },
 ];
 
-const testimonials = [
-  {
-    quote:
-      "They treated our platform like a product, not a brochure. Clients arrive calmer and more informed before the first call.",
-    name: "Founder, MedNLaw",
-    role: "Healthcare law platform",
-  },
-  {
-    quote:
-      "Studio Miyawaki turned scattered ideas into a web presence that actually reflects how we practice law.",
-    name: "Partner, GSLO",
-    role: "Corporate law firm",
-  },
-];
+
 
 // simple timed image index hook using useCycle
 function useTimedCycle(length: number, delayMs: number) {
@@ -298,6 +301,18 @@ export default function Home() {
     restDelta: 0.001,
   });
 
+  const [activeProject, setActiveProject] = useState(0);
+  
+  const [startIndex, setStartIndex] = useState(0);
+
+ useEffect(() => {
+  const interval = setInterval(() => {
+    setActiveProject((prev) => (prev + 1) % projects.length);
+  }, 10000); // 10 seconds
+
+  return () => clearInterval(interval);
+}, [projects.length]);
+
   const heroBgImages = [
     "/images/hero-card-bg.jpg",
     "/images/hero-bg-2.jpg",
@@ -327,6 +342,25 @@ export default function Home() {
     }, 4000); // 4s
     return () => clearInterval(id);
   }, []);
+
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    setStartIndex((prev) => (prev + 1) % testimonials.length);
+  }, 3000);
+
+  return () => clearInterval(interval);
+}, []);
+
+const goNextProject = () => {
+  setActiveProject((prev) => (prev + 1) % projects.length);
+};
+
+const goPrevProject = () => {
+  setActiveProject((prev) =>
+    prev === 0 ? projects.length - 1 : prev - 1
+  );
+};
 
   return (
     <main className="relative min-h-screen text-slate-900">
@@ -430,199 +464,138 @@ export default function Home() {
 
             {/* METRICS STRIP (unchanged) */}
             <MotionSection
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.3 }}
-              className="grid gap-4 md:grid-cols-4"
-            >
-              {metrics.map((metric, idx) => (
-                <MotionDiv
-                  key={metric.label}
-                  variants={fadeInUp}
-                  whileHover={{ y: -3, scale: 1.02 }}
-                  className="flex flex-col gap-1"
-                >
-                  <span className="text-[0.7rem] uppercase tracking-[0.16em] text-slate-600">
-                    {metric.label}
-                  </span>
-                  <span className="text-[1.1rem] font-semibold text-emerald-500 tabular-nums">
-                    {displayValues[idx]}
-                  </span>
-                </MotionDiv>
-              ))}
-            </MotionSection>
+  variants={staggerContainer}
+  initial="hidden"
+  whileInView="show"
+  viewport={{ once: true, amount: 0.3 }}
+  className="grid gap-4 md:grid-cols-4"
+>
+  {metrics.map((metric, idx) => (
+    <MotionDiv
+      key={metric.label}
+      variants={fadeInUp}
+      whileHover={{ y: -3, scale: 1.02 }}
+      className="flex flex-col gap-1"
+    >
+      <span className="text-sm uppercase tracking-[0.16em] text-black font-medium">
+        {metric.label}
+      </span>
+      <span className="text-3xl md:text-4xl font-bold text-black tabular-nums tracking-tight">
+        {displayValues[idx]}
+      </span>
+    </MotionDiv>
+  ))}
+</MotionSection>
+
 
             {/* SERVICES (unchanged) */}
             <MotionSection
-              id="services"
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.2 }}
-              className="grid gap-4 md:grid-cols-12"
-            >
-              <MotionDiv
-                variants={fadeInUp}
-                className="
-                  relative col-span-12 md:col-span-4
-                  flex flex-col justify-between
-                  overflow-hidden rounded-3xl
-                  border border-slate-200
-                  p-5 shadow-md"
-              >
-                {/* Background image layer */}
-                <div
-                  className="absolute inset-0 z-0 bg-cover bg-center"
-                  style={{
-                    backgroundImage: "url('/assets/images/image_1.jpeg')",
-                  }}
-                />
+  id="services"
+  variants={staggerContainer}
+  initial="hidden"
+  whileInView="show"
+  viewport={{ once: true, amount: 0.2 }}
+  className="grid gap-4 md:grid-cols-12"
+>
+  <MotionDiv
+    variants={fadeInUp}
+    className="
+      relative col-span-12 md:col-span-4
+      flex flex-col justify-between
+      overflow-hidden rounded-3xl
+      border border-slate-200
+      p-5 shadow-md"
+  >
+    {/* Background image layer */}
+    <div
+      className="absolute inset-0 z-0 bg-cover bg-center"
+      style={{
+        backgroundImage: "url('/assets/images/image_1.jpeg')",
+      }}
+    />
 
-                {/* Optional dark overlay */}
-                <div className="absolute inset-0 z-0 bg-white/60" />
+    {/* Light overlay */}
+    <div className="absolute inset-0 z-0 bg-white/60" />
 
-                {/* Content */}
-                <div className="relative z-10">
-                  <p className="text-xs uppercase tracking-[0.25em] text-slate-700">
-                    Services
-                  </p>
-                  <h2 className="mt-3 text-lg font-medium text-slate-900">
-                    From story to system to stewardship.
-                  </h2>
-                  <p className="mt-3 text-[0.8rem] text-slate-700">
-                    StudiYo Miyawaki blends strategy, interface design, and
-                    engineering so your website behaves like an ongoing asset,
-                    not a one-off launch.
-                  </p>
-                </div>
-              </MotionDiv>
+    {/* Content */}
+    <div className="relative z-10">
+      <p className="text-xs uppercase tracking-[0.25em] text-slate-700">
+        Services
+      </p>
+      <h2 className="mt-3 text-lg font-medium text-slate-900">
+        From story to system to stewardship.
+      </h2>
+      <p className="mt-3 text-[0.8rem] text-slate-700">
+        We design and build digital systems that stay relevant—strategically
+        planned, carefully engineered, and continuously improved over time.
+      </p>
+    </div>
+  </MotionDiv>
+
+  <div className="col-span-12 grid gap-4 md:col-span-8 md:grid-cols-2">
+    {[
+  {
+    title: "Web Development",
+    description:
+      "We design and build flagship marketing websites and founder hubs using Next.js, focused on speed, security, and long-term scalability. From clean information architecture to conversion-driven UI, every page is engineered to load fast, rank well, and evolve easily as your product, brand, or audience grows. Ideal for startups, agencies, and founders who want a future-proof digital presence.",
+    route: "/services/webDevelopment",
+  },
+  {
+    title: "SEO Optimization",
+    description:
+      "Our SEO approach goes beyond keywords. We implement technical SEO foundations, smart information architecture, and on-page optimization that aligns with real search intent. By improving crawlability, performance, and content structure, we help your brand stay discoverable, competitive, and relevant in the searches that actually drive qualified traffic and long-term growth.",
+    route: "/services/seoOptimzation",
+  },
+  {
+    title: "Personal Branding",
+    description:
+      "We craft signature personal websites for founders, creators, and practitioners who want their story to feel authentic and intentional. From visual identity to content flow, every element is designed to speak in one clear voice — building trust, authority, and recognition while positioning you as a credible expert in your space.",
+    route: "/services/personalBranding",
+  },
+  {
+    title: "Performance Management",
+    description:
+      "We continuously monitor and refine your website through performance audits, analytics dashboards, and structured iteration cycles. By optimizing speed, UX, accessibility, and conversion paths, we ensure your digital presence stays sharp, reliable, and effective — even as traffic increases, features expand, and your brand scales.",
+    route: "/services/performanceManagement",
+  },
+]
+.map((service, index) => (
+      <MotionDiv
+        key={service.title}
+        variants={fadeInUp}
+        whileHover={{ y: -5, scale: 1.02 }}
+        transition={{ type: "spring", stiffness: 220, damping: 22 }}
+        className={`relative flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 shadow-md ${
+          index % 2 === 0 ? "min-h-[220px]" : "min-h-[260px]"
+        }`}
+      >
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.15),_transparent_55%)]"
+        />
+
+        <div className="relative">
+          <p className="text-sm font-medium text-slate-900">
+            {service.title}
+          </p>
+          <p className="mt-2 text-[0.75rem] text-slate-700">
+            {service.description}
+          </p>
+        </div>
+
+        <Link
+          href={service.route}
+          className="relative mt-4 inline-flex items-center gap-1 text-[0.7rem] text-emerald-600 hover:text-emerald-500"
+        >
+          Learn more <span>↗</span>
+        </Link>
+      </MotionDiv>
+    ))}
+  </div>
+</MotionSection>
 
 
-
-
-              <div className="col-span-12 grid gap-4 md:col-span-8 md:grid-cols-2">
-                {services.map((service, index) => (
-                  <MotionDiv
-                    key={service.title}
-                    variants={fadeInUp}
-                    whileHover={{ y: -5, scale: 1.02 }}
-                    transition={{ type: "spring", stiffness: 220, damping: 22 }}
-                    className={`relative flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 shadow-md ${index % 2 === 0 ? "min-h-[220px]" : "min-h-[260px]"
-                      }`}
-                  >
-                    <div
-                      aria-hidden
-                      className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.15),_transparent_55%)]"
-                    />
-                    <div className="relative">
-                      <p className="text-sm font-medium text-slate-900">
-                        {service.title}
-                      </p>
-                      <p className="mt-2 text-[0.75rem] text-slate-700">
-                        {service.description}
-                      </p>
-                    </div>
-                    <Link
-                      href={service.route}
-                      className="relative mt-4 inline-flex items-center gap-1 text-[0.7rem] text-emerald-600 hover:text-emerald-500"
-                    >
-                      Learn more <span>↗</span>
-                    </Link>
-                  </MotionDiv>
-                ))}
-              </div>
-            </MotionSection>
-
-            {/* PROCESS – REPLACED WITH SLIDER + DARKER UNIQUE COLORS */}
-            <MotionSection
-              id="process"
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.25 }}
-              className="grid gap-4 md:grid-cols-12"
-            >
-              <MotionDiv
-                variants={fadeInUp}
-                className="relative col-span-12 flex flex-col gap-4 overflow-hidden rounded-3xl border border-slate-200 shadow-md"
-              >
-                {/* Background gradient */}
-                <div
-                  className={`
-        absolute inset-0 transition-all duration-500
-        ${processIndex === 0
-                      ? "bg-gradient-to-br from-sky-300 via-cyan-200 to-sky-400"
-                      : processIndex === 1
-                        ? "bg-gradient-to-br from-emerald-300 via-lime-200 to-emerald-400"
-                        : processIndex === 2
-                          ? "bg-gradient-to-br from-indigo-300 via-violet-200 to-indigo-400"
-                          : processIndex === 3
-                            ? "bg-gradient-to-br from-amber-300 via-orange-200 to-amber-400"
-                            : "bg-gradient-to-br from-rose-300 via-pink-200 to-rose-400"
-                    }
-      `}
-                />
-
-                {/* Soft light overlay for depth */}
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.35),_transparent_60%)]"
-                />
-
-                {/* Content */}
-                <div className="relative z-10 p-5 md:p-6 h-full flex flex-col">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <p className="text-xs uppercase tracking-[0.25em] text-slate-700">
-                        Process
-                      </p>
-                      <h2 className="mt-3 text-lg font-medium text-slate-900">
-                        A clear, four-step rhythm from idea to interface.
-                      </h2>
-                    </div>
-
-                    {/* Indicators */}
-                    <div className="flex gap-1.5 mt-1">
-                      {processSlides.map((slide, idx) => (
-                        <button
-                          key={slide.id}
-                          type="button"
-                          className={`h-1.5 w-1.5 rounded-full transition ${processIndex === idx
-                            ? "bg-slate-900"
-                            : "bg-slate-700/70"
-                            }`}
-                        />
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Slides */}
-                  <div className="relative mt-4 flex-1 min-h-[150px]">
-                    {processSlides.map((slide, idx) => (
-                      <motion.div
-                        key={slide.id}
-                        className="absolute inset-0 flex flex-col justify-center px-4 py-3"
-                        animate={{
-                          opacity: processIndex === idx ? 1 : 0,
-                          x: processIndex === idx ? 0 : 40,
-                          pointerEvents:
-                            processIndex === idx ? "auto" : "none",
-                        }}
-                        transition={{ duration: 0.45, ease: "easeOut" }}
-                      >
-                        <p className="text-sm font-semibold text-slate-900">
-                          {slide.title}
-                        </p>
-                        <p className="mt-2 text-[0.8rem] text-slate-800">
-                          {slide.body}
-                        </p>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-              </MotionDiv>
-            </MotionSection>
+           
 
 
 
@@ -773,359 +746,247 @@ export default function Home() {
 
 
             {/* PROJECTS (unchanged) */}
-            <MotionSection
-              id="projects"
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.25 }}
-              className="space-y-5"
-            >
-              <div className="grid gap-4 md:grid-cols-12">
-                <MotionDiv
-                  variants={fadeInUp}
-                  className="relative col-span-12 md:col-span-4 overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 shadow-md"
-                >
-                  <div
-                    aria-hidden
-                    className="pointer-events-none absolute inset-0 bg-[url('/images/projects-bg.jpg')] bg-cover bg-center opacity-25 mix-blend-soft-light"
-                  />
-                  <div className="relative">
-                    <p className="text-xs uppercase tracking-[0.25em] text-slate-700">
-                      Studio websites
-                    </p>
-                    <h2 className="mt-3 text-lg font-medium text-slate-900">
-                      A small constellation of service‑driven sites.
-                    </h2>
-                    <p className="mt-3 text-[0.8rem] text-slate-700">
-                      From MedNLaw to Unsaathi, StudiYo Miyawaki shapes legal‑tech,
-                      support platforms, and personal brands into web experiences
-                      that feel composed and trustworthy.
-                    </p>
-                  </div>
-                </MotionDiv>
+            <section className="relative flex items-center gap-6">
+      {/* OUTSIDE VERTICAL LABEL */}
+      <div className="flex h-[360px] items-center">
+        <span
+          className="select-none text-[1.2rem] font-medium uppercase tracking-[0.55em] text-slate-400"
+          style={{
+            writingMode: "vertical-rl",
+            transform: "rotate(180deg)",
+          }}
+        >
+          Our work
+        </span>
+      </div>
 
-                <MotionDiv
-                  variants={fadeInUp}
-                  className="relative col-span-12 md:col-span-8 overflow-hidden rounded-3xl border border-slate-200 bg-white p-4 shadow-md"
-                >
-                  <div className="grid gap-4 md:grid-cols-2 md:items-center">
-                    <div className="relative h-48 w-full overflow-hidden rounded-2xl bg-slate-100 flex items-center justify-center">
-                      <motion.div
-                        initial={{ scale: 1.02, y: 4 }}
-                        whileInView={{ scale: 1.02, y: 0 }}
-                        transition={{ duration: 0.7, ease: "easeOut" }}
-                        viewport={{ once: true }}
-                        className="h-full w-full flex items-center justify-center"
-                      >
-                        <Image
-                          src={projects[0].image}
-                          alt={projects[0].title}
-                          width={600}
-                          height={320}
-                          className="max-h-full max-w-full object-contain"
-                        />
-                      </motion.div>
-                      <span className="absolute left-3 top-3 rounded-full bg-emerald-500/90 px-3 py-1 text-[0.65rem] font-medium text-white">
-                        Flagship build
-                      </span>
-                    </div>
-                    <div className="space-y-2">
-                      <p className="text-sm font-semibold text-slate-900">
-                        {projects[0].title}
-                      </p>
-                      <p className="text-[0.8rem] text-slate-700">
-                        Licensing & legal solutions for medical professionals,
-                        redesigned around clarity and calm for anxious visitors.
-                      </p>
-                      <p className="text-[0.75rem] text-slate-600">
-                        “They treated our platform like a product, not a brochure.”
-                      </p>
-                      <a
-                        href={projects[0].link}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center gap-1 text-[0.7rem] text-emerald-600 hover:text-emerald-500"
-                      >
-                        Visit website <span>↗</span>
-                      </a>
-                    </div>
-                  </div>
-                </MotionDiv>
-              </div>
+      {/* MAIN SHOWCASE */}
+      <div className="relative flex-1 h-[360px] overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-md">
+        {/* subtle enhancement */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(16,185,129,0.12),_transparent_65%)]"
+        />
 
-              <div className="grid gap-4 md:grid-cols-3">
-                {projects.slice(1).map((project) => (
-                  <MotionDiv
-                    key={project.title}
-                    variants={fadeInUp}
-                    whileHover={{ y: -5, scale: 1.01 }}
-                    className="group relative flex flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-md"
-                  >
-                    <div className="relative h-40 w-full overflow-hidden bg-slate-100 flex items-center justify-center">
-                      <motion.div
-                        initial={{ scale: 1.02, y: 4 }}
-                        whileInView={{ scale: 1.02, y: 0 }}
-                        whileHover={{ scale: 1.06 }}
-                        transition={{ duration: 0.7, ease: "easeOut" }}
-                        viewport={{ once: true }}
-                        className="h-full w-full flex items-center justify-center"
-                      >
-                        <Image
-                          src={project.image}
-                          alt={project.title}
-                          width={600}
-                          height={320}
-                          className="max-h-full max-w-full object-contain"
-                        />
-                      </motion.div>
-                      <span className="absolute left-3 top-3 rounded-full bg-slate-900/70 px-2 py-1 text-[0.6rem] text-white border border-white/40">
-                        {project.tag}
-                      </span>
-                    </div>
-                    <div className="flex flex-1 flex-col justify-between p-4">
-                      <div>
-                        <p className="text-sm font-medium text-slate-900">
-                          {project.title}
-                        </p>
-                        <p className="mt-1 text-[0.75rem] text-slate-700">
-                          {project.description}
-                        </p>
-                      </div>
-                      <a
-                        href={project.link}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="mt-3 inline-flex items-center gap-1 text-[0.7rem] text-slate-700 group-hover:text-slate-900"
-                      >
-                        Visit website <span>↗</span>
-                      </a>
-                    </div>
-                  </MotionDiv>
-                ))}
-              </div>
-            </MotionSection>
+        {/* LEFT ARROW */}
+        <button
+          onClick={goPrevProject}
+          aria-label="Previous project"
+          className="
+            absolute left-4 top-1/2 -translate-y-1/2 z-20
+            flex h-9 w-9 items-center justify-center
+            rounded-full border border-slate-300
+            bg-white/80 backdrop-blur
+            text-slate-600 hover:text-slate-900
+            hover:border-slate-400
+            transition
+          "
+        >
+          ←
+        </button>
 
-            {/* PHILOSOPHY + TESTIMONIALS (unchanged) */}
-            <MotionSection
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.25 }}
-              className="space-y-5"
-            >
-              <div className="grid gap-4 md:grid-cols-12">
-                <MotionDiv
-                  variants={fadeInUp}
-                  className="relative col-span-12 md:col-span-5 flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-200 bg-white px-5 py-6 shadow-md"
-                >
-                  <div
-                    aria-hidden
-                    className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(16,185,129,0.2),_transparent_60%)]"
-                  />
-                  <div className="relative">
-                    <p className="text-xs uppercase tracking-[0.25em] text-slate-700">
-                      Philosophy
-                    </p>
-                    <h2 className="mt-3 text-lg font-medium text-slate-900">
-                      Interfaces that feel like your practice, not the latest trend.
-                    </h2>
-                    <p className="mt-3 text-[0.8rem] text-slate-700">
-                      StudiYo Miyawaki favors timeless layouts, readable type, and
-                      motion that whispers instead of shouts. The goal is quiet
-                      confidence, not visual noise.
-                    </p>
-                  </div>
-                  <p className="relative mt-4 text-[0.78rem] text-slate-700">
-                    Every decision is filtered through three lenses:{" "}
-                    <span className="text-slate-900">
-                      clarity, calm, and credibility
-                    </span>
-                    .
-                  </p>
-                </MotionDiv>
+        {/* RIGHT ARROW */}
+        <button
+          onClick={goNextProject}
+          aria-label="Next project"
+          className="
+            absolute right-4 top-1/2 -translate-y-1/2 z-20
+            flex h-9 w-9 items-center justify-center
+            rounded-full border border-slate-300
+            bg-white/80 backdrop-blur
+            text-slate-600 hover:text-slate-900
+            hover:border-slate-400
+            transition
+          "
+        >
+          →
+        </button>
 
-                <div className="col-span-12 grid gap-4 md:col-span-7 md:grid-cols-2">
-                  {testimonials.map((t, i) => (
-                    <MotionDiv
-                      key={t.name}
-                      variants={fadeInUp}
-                      whileHover={{ y: -4 }}
-                      className={`relative flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 shadow-md ${i === 0 ? "min-h-[210px]" : "min-h-[260px]"
-                        }`}
-                    >
-                      <div
-                        aria-hidden
-                        className="pointer-events-none absolute inset-0 bg-[url('/images/testimonials-bg.jpg')] bg-cover bg-center opacity-20 mix-blend-soft-light"
-                      />
-                      <p className="relative text-[0.8rem] text-slate-700">
-                        “{t.quote}”
-                      </p>
-                      <div className="relative mt-4 text-[0.7rem] text-slate-600">
-                        <p className="font-medium text-slate-900">{t.name}</p>
-                        <p>{t.role}</p>
-                      </div>
-                    </MotionDiv>
-                  ))}
-                </div>
-              </div>
-            </MotionSection>
-
-            {/* CONTACT (unchanged) */}
-            <MotionSection
-              id="contact"
-              variants={fadeInUp}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.3 }}
-              className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white px-5 py-8 shadow-md md:px-8 md:py-10"
-            >
-              <div
-                aria-hidden
-                className="pointer-events-none absolute inset-0 bg-[url('/images/contact-bg.jpg')] bg-cover bg-center opacity-20 mix-blend-soft-light"
+        {/* SLIDER */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeProject}
+            initial={{ opacity: 0, x: 80 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -80 }}
+            transition={{ duration: 0.6, ease: "easeInOut" }}
+            className="relative h-full w-full"
+          >
+            {/* BIG GIF VIEWER */}
+            <div className="relative h-full w-full bg-slate-100">
+              <Image
+                src={projects[activeProject].gif}
+                alt={projects[activeProject].title}
+                fill
+                className="object-cover"
+                priority
               />
 
-              <div className="relative flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
-                {/* Left: copy + trust */}
-                <div className="md:w-1/3 space-y-4">
-                  <p className="text-xs uppercase tracking-[0.25em] text-slate-700">
-                    Contact
-                  </p>
-                  <h3 className="text-lg font-medium text-slate-900">
-                    Bring us the tangled version. We&apos;ll reply with a clear, written plan.
-                  </h3>
-                  <p className="text-[0.8rem] text-slate-700">
-                    You don&apos;t need a perfect brief. Share links, context, or even a messy doc.
-                    The studio replies within 48 hours with next steps, ballpark budget, and timing.
-                  </p>
+              <span className="absolute left-5 top-5 rounded-full bg-emerald-500/90 px-3 py-1 text-[0.65rem] font-medium text-white backdrop-blur-sm">
+                Featured
+              </span>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      </div>
 
-                  <div className="rounded-2xl border border-emerald-200 bg-emerald-50/80 px-4 py-3 text-[0.75rem] text-emerald-900">
-                    <p className="text-[0.7rem] uppercase tracking-[0.18em]">
-                      What happens after you hit send?
-                    </p>
-                    <ul className="mt-2 space-y-1">
-                      <li>• A real person reads your note (no bots, no ticket system).</li>
-                      <li>• You get a thoughtful reply, not a template, within 1–2 business days.</li>
-                      <li>• If it&apos;s not a fit, you still leave with honest pointers.</li>
-                    </ul>
-                  </div>
+      {/* HELPER TEXT */}
+      <p className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-[0.65rem] text-slate-500">
+        Click on the arrows to see other projects.
+      </p>
+    </section>
 
-                  <p className="pt-1 text-[0.75rem] text-slate-600">
-                    Prefer email?{" "}
-                    <a
-                      href="mailto:hello@studiomiyawaki.com"
-                      className="text-emerald-600 hover:text-emerald-500"
-                    >
-                      hello@studiomiyawaki.com
-                    </a>
-                  </p>
-                </div>
 
-                {/* Right: form */}
-                <div className="md:w-2/3">
-                  <form className="grid gap-4 md:grid-cols-2">
-                    <div>
-                      <label
-                        htmlFor="name"
-                        className="block text-[0.75rem] text-slate-700"
-                      >
-                        Name
-                      </label>
-                      <input
-                        id="name"
-                        name="name"
-                        type="text"
-                        placeholder="How should we address you?"
-                        className="mt-2 w-full rounded-2xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/70"
-                      />
-                    </div>
 
-                    <div>
-                      <label
-                        htmlFor="email"
-                        className="block text-[0.75rem] text-slate-700"
-                      >
-                        Email
-                      </label>
-                      <input
-                        id="email"
-                        name="email"
-                        type="email"
-                        placeholder="Where can we reply?"
-                        className="mt-2 w-full rounded-2xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/70"
-                      />
-                    </div>
 
-                    <div>
-                      <label
-                        htmlFor="company"
-                        className="block text-[0.75rem] text-slate-700"
-                      >
-                        Company / project
-                      </label>
-                      <input
-                        id="company"
-                        name="company"
-                        type="text"
-                        placeholder="Firm, platform, or idea name"
-                        className="mt-2 w-full rounded-2xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/70"
-                      />
-                    </div>
 
-                    <div>
-                      <label
-                        htmlFor="budget"
-                        className="block text-[0.75rem] text-slate-700"
-                      >
-                        Approx. budget
-                      </label>
-                      <select
-                        id="budget"
-                        name="budget"
-                        className="mt-2 w-full rounded-2xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/70"
-                      >
-                        <option value="">Select a range</option>
-                        <option value="1">Exploratory / phased</option>
-                        <option value="2">Growth stage</option>
-                        <option value="3">Established practice</option>
-                      </select>
-                    </div>
 
-                    <div className="md:col-span-2">
-                      <label
-                        htmlFor="message"
-                        className="block text-[0.75rem] text-slate-700"
-                      >
-                        What would you like to build together?
-                      </label>
-                      <textarea
-                        id="message"
-                        name="message"
-                        rows={4}
-                        placeholder="Share where you are, what you’re aiming for, and any deadlines or links we should see."
-                        className="mt-2 w-full rounded-2xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/70"
-                      />
-                    </div>
+            {/* TESTIMONIALS */}
+            <MotionSection
+  variants={staggerContainer}
+  initial="hidden"
+  whileInView="show"
+  viewport={{ once: true, amount: 0.25 }}
+  className="space-y-4"
+>
+  {/* Subtle heading */}
+  <p className="text-xs uppercase tracking-[0.25em] text-slate-600">
+    Testimonials
+  </p>
 
-                    <div className="md:col-span-2 flex flex-wrap items-center justify-between gap-3">
-                      <button
-                        type="submit"
-                        className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-5 py-2.5 text-[0.8rem] font-semibold text-white shadow-sm transition hover:bg-emerald-400"
-                      >
-                        Send a project inquiry
-                        <span>↗</span>
-                      </button>
-                      <div className="space-y-0.5 text-[0.7rem] text-slate-600">
-                        <p>Typical reply time: within 24–48 hours on business days.</p>
-                        <p className="text-slate-500">
-                          Your details are used only to respond to this inquiry.
-                        </p>
-                      </div>
-                    </div>
-                  </form>
-                </div>
+  {/* Slider wrapper */}
+  <div className="relative overflow-hidden">
+    <motion.div
+      animate={{ x: "-33.3333%" }}
+      transition={{ duration: 0.6, ease: "easeInOut" }}
+      key={startIndex}
+      className="flex gap-4"
+    >
+      {[0, 1, 2, 3].map((offset) => {
+        const t =
+          testimonials[(startIndex + offset) % testimonials.length];
+
+        return (
+          <div
+            key={t.name + offset}
+            className="min-w-[33.3333%]"
+          >
+            <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 shadow-md">
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 bg-[url('/images/testimonials-bg.jpg')] bg-cover bg-center opacity-20 mix-blend-soft-light"
+              />
+              <p className="relative text-[0.8rem] leading-relaxed text-slate-700">
+                “{t.quote}”
+              </p>
+              <div className="relative mt-4 text-[0.7rem] text-slate-600">
+                <p className="font-medium text-slate-900">{t.name}</p>
+                <p>{t.role}</p>
               </div>
-            </MotionSection>
+            </div>
+          </div>
+        );
+      })}
+    </motion.div>
+  </div>
+</MotionSection>
+
+
+
+
+            
+            {/* CONTACT */}
+<MotionSection
+  id="contact"
+  variants={fadeInUp}
+  initial="hidden"
+  whileInView="show"
+  viewport={{ once: true, amount: 0.3 }}
+  className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white px-8 py-14 shadow-md md:px-16"
+>
+  <div className="mx-auto max-w-4xl">
+    {/* Header */}
+    <div className="mb-10 max-w-xl space-y-3">
+      <p className="text-xs uppercase tracking-[0.25em] text-slate-600">
+        Contact
+      </p>
+      <h2 className="text-2xl font-medium text-slate-900">
+        Let’s start with the real version.
+      </h2>
+      <p className="text-[0.9rem] leading-relaxed text-slate-700">
+        You don’t need a perfect brief. Share context, constraints, or even
+        something half-formed. We’ll respond with a clear next step.
+      </p>
+    </div>
+
+    {/* Form */}
+    <form className="grid gap-6 md:grid-cols-2">
+      {/* Name */}
+      <div className="flex flex-col gap-1.5">
+        <label className="text-[0.75rem] font-medium text-slate-700">
+          Your Name
+        </label>
+        <input
+          type="text"
+          placeholder="Enter your name"
+          className="rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/30"
+        />
+      </div>
+
+      {/* Phone */}
+      <div className="flex flex-col gap-1.5">
+        <label className="text-[0.75rem] font-medium text-slate-700">
+          Phone Number
+        </label>
+        <input
+          type="tel"
+          placeholder="e.g., 998-877-6655"
+          className="rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/30"
+        />
+      </div>
+
+      {/* Email */}
+      <div className="md:col-span-2 flex flex-col gap-1.5">
+        <label className="text-[0.75rem] font-medium text-slate-700">
+          Email Address
+        </label>
+        <input
+          type="email"
+          placeholder="name@domain.com"
+          className="rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/30"
+        />
+      </div>
+
+      {/* Message */}
+      <div className="md:col-span-2 flex flex-col gap-1.5">
+        <label className="text-[0.75rem] font-medium text-slate-700">
+          Brief Message
+        </label>
+        <textarea
+          rows={5}
+          placeholder="What are you building? What problem are you trying to solve?"
+          className="rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/30"
+        />
+      </div>
+
+      {/* CTA */}
+      <div className="md:col-span-2 mt-2 flex items-center justify-between">
+        <p className="text-[0.7rem] text-slate-500">
+          Typical reply within 24–48 business hours.
+        </p>
+
+        <button
+          type="submit"
+          className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-8 py-3 text-[0.8rem] font-semibold text-white shadow-sm transition hover:bg-emerald-400"
+        >
+          Send inquiry
+          <span>↗</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</MotionSection>
+
 
           </div>
         </div>
