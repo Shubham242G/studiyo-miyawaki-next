@@ -91,7 +91,7 @@ const faqs = [
 
 export default function ServicesPage() {
   return (
-    <main className="min-h-screen bg-slate-50 text-slate-900">
+    <main className="min-h-screen text-slate-900">
       <div className="mx-auto max-w-5xl px-4 pb-20 pt-6 md:px-6 lg:px-0">
         {/* HEADER BAR */}
         <header className="mb-6 flex items-center justify-between gap-4">
