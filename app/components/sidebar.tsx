@@ -8,7 +8,7 @@ export function Sidebar() {
     <>
       {/* Desktop sidebar – 20% width */}
       <aside className="fixed left-0 top-0 z-30 hidden h-screen lg:block lg:w-1/5">
-        <div className="relative h-full w-full overflow-hidden  bg-slate-50">
+        <div className="relative h-full w-full overflow-hidden  bg-white">
           {/* Content */}
           <div className="relative flex h-full flex-col px-4 py-5">
             {/* Brand row */}
@@ -40,7 +40,7 @@ export function Sidebar() {
 
               <Link
                 href="/pages/services"
-                className="group flex items-center justify-between rounded-full px-3 py-2 border border-slate-200 bg-white hover:bg-slate-100 hover:border-slate-300 hover:scale-[1.02] transition-all"
+                className="group flex items-center justify-between rounded-full px-3 py-2 hover:scale-[1.02] transition-all"
               >
                 <span className="font-medium">Services</span>
                 <span className="h-px w-6 bg-slate-300 group-hover:bg-slate-500 transition-all" />
@@ -48,15 +48,15 @@ export function Sidebar() {
 
               <Link
                 href="/pages/aboutUs"
-                className="group flex items-center justify-between rounded-full px-3 py-2 border border-slate-200 bg-white hover:bg-slate-100 hover:border-slate-300 hover:scale-[1.02] transition-all"
+                className="group flex items-center justify-between rounded-full px-3 py-2 hover:scale-[1.02] transition-all"
               >
                 <span className="font-medium">About</span>
                 <span className="h-px w-6 bg-slate-300 group-hover:bg-slate-500 transition-all" />
               </Link>
 
               <Link
-                href="#contact"
-                className="group flex items-center justify-between rounded-full px-3 py-2 border border-slate-200 bg-white hover:bg-slate-100 hover:border-slate-300 hover:scale-[1.02] transition-all"
+                href="/pages/contact"
+                className="group flex items-center justify-between rounded-full px-3 py-2 hover:scale-[1.02] transition-all"
               >
                 <span className="font-medium">Contact</span>
                 <span className="h-px w-6 bg-slate-300 group-hover:bg-slate-500 transition-all" />
@@ -113,7 +113,7 @@ export function Sidebar() {
             <Link href="/pages/aboutUs" className="hover:text-emerald-500">
               About
             </Link>
-            <Link href="#contact" className="hover:text-emerald-500">
+            <Link href="/pages/contact" className="hover:text-emerald-500">
               Contact
             </Link>
           </nav>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Playfair_Display, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Sidebar } from "./components/sidebar";
+import WhatsappFloat from "./components/whatsAppFloat";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,16 +28,22 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${playfair.variable} ${geistMono.variable} bg-slate-50 text-slate-900 font-sans `}>
+      <body
+        className={`${geistSans.variable} ${playfair.variable} ${geistMono.variable}text-slate-900 font-sans`}
+      >
         <Sidebar />
-        <div className="min-h-screen lg:pl-[20%] bg-stone-50">
+
+        <div className="min-h-screen lg:pl-[20%] ">
           {children}
         </div>
+
+        {/* FLOATING WHATSAPP */}
+        <WhatsappFloat />
       </body>
     </html>
   );
