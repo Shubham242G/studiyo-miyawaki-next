@@ -163,7 +163,7 @@ const aboutSlides = [
 
 
 const teamSlides = [
-     {
+    {
         id: 0,
         name: "Vatsala Singh",
         role: "Content & SEO",
@@ -179,7 +179,7 @@ const teamSlides = [
             "Shubham leads development at StudiYo Miyawaki, turning messy ideas into fast, maintainable Next.js builds that feel calm to use and easy to extend.",
         image: "/assets/images/shubham.jpg",
     },
-   
+
     {
         id: 2,
         name: "Ekumpreet Singh",
@@ -345,13 +345,13 @@ export default function Home() {
 
     return (
         <main className="relative min-h-screen text-slate-900">
-      {/* Scroll progress */}
-      <motion.div
-        style={{ scaleX }}
-        className="fixed left-0 top-0 z-40 h-[2px] w-full origin-left bg-gradient-to-r from-emerald-400 via-cyan-400 to-violet-400"
-      />
+            {/* Scroll progress */}
+            <motion.div
+                style={{ scaleX }}
+                className="fixed left-0 top-0 z-40 h-[2px] w-full origin-left bg-gradient-to-r from-emerald-400 via-cyan-400 to-violet-400"
+            />
 
-      {/* Studio status badge */}
+            {/* Studio status badge */}
             <motion.div
                 initial={{ opacity: 0, y: -8 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -366,18 +366,18 @@ export default function Home() {
             </motion.div>
 
 
-      {/* Main content */}
-      <motion.div
-        variants={pageEnter}
-        initial="hidden"
-        animate="show"
-        className="min-h-screen"
-      >
-        <div className="min-h-screen pb-20 pt-4 lg:pb-16 lg:pt-10 lg:pr-10 px-4">
-          <div className="space-y-10">
+            {/* Main content */}
+            <motion.div
+                variants={pageEnter}
+                initial="hidden"
+                animate="show"
+                className="min-h-screen"
+            >
+                <div className="min-h-screen pb-20 pt-4 lg:pb-16 lg:pt-10 lg:pr-10 px-4">
+                    <div className="space-y-10">
 
-            {/* HERO */}
-            <section
+                        {/* HERO */}
+                        <section
                             id="hero"
                             className="relative overflow-hidden rounded-3xl border border-slate-200 px-6 py-10 shadow-md lg:px-10 lg:py-16"
                         >
@@ -424,23 +424,23 @@ export default function Home() {
 
                                     {/* CTA – unchanged */}
                                     <motion.div
-  variants={fadeInUp}
-  initial="hidden"
-  animate="show"
-  transition={{ delay: 0.22 }}
-  className="mt-6 lg:ml-72 flex justify-center"
->
-  <Link href="/pages/contact" passHref>
-    <motion.a
-      whileHover={{ y: -2, scale: 1.03 }}
-      whileTap={{ scale: 0.98 }}
-      className="inline-flex lg:mr- items-center gap-2 rounded-full bg-white/95 px-12 py-2.5 text-[0.8rem] font-semibold text-slate-900 shadow-md shadow-slate-900/30"
-    >
-      <span>Start your project</span>
-      <span className="text-xs">↗</span>
-    </motion.a>
-  </Link>
-</motion.div>
+                                        variants={fadeInUp}
+                                        initial="hidden"
+                                        animate="show"
+                                        transition={{ delay: 0.22 }}
+                                        className="mt-6 lg:ml-72 flex justify-center"
+                                    >
+                                        <Link href="/pages/contact">
+                                            <motion.div
+                                                whileHover={{ y: -2, scale: 1.03 }}
+                                                whileTap={{ scale: 0.98 }}
+                                                className="inline-flex items-center gap-2 rounded-full bg-white/95 px-12 py-2.5 text-[0.8rem] font-semibold text-slate-900 shadow-md shadow-slate-900/30 cursor-pointer"
+                                            >
+                                                <span>Start your project </span>
+                                                <span className="text-xs">↗</span>
+                                            </motion.div>
+                                        </Link>
+                                    </motion.div>
                                 </div>
                             </div>
                         </section>
@@ -475,113 +475,112 @@ export default function Home() {
 
                         {/* SERVICES (unchanged) */}
                         <MotionSection
-  id="services"
-  variants={staggerContainer}
-  initial="hidden"
-  whileInView="show"
-  viewport={{ once: true, amount: 0.2 }}
-  className="grid gap-4 md:grid-cols-12"
->
-  {/* LEFT – SERVICES INTRO */}
-  <MotionDiv
-    variants={fadeInUp}
-    className="
+                            id="services"
+                            variants={staggerContainer}
+                            initial="hidden"
+                            whileInView="show"
+                            viewport={{ once: true, amount: 0.2 }}
+                            className="grid gap-4 md:grid-cols-12"
+                        >
+                            {/* LEFT – SERVICES INTRO */}
+                            <MotionDiv
+                                variants={fadeInUp}
+                                className="
       relative col-span-12 md:col-span-4
       flex flex-col justify-between
       overflow-hidden rounded-3xl
       border border-slate-200
       p-5 shadow-md
     "
-  >
-    {/* Background image */}
-    <div
-      className="absolute inset-0 z-0 bg-cover bg-center"
-      style={{
-        backgroundImage: "url('/assets/images/aboutUs.webp')",
-      }}
-    />
+                            >
+                                {/* Background image */}
+                                <div
+                                    className="absolute inset-0 z-0 bg-cover bg-center"
+                                    style={{
+                                        backgroundImage: "url('/assets/images/aboutUs.webp')",
+                                    }}
+                                />
 
-    {/* Gradient overlay */}
-    <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-br from-[#b36666]/40 via-black/30 to-black/50" />
+                                {/* Gradient overlay */}
+                                <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-br from-[#b36666]/40 via-black/30 to-black/50" />
 
-    {/* Content */}
-    <div className="relative z-20">
-      <p className="text-xs uppercase tracking-[0.25em] text-white/80">
-        Services
-      </p>
-      <h2 className="mt-3 text-xl font-bold text-white">
-        From story to system to stewardship.
-      </h2>
-      <p className="mt-3 text-[0.8rem] text-white/90">
-        We design and build digital systems that stay relevant — strategically
-        planned, carefully engineered, and continuously improved over time.
-      </p>
-    </div>
-  </MotionDiv>
+                                {/* Content */}
+                                <div className="relative z-20">
+                                    <p className="text-xs uppercase tracking-[0.25em] text-white/80">
+                                        Services
+                                    </p>
+                                    <h2 className="mt-3 text-xl font-bold text-white">
+                                        From story to system to stewardship.
+                                    </h2>
+                                    <p className="mt-3 text-[0.8rem] text-white/90">
+                                        We design and build digital systems that stay relevant — strategically
+                                        planned, carefully engineered, and continuously improved over time.
+                                    </p>
+                                </div>
+                            </MotionDiv>
 
-  {/* RIGHT – SERVICE CARDS */}
-  <div className="col-span-12 grid gap-4 md:col-span-8 md:grid-cols-2">
-    {[
-      {
-        title: "Web Development",
-        description:
-          "We design and build flagship marketing websites and founder hubs using Next.js, focused on speed, security, and long-term scalability. From clean information architecture to conversion-driven UI, every page is engineered to load fast, rank well, and evolve easily as your product, brand, or audience grows.",
-        route: "/services/webDevelopment",
-      },
-      {
-        title: "SEO Optimization",
-        description:
-          "Our SEO approach goes beyond keywords. We implement technical SEO foundations, smart information architecture, and on-page optimization aligned with real search intent — improving discoverability, performance, and qualified traffic.",
-        route: "/services/seoOptimzation",
-      },
-      {
-        title: "Personal Branding",
-        description:
-          "We craft signature personal websites for founders, creators, and practitioners who want their story to feel authentic and intentional — building trust, authority, and long-term recognition.",
-        route: "/services/personalBranding",
-      },
-      {
-        title: "Performance Management",
-        description:
-          "Through ongoing audits, analytics dashboards, and structured iteration cycles, we refine speed, UX, accessibility, and conversion — keeping your site sharp as your brand scales.",
-        route: "/services/performanceManagement",
-      },
-    ].map((service, index) => (
-      <MotionDiv
-        key={service.title}
-        variants={fadeInUp}
-        whileHover={{ y: -5, scale: 1.02 }}
-        transition={{ type: "spring", stiffness: 220, damping: 22 }}
-        className={`relative flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 shadow-md ${
-          index % 2 === 0 ? "min-h-[240px]" : "min-h-[280px]"
-        }`}
-      >
-        {/* Gradient layer */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#b36666]/15 via-transparent to-transparent"
-        />
+                            {/* RIGHT – SERVICE CARDS */}
+                            <div className="col-span-12 grid gap-4 md:col-span-8 md:grid-cols-2">
+                                {[
+                                    {
+                                        title: "Web Development",
+                                        description:
+                                            "We design and build flagship marketing websites and founder hubs using Next.js, focused on speed, security, and long-term scalability. From clean information architecture to conversion-driven UI, every page is engineered to load fast, rank well, and evolve easily as your product, brand, or audience grows.",
+                                        route: "/services/webDevelopment",
+                                    },
+                                    {
+                                        title: "SEO Optimization",
+                                        description:
+                                            "Our SEO approach goes beyond keywords. We implement technical SEO foundations, smart information architecture, and on-page optimization aligned with real search intent — improving discoverability, performance, and qualified traffic.",
+                                        route: "/services/seoOptimzation",
+                                    },
+                                    {
+                                        title: "Personal Branding",
+                                        description:
+                                            "We craft signature personal websites for founders, creators, and practitioners who want their story to feel authentic and intentional — building trust, authority, and long-term recognition.",
+                                        route: "/services/personalBranding",
+                                    },
+                                    {
+                                        title: "Performance Management",
+                                        description:
+                                            "Through ongoing audits, analytics dashboards, and structured iteration cycles, we refine speed, UX, accessibility, and conversion — keeping your site sharp as your brand scales.",
+                                        route: "/services/performanceManagement",
+                                    },
+                                ].map((service, index) => (
+                                    <MotionDiv
+                                        key={service.title}
+                                        variants={fadeInUp}
+                                        whileHover={{ y: -5, scale: 1.02 }}
+                                        transition={{ type: "spring", stiffness: 220, damping: 22 }}
+                                        className={`relative flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 shadow-md ${index % 2 === 0 ? "min-h-[240px]" : "min-h-[280px]"
+                                            }`}
+                                    >
+                                        {/* Gradient layer */}
+                                        <div
+                                            aria-hidden
+                                            className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#b36666]/15 via-transparent to-transparent"
+                                        />
 
-        {/* Content */}
-        <div className="relative">
-          <p className="text-base font-bold text-slate-900">
-            {service.title}
-          </p>
-          <p className="mt-2 text-[0.75rem] leading-relaxed text-slate-700">
-            {service.description}
-          </p>
-        </div>
+                                        {/* Content */}
+                                        <div className="relative">
+                                            <p className="text-base font-bold text-slate-900">
+                                                {service.title}
+                                            </p>
+                                            <p className="mt-2 text-[0.75rem] leading-relaxed text-slate-700">
+                                                {service.description}
+                                            </p>
+                                        </div>
 
-        <Link
-          href={service.route}
-          className="relative mt-4 inline-flex items-center gap-1 text-[0.7rem] font-semibold text-[#b36666] hover:opacity-80"
-        >
-          Learn more <span>↗</span>
-        </Link>
-      </MotionDiv>
-    ))}
-  </div>
-</MotionSection>
+                                        <Link
+                                            href={service.route}
+                                            className="relative mt-4 inline-flex items-center gap-1 text-[0.7rem] font-semibold text-[#b36666] hover:opacity-80"
+                                        >
+                                            Learn more <span>↗</span>
+                                        </Link>
+                                    </MotionDiv>
+                                ))}
+                            </div>
+                        </MotionSection>
 
 
 
@@ -591,12 +590,12 @@ export default function Home() {
 
                         {/* ABOUT – BIGGER, DEDICATED SECTION AFTER PROCESS */}
                         <MotionSection
-  id="about"
-  variants={staggerContainer}
-  initial="hidden"
-  whileInView="show"
-  viewport={{ once: true, amount: 0.25 }}
-  className="
+                            id="about"
+                            variants={staggerContainer}
+                            initial="hidden"
+                            whileInView="show"
+                            viewport={{ once: true, amount: 0.25 }}
+                            className="
     relative
     mt-28
     overflow-hidden
@@ -606,18 +605,18 @@ export default function Home() {
     shadow-md
     md:px-10
   "
->
-  {/* SECTION LABEL */}
-  <p className="mb-8 text-xs uppercase tracking-[0.3em] font-semibold text-slate-600">
-    About Us
-  </p>
+                        >
+                            {/* SECTION LABEL */}
+                            <p className="mb-8 text-xs uppercase tracking-[0.3em] font-semibold text-slate-600">
+                                About Us
+                            </p>
 
-  {/* CONTENT GRID */}
-  <div className="grid items-center gap-8 md:grid-cols-12">
-    {/* LEFT — BLACK CARD (SMALLER) */}
-    <MotionDiv
-      variants={fadeInUp}
-      className="
+                            {/* CONTENT GRID */}
+                            <div className="grid items-center gap-8 md:grid-cols-12">
+                                {/* LEFT — BLACK CARD (SMALLER) */}
+                                <MotionDiv
+                                    variants={fadeInUp}
+                                    className="
         col-span-12 md:col-span-4
         rounded-3xl
         border border-slate-700/60
@@ -625,61 +624,60 @@ export default function Home() {
         px-6 py-6
         shadow-md
       "
-    >
-      <div className="space-y-3">
-        <p className="text-xs uppercase tracking-[0.25em] text-emerald-200">
-          About & concepts
-        </p>
+                                >
+                                    <div className="space-y-3">
+                                        <p className="text-xs uppercase tracking-[0.25em] text-emerald-200">
+                                            About & concepts
+                                        </p>
 
-        <h2 className="text-lg font-bold text-white">
-          The thinking behind StudiYo Miyawaki.
-        </h2>
-      </div>
+                                        <h2 className="text-lg font-bold text-white">
+                                            The thinking behind StudiYo Miyawaki.
+                                        </h2>
+                                    </div>
 
-      <div className="mt-4 min-h-[160px]">
-        {aboutSlides.map((slide, index) =>
-          index === activeAboutIndex ? (
-            <motion.div
-              key={slide.id}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-              className="space-y-2"
-            >
-              <p className="text-[0.7rem] uppercase tracking-[0.2em] text-emerald-200">
-                {slide.tagline}
-              </p>
-              <p className="text-sm font-semibold text-slate-50">
-                {slide.title}
-              </p>
-              <p className="text-[0.85rem] text-slate-200 leading-relaxed">
-                {slide.body}
-              </p>
-            </motion.div>
-          ) : null
-        )}
-      </div>
+                                    <div className="mt-4 min-h-[160px]">
+                                        {aboutSlides.map((slide, index) =>
+                                            index === activeAboutIndex ? (
+                                                <motion.div
+                                                    key={slide.id}
+                                                    initial={{ opacity: 0, y: 12 }}
+                                                    animate={{ opacity: 1, y: 0 }}
+                                                    transition={{ duration: 0.4, ease: "easeOut" }}
+                                                    className="space-y-2"
+                                                >
+                                                    <p className="text-[0.7rem] uppercase tracking-[0.2em] text-emerald-200">
+                                                        {slide.tagline}
+                                                    </p>
+                                                    <p className="text-sm font-semibold text-slate-50">
+                                                        {slide.title}
+                                                    </p>
+                                                    <p className="text-[0.85rem] text-slate-200 leading-relaxed">
+                                                        {slide.body}
+                                                    </p>
+                                                </motion.div>
+                                            ) : null
+                                        )}
+                                    </div>
 
-      {/* DOTS */}
-      <div className="mt-5 flex justify-center gap-1.5">
-        {aboutSlides.map((_, idx) => (
-          <button
-            key={idx}
-            onClick={() => setActiveAboutIndex(idx)}
-            className={`h-1.5 w-1.5 rounded-full transition ${
-              idx === activeAboutIndex
-                ? "bg-emerald-300"
-                : "bg-slate-500/60"
-            }`}
-          />
-        ))}
-      </div>
-    </MotionDiv>
+                                    {/* DOTS */}
+                                    <div className="mt-5 flex justify-center gap-1.5">
+                                        {aboutSlides.map((_, idx) => (
+                                            <button
+                                                key={idx}
+                                                onClick={() => setActiveAboutIndex(idx)}
+                                                className={`h-1.5 w-1.5 rounded-full transition ${idx === activeAboutIndex
+                                                        ? "bg-emerald-300"
+                                                        : "bg-slate-500/60"
+                                                    }`}
+                                            />
+                                        ))}
+                                    </div>
+                                </MotionDiv>
 
-    {/* RIGHT — WHITE CARD (BIG, VISUAL FIRST) */}
-    <MotionDiv
-  variants={fadeInUp}
-  className="
+                                {/* RIGHT — WHITE CARD (BIG, VISUAL FIRST) */}
+                                <MotionDiv
+                                    variants={fadeInUp}
+                                    className="
     col-span-12 md:col-span-8
     flex flex-col
     rounded-3xl
@@ -689,72 +687,71 @@ export default function Home() {
     shadow-md
     min-h-[620px]
   "
->
-  {/* HEADER */}
-  <div className="mb-5">
-    <p className="text-xs uppercase tracking-[0.3em] font-semibold text-slate-500">
-      Our team
-    </p>
-    <h2 className="mt-1 text-base font-bold text-slate-900">
-      The people you’ll work with.
-    </h2>
-  </div>
+                                >
+                                    {/* HEADER */}
+                                    <div className="mb-5">
+                                        <p className="text-xs uppercase tracking-[0.3em] font-semibold text-slate-500">
+                                            Our team
+                                        </p>
+                                        <h2 className="mt-1 text-base font-bold text-slate-900">
+                                            The people you’ll work with.
+                                        </h2>
+                                    </div>
 
-  {/* SLIDER */}
-  <div className="relative flex-1 min-h-[460px]">
-    {teamSlides.map((member, index) =>
-      index === activeTeamIndex ? (
-        <motion.div
-          key={member.id}
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-          className="flex h-full flex-col"
-        >
-          {/* IMAGE — FIXED HEIGHT (NO % HEIGHTS) */}
-          <div className="relative mb-6 w-full flex-1 min-h-[400px] overflow-hidden rounded-3xl bg-slate-200">
-            <Image
-              src={member.image}
-              alt={member.name}
-              fill
-              sizes="(min-width: 768px) 60vw, 100vw"
-              className="object-cover"
-              priority
-            />
-          </div>
+                                    {/* SLIDER */}
+                                    <div className="relative flex-1 min-h-[460px]">
+                                        {teamSlides.map((member, index) =>
+                                            index === activeTeamIndex ? (
+                                                <motion.div
+                                                    key={member.id}
+                                                    initial={{ opacity: 0, y: 18 }}
+                                                    animate={{ opacity: 1, y: 0 }}
+                                                    transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                                                    className="flex h-full flex-col"
+                                                >
+                                                    {/* IMAGE — FIXED HEIGHT (NO % HEIGHTS) */}
+                                                    <div className="relative mb-6 w-full flex-1 min-h-[400px] overflow-hidden rounded-3xl bg-slate-200">
+                                                        <Image
+                                                            src={member.image}
+                                                            alt={member.name}
+                                                            fill
+                                                            sizes="(min-width: 768px) 60vw, 100vw"
+                                                            className="object-cover"
+                                                            priority
+                                                        />
+                                                    </div>
 
-          {/* NAME + ROLE */}
-          <div className="text-center">
-            <p className="text-lg font-semibold text-slate-900">
-              {member.name}
-            </p>
-            <p className="mt-1 text-xs uppercase tracking-[0.25em] font-semibold text-slate-600">
-              {member.role}
-            </p>
-          </div>
-        </motion.div>
-      ) : null
-    )}
-  </div>
+                                                    {/* NAME + ROLE */}
+                                                    <div className="text-center">
+                                                        <p className="text-lg font-semibold text-slate-900">
+                                                            {member.name}
+                                                        </p>
+                                                        <p className="mt-1 text-xs uppercase tracking-[0.25em] font-semibold text-slate-600">
+                                                            {member.role}
+                                                        </p>
+                                                    </div>
+                                                </motion.div>
+                                            ) : null
+                                        )}
+                                    </div>
 
-  {/* DOT NAV */}
-  <div className="mt-6 flex justify-center gap-2">
-    {teamSlides.map((_, idx) => (
-      <button
-        key={idx}
-        onClick={() => setActiveTeamIndex(idx)}
-        className={`h-1.5 w-1.5 rounded-full transition ${
-          idx === activeTeamIndex
-            ? 'bg-slate-900'
-            : 'bg-slate-400/60'
-        }`}
-      />
-    ))}
-  </div>
-</MotionDiv>
+                                    {/* DOT NAV */}
+                                    <div className="mt-6 flex justify-center gap-2">
+                                        {teamSlides.map((_, idx) => (
+                                            <button
+                                                key={idx}
+                                                onClick={() => setActiveTeamIndex(idx)}
+                                                className={`h-1.5 w-1.5 rounded-full transition ${idx === activeTeamIndex
+                                                        ? 'bg-slate-900'
+                                                        : 'bg-slate-400/60'
+                                                    }`}
+                                            />
+                                        ))}
+                                    </div>
+                                </MotionDiv>
 
-  </div>
-</MotionSection>
+                            </div>
+                        </MotionSection>
 
 
 
@@ -919,7 +916,7 @@ export default function Home() {
 
 
                         {/* CONTACT */}
-                       <ContactFormSection animated/>
+                        <ContactFormSection animated />
                     </div>
                 </div>
             </motion.div>
