@@ -3,776 +3,773 @@
 import Link from "next/link";
 import Image from "next/image";
 import {
-  MotionDiv,
-  MotionSection,
-  MotionSpan,
-  fadeInUp,
-  fadeIn,
-  staggerContainer,
+    MotionDiv,
+    MotionSection,
+    MotionSpan,
+    fadeInUp,
+    fadeIn,
+    staggerContainer,
 } from "../../components/motion";
 import { motion, Variants, useScroll, useSpring, useCycle, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 
 interface Project {
-  title: string;
-  description: string;
-  gif: string;
-  link: string;
-  tag: string;
+    title: string;
+    description: string;
+    gif: string;
+    link: string;
+    tag: string;
 }
 
 
 
 const projects: Project[] = [
-  {
-    title: "MedNLaw",
-    description: "Licensing & legal solutions for medical professionals.",
-    gif: "/assets/images/mednlaw.png",
-    link: "https://mednlaw.com/",
-    tag: "Flagship • Healthcare law",
-  },
-  {
-    title: "Unsaathi",
-    description: "A supportive platform for divorce and legal guidance.",
-    gif: "/assets/images/Unsaathi-logo1.png",
-    link: "https://unsaathi.com/",
-    tag: "Support platform",
-  },
-  {
-    title: "GSLO",
-    description: "Comprehensive legal services for the modern enterprise.",
-    gif: "/assets/images/GSLO-black.png",
-    link: "https://gslo.in/",
-    tag: "Corporate law",
-  },
-  {
-    title: "Gaurav Sharma",
-    description: "A personal hub for legal expertise and thought leadership.",
-    gif: "/assets/images/gaurav_sharma.png",
-    link: "https://gauravsharma.org/",
-    tag: "Personal brand",
-  },
+    {
+        title: "MedNLaw",
+        description: "Licensing & legal solutions for medical professionals.",
+        gif: "/assets/videos/mednlife.mp4",
+        link: "https://mednlaw.com/",
+        tag: "Flagship • Healthcare law",
+    },
+    {
+        title: "Unsaathi",
+        description: "A supportive platform for divorce and legal guidance.",
+        gif: "/assets/videos/unsaathi.mp4",
+        link: "https://unsaathi.com/",
+        tag: "Support platform",
+    },
+    {
+        title: "GSLO",
+        description: "Comprehensive legal services for the modern enterprise.",
+        gif: "/assets/videos/gslo_web.mp4",
+        link: "https://gslo.in/",
+        tag: "Corporate law",
+    },
+    {
+        title: "Gaurav Sharma",
+        description: "A personal hub for legal expertise and thought leadership.",
+        gif: "/assets/videos/gaurav_sharma.mp4",
+        link: "https://gauravsharma.org/",
+        tag: "Personal brand",
+    },
 ];
 
 const processSteps = [
-  {
-    label: "01",
-    title: "Sense & frame",
-    copy: "A focused discovery sprint to understand your work, constraints, and where the web can do the most good.",
-  },
-  {
-    label: "02",
-    title: "Structure & story",
-    copy: "Sitemaps, flows, and content prompts so every page and section has a real job.",
-  },
-  {
-    label: "03",
-    title: "Interface & motion",
-    copy: "Interfaces and micro‑interactions that feel calm, premium, and unmistakably yours.",
-  },
-  {
-    label: "04",
-    title: "Launch & steward",
-    copy: "Technical launch, instrumentation, and performance cycles that keep the site sharp.",
-  },
+    {
+        label: "01",
+        title: "Sense & frame",
+        copy: "A focused discovery sprint to understand your work, constraints, and where the web can do the most good.",
+    },
+    {
+        label: "02",
+        title: "Structure & story",
+        copy: "Sitemaps, flows, and content prompts so every page and section has a real job.",
+    },
+    {
+        label: "03",
+        title: "Interface & motion",
+        copy: "Interfaces and micro‑interactions that feel calm, premium, and unmistakably yours.",
+    },
+    {
+        label: "04",
+        title: "Launch & steward",
+        copy: "Technical launch, instrumentation, and performance cycles that keep the site sharp.",
+    },
 ];
 
 const processSlides = [
-  {
-    id: 0,
-    title: "How the process feels",
-    body:
-      "One clear owner on your side, one on ours. You always know what week you are in, what we are working on, and what decisions are in front of you.",
-  },
-  {
-    id: 1,
-    title: "01. Sense & frame",
-    body:
-      "A focused discovery sprint to understand your practice, constraints, and where a sharper web experience will actually move the needle.",
-  },
-  {
-    id: 2,
-    title: "02. Structure & story",
-    body:
-      "Sitemaps, flows, and content prompts so no page is random. You know what belongs where, and what each section is supposed to say.",
-  },
-  {
-    id: 3,
-    title: "03. Interface & motion",
-    body:
-      "Interfaces, typography, and motion details that feel calm and premium, with just enough movement to guide attention—not distract from the work.",
-  },
-  {
-    id: 4,
-    title: "04. Launch & steward",
-    body:
-      "A measured launch and light‑touch performance + SEO stewardship so the site stays healthy after day one without heavy retainers.",
-  },
+    {
+        id: 0,
+        title: "How the process feels",
+        body:
+            "One clear owner on your side, one on ours. You always know what week you are in, what we are working on, and what decisions are in front of you.",
+    },
+    {
+        id: 1,
+        title: "01. Sense & frame",
+        body:
+            "A focused discovery sprint to understand your practice, constraints, and where a sharper web experience will actually move the needle.",
+    },
+    {
+        id: 2,
+        title: "02. Structure & story",
+        body:
+            "Sitemaps, flows, and content prompts so no page is random. You know what belongs where, and what each section is supposed to say.",
+    },
+    {
+        id: 3,
+        title: "03. Interface & motion",
+        body:
+            "Interfaces, typography, and motion details that feel calm and premium, with just enough movement to guide attention—not distract from the work.",
+    },
+    {
+        id: 4,
+        title: "04. Launch & steward",
+        body:
+            "A measured launch and light‑touch performance + SEO stewardship so the site stays healthy after day one without heavy retainers.",
+    },
 ];
 
 const testimonials = [
-  {
-    name: "Adv. Rohit Malhotra",
-    role: "Litigation Partner, GSLO",
-    quote:
-      "They understood litigation workflows deeply. The site feels calm, credible, and purpose-built for serious clients.",
-  },
-  {
-    name: "Dr. Ananya Verma",
-    role: "Founder, MedNLaw",
-    quote:
-      "The redesign removed anxiety from the experience. Patients and doctors both trust the platform more now.",
-  },
-  {
-    name: "Kunal Sharma",
-    role: "Startup Consultant",
-    quote:
-      "Nothing flashy, nothing forced. Just clarity. Exactly what service businesses need.",
-  },
-  {
-    name: "Neha Kapoor",
-    role: "Legal Ops Manager",
-    quote:
-      "Every screen felt intentional. It didn’t feel like a template — it felt like us.",
-  },
-  {
-    name: "Amit Jain",
-    role: "Founder, Unsaathi",
-    quote:
-      "They think like product people, not designers chasing trends.",
-  },
+    {
+        name: "Adv. Rohit Malhotra",
+        role: "Litigation Partner, GSLO",
+        quote:
+            "They understood litigation workflows deeply. The site feels calm, credible, and purpose-built for serious clients.",
+    },
+    {
+        name: "Dr. Ananya Verma",
+        role: "Founder, MedNLaw",
+        quote:
+            "The redesign removed anxiety from the experience. Patients and doctors both trust the platform more now.",
+    },
+    {
+        name: "Kunal Sharma",
+        role: "Startup Consultant",
+        quote:
+            "Nothing flashy, nothing forced. Just clarity. Exactly what service businesses need.",
+    },
+    {
+        name: "Neha Kapoor",
+        role: "Legal Ops Manager",
+        quote:
+            "Every screen felt intentional. It didn’t feel like a template — it felt like us.",
+    },
+    {
+        name: "Amit Jain",
+        role: "Founder, Unsaathi",
+        quote:
+            "They think like product people, not designers chasing trends.",
+    },
 ];
 
 const aboutSlides = [
-  {
-    id: 0,
-    tagline: "Studio",
-    title: "A small team, on purpose.",
-    body:
-      "StudiYo Miyawaki is a compact studio that prefers a few deep projects over a crowded pipeline. The same people who join your first call stay with you through launch.",
-  },
-  {
-    id: 1,
-    tagline: "Miyawaki method",
-    title: "Grow like a mini‑forest, not a single tree.",
-    body:
-      "The studio borrows from the Miyawaki method: build dense, healthy systems, not fragile one‑offs. Sites are designed to mature over time as new pages and products are added.",
-  },
-  {
-    id: 2,
-    tagline: "Ma (間)",
-    title: "Space that lets work breathe.",
-    body:
-      "Ma is the Japanese idea of purposeful empty space. Interfaces use it to lower anxiety, highlight what matters, and give serious decisions room to land.",
-  },
-  {
-    id: 3,
-    tagline: "Ikigai",
-    title: "A site with a reason for being.",
-    body:
-      "Ikigai is the intersection of what you love, what you are good at, and what the world needs. Each project starts by finding that overlap and designing the site around it.",
-  },
-  {
-    id: 4,
-    tagline: "Kaizen",
-    title: "Small, steady improvements by design.",
-    body:
-      "Kaizen is continuous improvement through tiny, consistent changes. After launch, the studio favours light recurring passes over big, stressful rebuilds every few years.",
-  },
+    {
+        id: 0,
+        tagline: "Studio",
+        title: "A small team, on purpose.",
+        body:
+            "StudiYo Miyawaki is a compact studio that prefers a few deep projects over a crowded pipeline. The same people who join your first call stay with you through launch.",
+    },
+    {
+        id: 1,
+        tagline: "Miyawaki method",
+        title: "Grow like a mini‑forest, not a single tree.",
+        body:
+            "The studio borrows from the Miyawaki method: build dense, healthy systems, not fragile one‑offs. Sites are designed to mature over time as new pages and products are added.",
+    },
+    {
+        id: 2,
+        tagline: "Ma (間)",
+        title: "Space that lets work breathe.",
+        body:
+            "Ma is the Japanese idea of purposeful empty space. Interfaces use it to lower anxiety, highlight what matters, and give serious decisions room to land.",
+    },
+    {
+        id: 3,
+        tagline: "Ikigai",
+        title: "A site with a reason for being.",
+        body:
+            "Ikigai is the intersection of what you love, what you are good at, and what the world needs. Each project starts by finding that overlap and designing the site around it.",
+    },
+    {
+        id: 4,
+        tagline: "Kaizen",
+        title: "Small, steady improvements by design.",
+        body:
+            "Kaizen is continuous improvement through tiny, consistent changes. After launch, the studio favours light recurring passes over big, stressful rebuilds every few years.",
+    },
 ];
 
 
 const teamSlides = [
-  {
-    id: 0,
-    name: "Shubham Godiyal",
-    role: "Developer",
-    bio:
-      "Shubham leads development at StudiYo Miyawaki, turning messy ideas into fast, maintainable Next.js builds that feel calm to use and easy to extend.",
-    image: "/assets/images/team-shubham.jpg",
-  },
-  {
-    id: 1,
-    name: "Vatsala Singh",
-    role: "Content & SEO",
-    bio:
-      "Vatsala shapes the words and search strategy so every page speaks clearly to humans while quietly pulling in the right kind of traffic from search.",
-    image: "/assets/images/team-vatsala.jpg",
-  },
-  {
-    id: 2,
-    name: "Ekumpreet Singh",
-    role: "Graphic Designer",
-    bio:
-      "Ekumpreet builds the visual language—logomarks, palettes, and layout details—so your site looks like one cohesive brand, not a stitched‑together template.",
-    image: "/assets/images/team-ekumpreet.jpg",
-  },
-  {
-    id: 3,
-    name: "Manan Kapoor",
-    role: "Content Uploader",
-    bio:
-      "Manan keeps launches smooth by preparing, structuring, and uploading content with care, so what goes live matches what was planned.",
-    image: "/assets/images/team-manan.jpg",
-  },
+    {
+        id: 0,
+        name: "Shubham Godiyal",
+        role: "Developer",
+        bio:
+            "Shubham leads development at StudiYo Miyawaki, turning messy ideas into fast, maintainable Next.js builds that feel calm to use and easy to extend.",
+        image: "/assets/images/shubham.jpg",
+    },
+    {
+        id: 1,
+        name: "Vatsala Singh",
+        role: "Content & SEO",
+        bio:
+            "Vatsala shapes the words and search strategy so every page speaks clearly to humans while quietly pulling in the right kind of traffic from search.",
+        image: "/assets/images/vatsala.jpg",
+    },
+    {
+        id: 2,
+        name: "Ekumpreet Singh",
+        role: "Graphic Designer",
+        bio:
+            "Ekumpreet builds the visual language—logomarks, palettes, and layout details—so your site looks like one cohesive brand, not a stitched‑together template.",
+        image: "/assets/images/ekam.jpg",
+    },
+    {
+        id: 3,
+        name: "Manan Kapoor",
+        role: "Content Uploader",
+        bio:
+            "Manan keeps launches smooth by preparing, structuring, and uploading content with care, so what goes live matches what was planned.",
+        image: "/assets/images/manan.jpg",
+    },
 ];
 
 const metrics = [
-  { label: "Projects shipped", value: "20+" },
-  { label: "Typical build window", value: "4–8 weeks" },
-  { label: "Lighthouse score", value: "95+" },
-  { label: "Return clients", value: "92%" },
+    { label: "Projects shipped", value: "20+" },
+    { label: "Typical build window", value: "4–8 weeks" },
+    { label: "Lighthouse score", value: "95+" },
+    { label: "Return clients", value: "92%" },
 ];
 
 
 
 // simple timed image index hook using useCycle
 function useTimedCycle(length: number, delayMs: number) {
-  const [index, cycle] = useCycle(
-    ...Array.from({ length }, (_, i) => i)
-  );
+    const [index, cycle] = useCycle(
+        ...Array.from({ length }, (_, i) => i)
+    );
 
-  useEffect(() => {
-    const id = setInterval(() => {
-      cycle();
-    }, delayMs);
-    return () => clearInterval(id);
-  }, [cycle, delayMs]);
+    useEffect(() => {
+        const id = setInterval(() => {
+            cycle();
+        }, delayMs);
+        return () => clearInterval(id);
+    }, [cycle, delayMs]);
 
-  return index as number;
+    return index as number;
 }
 
 // subtle page-enter wrapper
 const pageEnter: Variants = {
-  hidden: { opacity: 0, y: 14 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.7,
-      ease: [0.16, 1, 0.3, 1],
+    hidden: { opacity: 0, y: 14 },
+    show: {
+        opacity: 1,
+        y: 0,
+        transition: {
+            duration: 0.7,
+            ease: [0.16, 1, 0.3, 1],
+        },
     },
-  },
 };
 
 // scramble numbers hook for metrics
 function useScrambledMetrics(durationMs = 2500, intervalMs = 80) {
-  const [displayValues, setDisplayValues] = useState<string[]>(
-    metrics.map((m) => m.value)
-  );
-  const [done, setDone] = useState(false);
+    const [displayValues, setDisplayValues] = useState<string[]>(
+        metrics.map((m) => m.value)
+    );
+    const [done, setDone] = useState(false);
 
-  useEffect(() => {
-    const start = performance.now();
-    const randomDigit = () => Math.floor(Math.random() * 10).toString();
+    useEffect(() => {
+        const start = performance.now();
+        const randomDigit = () => Math.floor(Math.random() * 10).toString();
 
-    const id = setInterval(() => {
-      const now = performance.now();
-      const elapsed = now - start;
-      if (elapsed >= durationMs) {
-        setDisplayValues(metrics.map((m) => m.value));
-        setDone(true);
-        clearInterval(id);
-        return;
-      }
+        const id = setInterval(() => {
+            const now = performance.now();
+            const elapsed = now - start;
+            if (elapsed >= durationMs) {
+                setDisplayValues(metrics.map((m) => m.value));
+                setDone(true);
+                clearInterval(id);
+                return;
+            }
 
-      setDisplayValues(() =>
-        metrics.map((metric) => {
-          const original = metric.value;
-          return original
-            .split("")
-            .map((ch) => (/\d/.test(ch) ? randomDigit() : ch))
-            .join("");
-        })
-      );
-    }, intervalMs);
+            setDisplayValues(() =>
+                metrics.map((metric) => {
+                    const original = metric.value;
+                    return original
+                        .split("")
+                        .map((ch) => (/\d/.test(ch) ? randomDigit() : ch))
+                        .join("");
+                })
+            );
+        }, intervalMs);
 
-    return () => clearInterval(id);
-  }, [durationMs, intervalMs]);
+        return () => clearInterval(id);
+    }, [durationMs, intervalMs]);
 
-  return { displayValues, done };
+    return { displayValues, done };
 }
 
 export default function Home() {
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 140,
-    damping: 30,
-    restDelta: 0.001,
-  });
+    const { scrollYProgress } = useScroll();
+    const scaleX = useSpring(scrollYProgress, {
+        stiffness: 140,
+        damping: 30,
+        restDelta: 0.001,
+    });
 
-  const [activeProject, setActiveProject] = useState(0);
-  
-  const [startIndex, setStartIndex] = useState(0);
+    const [activeProject, setActiveProject] = useState(0);
 
- useEffect(() => {
-  const interval = setInterval(() => {
-    setActiveProject((prev) => (prev + 1) % projects.length);
-  }, 10000); // 10 seconds
+    const [startIndex, setStartIndex] = useState(0);
 
-  return () => clearInterval(interval);
-}, [projects.length]);
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setActiveProject((prev) => (prev + 1) % projects.length);
+        }, 10000); // 10 seconds
 
-  const heroBgImages = [
-    "/images/hero-card-bg.jpg",
-    "/images/hero-bg-2.jpg",
-    "/images/hero-bg-3.jpg",
-  ];
-  const heroBgIndex = useTimedCycle(heroBgImages.length, 7000);
+        return () => clearInterval(interval);
+    }, [projects.length]);
 
-  const { displayValues } = useScrambledMetrics();
-  const processIndex = useTimedCycle(processSlides.length, 3000);
-  const teamIndex = useTimedCycle(teamSlides.length, 3000);
+    const heroBgImages = [
+        "/images/hero-card-bg.jpg",
+        "/images/hero-bg-2.jpg",
+        "/images/hero-bg-3.jpg",
+    ];
+    const heroBgIndex = useTimedCycle(heroBgImages.length, 7000);
+
+    const { displayValues } = useScrambledMetrics();
+    const processIndex = useTimedCycle(processSlides.length, 3000);
+    const teamIndex = useTimedCycle(teamSlides.length, 3000);
 
     const [activeAboutIndex, setActiveAboutIndex] = useState(0);
-  const [activeTeamIndex, setActiveTeamIndex] = useState(0);
+    const [activeTeamIndex, setActiveTeamIndex] = useState(0);
 
-  // autoplay for About / Japanese concepts
-  useEffect(() => {
-    const id = setInterval(() => {
-      setActiveAboutIndex((prev) => (prev + 1) % aboutSlides.length);
-    }, 4000); // 4s
-    return () => clearInterval(id);
-  }, []);
+    // autoplay for About / Japanese concepts
+    useEffect(() => {
+        const id = setInterval(() => {
+            setActiveAboutIndex((prev) => (prev + 1) % aboutSlides.length);
+        }, 4000); // 4s
+        return () => clearInterval(id);
+    }, []);
 
-  // autoplay for Team slider
-  useEffect(() => {
-    const id = setInterval(() => {
-      setActiveTeamIndex((prev) => (prev + 1) % teamSlides.length);
-    }, 4000); // 4s
-    return () => clearInterval(id);
-  }, []);
-
-
-useEffect(() => {
-  const interval = setInterval(() => {
-    setStartIndex((prev) => (prev + 1) % testimonials.length);
-  }, 3000);
-
-  return () => clearInterval(interval);
-}, []);
-
-const goNextProject = () => {
-  setActiveProject((prev) => (prev + 1) % projects.length);
-};
-
-const goPrevProject = () => {
-  setActiveProject((prev) =>
-    prev === 0 ? projects.length - 1 : prev - 1
-  );
-};
-
-  return (
-    <main className="relative min-h-screen text-slate-900">
-      {/* Scroll progress */}
-      <motion.div
-        style={{ scaleX }}
-        className="fixed left-0 top-0 z-40 h-[2px] w-full origin-left bg-gradient-to-r from-emerald-400 via-cyan-400 to-violet-400"
-      />
-
-      {/* Studio status badge */}
-      <motion.div
-        initial={{ opacity: 0, y: -8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.9, duration: 0.6, ease: "easeOut" }}
-        className="fixed right-5 top-5 z-40 hidden items-center gap-2 rounded-full border border-emerald-300/40 bg-white/80 px-3 py-1.5 text-[0.7rem] text-slate-900 shadow-lg backdrop-blur-xl sm:flex"
-      >
-        <span className="relative flex h-2 w-2">
-          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/60" />
-          <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-300" />
-        </span>
-        Accepting 1 new project for Q1
-      </motion.div>
-
-      {/* Main content */}
-      <motion.div
-        variants={pageEnter}
-        initial="hidden"
-        animate="show"
-        className="min-h-screen"
-      >
-        <div className="min-h-screen pb-20 pt-4 lg:pb-16 lg:pt-10  lg:pr-10 px-4">
-          <div className="space-y-10">
-            {/* HERO WITH BACKGROUND VIDEO + STRONG CTA NEAR BOTTOM */}
-            <section
-  id="hero"
-  className="relative overflow-hidden rounded-3xl border border-slate-200 px-6 py-10 shadow-md lg:px-10 lg:py-16"
->
-  <video
-    className="pointer-events-none absolute inset-0 h-full w-full object-cover z-0"
-    autoPlay
-    muted
-    loop
-    playsInline
-  >
-    <source src="/assets/videos/miyawaki.mp4" type="video/mp4" />
-  </video>
-
-  <div className="pointer-events-none absolute inset-0 bg-black/30 z-10" />
-
-  <div className="relative z-20 grid gap-10 md:grid-cols-3 md:items-end">
-    {/* Left: original content + brand title */}
-    <div className="md:col-span-2 flex flex-col justify-between min-h-[280px] md:min-h-[340px] relative">
-      <div>
-        <MotionSpan
-          variants={fadeIn}
-          className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/90 px-3 py-1 text-[0.6rem] uppercase tracking-[0.25em] text-slate-900"
-        >
-          Studio Miyawaki
-          <span className="h-1 w-1 rounded-full bg-emerald-400" />
-          Web • SEO • Brand
-        </MotionSpan>
-
-        {/* Brand title block (new) */}
-        <div className="mt-6 space-y-2">
-          <h1 className="font-playfair text-[2.1rem] md:text-[2.5rem] lg:text-[2.8rem] leading-tight text-slate-50">
-            Studio{" "}
-            <span className="italic text-emerald-200">
-              Miyawaki
-            </span>
-          </h1>
-          <p className="max-w-md text-[0.85rem] text-slate-100/90">
-            A Japanese‑inspired web studio for practices that grow like quiet
-            forests: dense with trust, calm in presentation, sharp in
-            performance.
-          </p>
-        </div>
-      </div>
-
-      {/* CTA – unchanged */}
-      <motion.div
-        variants={fadeInUp}
-        initial="hidden"
-        animate="show"
-        transition={{ delay: 0.22 }}
-        className="mt-6 lg:ml-72 flex justify-center"
-      >
-        <motion.button
-          whileHover={{ y: -2, scale: 1.03 }}
-          whileTap={{ scale: 0.98 }}
-          className="inline-flex items-center gap-2 rounded-full bg-white/95 px-6 py-2.5 text-[0.8rem] font-semibold text-slate-900 shadow-md shadow-slate-900/30"
-        >
-          <span>Start my project with StudiYo Miyawaki</span>
-          <span className="text-xs">↗</span>
-        </motion.button>
-      </motion.div>
-    </div>
-  </div>
-</section>
+    // autoplay for Team slider
+    useEffect(() => {
+        const id = setInterval(() => {
+            setActiveTeamIndex((prev) => (prev + 1) % teamSlides.length);
+        }, 4000); // 4s
+        return () => clearInterval(id);
+    }, []);
 
 
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setStartIndex((prev) => (prev + 1) % testimonials.length);
+        }, 3000);
 
-            {/* METRICS STRIP (unchanged) */}
-            <MotionSection
-  variants={staggerContainer}
-  initial="hidden"
-  whileInView="show"
-  viewport={{ once: true, amount: 0.3 }}
-  className="grid gap-4 md:grid-cols-4"
->
-  {metrics.map((metric, idx) => (
-    <MotionDiv
-      key={metric.label}
-      variants={fadeInUp}
-      whileHover={{ y: -3, scale: 1.02 }}
-      className="flex flex-col gap-1"
-    >
-      <span className="text-sm uppercase tracking-[0.16em] text-black font-medium">
-        {metric.label}
-      </span>
-      <span className="text-3xl md:text-4xl font-bold text-black tabular-nums tracking-tight">
-        {displayValues[idx]}
-      </span>
-    </MotionDiv>
-  ))}
-</MotionSection>
+        return () => clearInterval(interval);
+    }, []);
+
+    const goNextProject = () => {
+        setActiveProject((prev) => (prev + 1) % projects.length);
+    };
+
+    const goPrevProject = () => {
+        setActiveProject((prev) =>
+            prev === 0 ? projects.length - 1 : prev - 1
+        );
+    };
+
+    return (
+        <main className="relative min-h-screen text-slate-900">
+            {/* Scroll progress */}
+            <motion.div
+                style={{ scaleX }}
+                className="fixed left-0 top-0 z-40 h-[2px] w-full origin-left bg-gradient-to-r from-emerald-400 via-cyan-400 to-violet-400"
+            />
+
+            {/* Studio status badge */}
+            <motion.div
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.9, duration: 0.6, ease: "easeOut" }}
+                className="fixed right-5 top-5 z-40 hidden items-center gap-2 rounded-full border border-emerald-300/40 bg-white/80 px-3 py-1.5 text-[0.7rem] text-slate-900 shadow-lg backdrop-blur-xl sm:flex"
+            >
+                <span className="relative flex h-2 w-2">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/60" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-300" />
+                </span>
+                Accepting 1 new project for Q1
+            </motion.div>
+
+            {/* Main content */}
+            <motion.div
+                variants={pageEnter}
+                initial="hidden"
+                animate="show"
+                className="min-h-screen"
+            >
+                <div className="min-h-screen pb-20 pt-4 lg:pb-16 lg:pt-10  lg:pr-10 px-4">
+                    <div className="space-y-10">
+                        {/* HERO WITH BACKGROUND VIDEO + STRONG CTA NEAR BOTTOM */}
+                        <section
+                            id="hero"
+                            className="relative overflow-hidden rounded-3xl border border-slate-200 px-6 py-10 shadow-md lg:px-10 lg:py-16"
+                        >
+                            <video
+                                className="pointer-events-none absolute inset-0 h-full w-full object-cover z-0"
+                                autoPlay
+                                muted
+                                loop
+                                playsInline
+                            >
+                                <source src="/assets/videos/miyawaki.mp4" type="video/mp4" />
+                            </video>
+
+                            <div className="pointer-events-none absolute inset-0 bg-black/30 z-10" />
+
+                            <div className="relative z-20 grid gap-10 md:grid-cols-3 md:items-end">
+                                {/* Left: original content + brand title */}
+                                <div className="md:col-span-2 flex flex-col justify-between min-h-[280px] md:min-h-[340px] relative">
+                                    <div>
+                                        <MotionSpan
+                                            variants={fadeIn}
+                                            className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/90 px-3 py-1 text-[0.6rem] uppercase tracking-[0.25em] text-slate-900"
+                                        >
+                                            Studio Miyawaki
+                                            <span className="h-1 w-1 rounded-full bg-emerald-400" />
+                                            Web • SEO • Brand
+                                        </MotionSpan>
+
+                                        {/* Brand title block (new) */}
+                                        <div className="mt-6 space-y-2">
+                                            <h1 className="font-playfair text-[2.1rem] md:text-[2.5rem] lg:text-[2.8rem] leading-tight text-slate-50">
+                                                Studio{" "}
+                                                <span className="italic text-emerald-200">
+                                                    Miyawaki
+                                                </span>
+                                            </h1>
+                                            <p className="max-w-md text-[0.85rem] text-slate-100/90">
+                                                A Japanese‑inspired web studio for practices that grow like quiet
+                                                forests: dense with trust, calm in presentation, sharp in
+                                                performance.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    {/* CTA – unchanged */}
+                                    <motion.div
+                                        variants={fadeInUp}
+                                        initial="hidden"
+                                        animate="show"
+                                        transition={{ delay: 0.22 }}
+                                        className="mt-6 lg:ml-72 flex justify-center"
+                                    >
+                                        <motion.button
+                                            whileHover={{ y: -2, scale: 1.03 }}
+                                            whileTap={{ scale: 0.98 }}
+                                            className="inline-flex items-center gap-2 rounded-full bg-white/95 px-6 py-2.5 text-[0.8rem] font-semibold text-slate-900 shadow-md shadow-slate-900/30"
+                                        >
+                                            <span>Start my project with StudiYo Miyawaki</span>
+                                            <span className="text-xs">↗</span>
+                                        </motion.button>
+                                    </motion.div>
+                                </div>
+                            </div>
+                        </section>
 
 
-            {/* SERVICES (unchanged) */}
-            <MotionSection
-  id="services"
-  variants={staggerContainer}
-  initial="hidden"
-  whileInView="show"
-  viewport={{ once: true, amount: 0.2 }}
-  className="grid gap-4 md:grid-cols-12"
->
-  <MotionDiv
-    variants={fadeInUp}
-    className="
+
+                        {/* METRICS STRIP (unchanged) */}
+                        <MotionSection
+                            variants={staggerContainer}
+                            initial="hidden"
+                            whileInView="show"
+                            viewport={{ once: true, amount: 0.3 }}
+                            className="grid gap-4 md:grid-cols-4"
+                        >
+                            {metrics.map((metric, idx) => (
+                                <MotionDiv
+                                    key={metric.label}
+                                    variants={fadeInUp}
+                                    whileHover={{ y: -3, scale: 1.02 }}
+                                    className="flex flex-col gap-1"
+                                >
+                                    <span className="text-sm uppercase tracking-[0.16em] text-black font-medium">
+                                        {metric.label}
+                                    </span>
+                                    <span className="text-3xl md:text-4xl font-bold text-black tabular-nums tracking-tight">
+                                        {displayValues[idx]}
+                                    </span>
+                                </MotionDiv>
+                            ))}
+                        </MotionSection>
+
+
+                        {/* SERVICES (unchanged) */}
+                        <MotionSection
+                            id="services"
+                            variants={staggerContainer}
+                            initial="hidden"
+                            whileInView="show"
+                            viewport={{ once: true, amount: 0.2 }}
+                            className="grid gap-4 md:grid-cols-12"
+                        >
+                            <MotionDiv
+                                variants={fadeInUp}
+                                className="
       relative col-span-12 md:col-span-4
       flex flex-col justify-between
       overflow-hidden rounded-3xl
       border border-slate-200
       p-5 shadow-md"
-  >
-    {/* Background image layer */}
-    <div
-      className="absolute inset-0 z-0 bg-cover bg-center"
-      style={{
-        backgroundImage: "url('/assets/images/image_1.jpeg')",
-      }}
-    />
+                            >
+                                {/* Background image layer */}
+                                <div
+                                    className="absolute inset-0 z-0 bg-cover bg-center"
+                                    style={{
+                                        backgroundImage: "url('/assets/images/image_1.jpeg')",
+                                    }}
+                                />
 
-    {/* Light overlay */}
-    <div className="absolute inset-0 z-0 bg-white/60" />
+                                {/* Light overlay */}
+                                <div className="absolute inset-0 z-0 bg-white/60" />
 
-    {/* Content */}
-    <div className="relative z-10">
-      <p className="text-xs uppercase tracking-[0.25em] text-slate-700">
-        Services
-      </p>
-      <h2 className="mt-3 text-lg font-medium text-slate-900">
-        From story to system to stewardship.
-      </h2>
-      <p className="mt-3 text-[0.8rem] text-slate-700">
-        We design and build digital systems that stay relevant—strategically
-        planned, carefully engineered, and continuously improved over time.
-      </p>
-    </div>
-  </MotionDiv>
+                                {/* Content */}
+                                <div className="relative z-10">
+                                    <p className="text-xs uppercase tracking-[0.25em] text-slate-700">
+                                        Services
+                                    </p>
+                                    <h2 className="mt-3 text-lg font-medium text-slate-900">
+                                        From story to system to stewardship.
+                                    </h2>
+                                    <p className="mt-3 text-[0.8rem] text-slate-700">
+                                        We design and build digital systems that stay relevant—strategically
+                                        planned, carefully engineered, and continuously improved over time.
+                                    </p>
+                                </div>
+                            </MotionDiv>
 
-  <div className="col-span-12 grid gap-4 md:col-span-8 md:grid-cols-2">
-    {[
-  {
-    title: "Web Development",
-    description:
-      "We design and build flagship marketing websites and founder hubs using Next.js, focused on speed, security, and long-term scalability. From clean information architecture to conversion-driven UI, every page is engineered to load fast, rank well, and evolve easily as your product, brand, or audience grows. Ideal for startups, agencies, and founders who want a future-proof digital presence.",
-    route: "/services/webDevelopment",
-  },
-  {
-    title: "SEO Optimization",
-    description:
-      "Our SEO approach goes beyond keywords. We implement technical SEO foundations, smart information architecture, and on-page optimization that aligns with real search intent. By improving crawlability, performance, and content structure, we help your brand stay discoverable, competitive, and relevant in the searches that actually drive qualified traffic and long-term growth.",
-    route: "/services/seoOptimzation",
-  },
-  {
-    title: "Personal Branding",
-    description:
-      "We craft signature personal websites for founders, creators, and practitioners who want their story to feel authentic and intentional. From visual identity to content flow, every element is designed to speak in one clear voice — building trust, authority, and recognition while positioning you as a credible expert in your space.",
-    route: "/services/personalBranding",
-  },
-  {
-    title: "Performance Management",
-    description:
-      "We continuously monitor and refine your website through performance audits, analytics dashboards, and structured iteration cycles. By optimizing speed, UX, accessibility, and conversion paths, we ensure your digital presence stays sharp, reliable, and effective — even as traffic increases, features expand, and your brand scales.",
-    route: "/services/performanceManagement",
-  },
-]
-.map((service, index) => (
-      <MotionDiv
-        key={service.title}
-        variants={fadeInUp}
-        whileHover={{ y: -5, scale: 1.02 }}
-        transition={{ type: "spring", stiffness: 220, damping: 22 }}
-        className={`relative flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 shadow-md ${
-          index % 2 === 0 ? "min-h-[220px]" : "min-h-[260px]"
-        }`}
-      >
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.15),_transparent_55%)]"
-        />
+                            <div className="col-span-12 grid gap-4 md:col-span-8 md:grid-cols-2">
+                                {[
+                                    {
+                                        title: "Web Development",
+                                        description:
+                                            "We design and build flagship marketing websites and founder hubs using Next.js, focused on speed, security, and long-term scalability. From clean information architecture to conversion-driven UI, every page is engineered to load fast, rank well, and evolve easily as your product, brand, or audience grows. Ideal for startups, agencies, and founders who want a future-proof digital presence.",
+                                        route: "/services/webDevelopment",
+                                    },
+                                    {
+                                        title: "SEO Optimization",
+                                        description:
+                                            "Our SEO approach goes beyond keywords. We implement technical SEO foundations, smart information architecture, and on-page optimization that aligns with real search intent. By improving crawlability, performance, and content structure, we help your brand stay discoverable, competitive, and relevant in the searches that actually drive qualified traffic and long-term growth.",
+                                        route: "/services/seoOptimzation",
+                                    },
+                                    {
+                                        title: "Personal Branding",
+                                        description:
+                                            "We craft signature personal websites for founders, creators, and practitioners who want their story to feel authentic and intentional. From visual identity to content flow, every element is designed to speak in one clear voice — building trust, authority, and recognition while positioning you as a credible expert in your space.",
+                                        route: "/services/personalBranding",
+                                    },
+                                    {
+                                        title: "Performance Management",
+                                        description:
+                                            "We continuously monitor and refine your website through performance audits, analytics dashboards, and structured iteration cycles. By optimizing speed, UX, accessibility, and conversion paths, we ensure your digital presence stays sharp, reliable, and effective — even as traffic increases, features expand, and your brand scales.",
+                                        route: "/services/performanceManagement",
+                                    },
+                                ]
+                                    .map((service, index) => (
+                                        <MotionDiv
+                                            key={service.title}
+                                            variants={fadeInUp}
+                                            whileHover={{ y: -5, scale: 1.02 }}
+                                            transition={{ type: "spring", stiffness: 220, damping: 22 }}
+                                            className={`relative flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 shadow-md ${index % 2 === 0 ? "min-h-[220px]" : "min-h-[260px]"
+                                                }`}
+                                        >
+                                            <div
+                                                aria-hidden
+                                                className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.15),_transparent_55%)]"
+                                            />
 
-        <div className="relative">
-          <p className="text-sm font-medium text-slate-900">
-            {service.title}
-          </p>
-          <p className="mt-2 text-[0.75rem] text-slate-700">
-            {service.description}
-          </p>
-        </div>
+                                            <div className="relative">
+                                                <p className="text-sm font-medium text-slate-900">
+                                                    {service.title}
+                                                </p>
+                                                <p className="mt-2 text-[0.75rem] text-slate-700">
+                                                    {service.description}
+                                                </p>
+                                            </div>
 
-        <Link
-          href={service.route}
-          className="relative mt-4 inline-flex items-center gap-1 text-[0.7rem] text-emerald-600 hover:text-emerald-500"
-        >
-          Learn more <span>↗</span>
-        </Link>
-      </MotionDiv>
-    ))}
-  </div>
-</MotionSection>
-
-
-           
-
-
-
-            {/* ABOUT – BIGGER, DEDICATED SECTION AFTER PROCESS */}
-            <MotionSection
-              id="about"
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.25 }}
-              className="relative overflow-hidden rounded-3xl border border-slate-200 shadow-md"
-            >
-             
-              <p className="text-xs uppercase tracking-[0.25em] text-slate-700 m-5">
-                        About Us
-              </p>
-            
-
-              {/* Content */}
-              <div className="relative z-10 px-5 py-8 md:px-8">
-  <div className="grid gap-6 md:grid-cols-12 items-start">
-    {/* Card 1: About + Japanese concepts slider */}
-    <MotionDiv
-      variants={fadeInUp}
-      className="col-span-12 md:col-span-6 space-y-4 rounded-3xl border border-slate-700/60 bg-slate-900/80 px-5 py-5 shadow-md"
-    >
-      <div className="space-y-2">
-        <p className="text-xs uppercase tracking-[0.25em] text-emerald-200">
-          About & concepts
-        </p>
-        <h2 className="text-xl font-medium text-white">
-          The thinking behind StudiYo Miyawaki.
-        </h2>
-      </div>
-
-      <div className="mt-2">
-        {aboutSlides.map((slide, index) =>
-          index === activeAboutIndex ? (
-            <motion.div
-              key={slide.id}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-              className="space-y-2"
-            >
-              <p className="text-[0.7rem] uppercase tracking-[0.2em] text-emerald-200">
-                {slide.tagline}
-              </p>
-              <p className="text-sm font-semibold text-slate-50">
-                {slide.title}
-              </p>
-              <p className="text-[0.85rem] text-slate-200">
-                {slide.body}
-              </p>
-            </motion.div>
-          ) : null
-        )}
-      </div>
-
-      <div className="mt-4 flex justify-center gap-1.5">
-        {aboutSlides.map((_, idx) => (
-          <button
-            key={idx}
-            type="button"
-            onClick={() => setActiveAboutIndex(idx)}
-            className={`h-1.5 w-1.5 rounded-full transition ${
-              idx === activeAboutIndex ? "bg-emerald-300" : "bg-slate-500/60"
-            }`}
-          />
-        ))}
-      </div>
-    </MotionDiv>
-
-    {/* Card 2: Team slider */}
-    <MotionDiv
-      variants={fadeInUp}
-      className="col-span-12 md:col-span-6 rounded-3xl border border-slate-200 bg-white px-5 py-5 shadow-md"
-    >
-      <div className="mb-3 space-y-1">
-        <p className="text-xs uppercase tracking-[0.25em] text-slate-600">
-          Team
-        </p>
-        <h2 className="text-sm font-semibold text-slate-900">
-          The people you&apos;ll work with.
-        </h2>
-      </div>
-
-      <div className="relative">
-        {teamSlides.map((member, index) =>
-          index === activeTeamIndex ? (
-            <motion.div
-              key={member.id}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-              className="flex flex-col gap-3"
-            >
-              <div className="flex items-center gap-3">
-                <div className="h-14 w-14 overflow-hidden rounded-2xl bg-slate-200">
-                  <Image
-                    src={member.image}
-                    alt={member.name}
-                    width={80}
-                    height={80}
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-slate-900">
-                    {member.name}
-                  </p>
-                  <p className="text-[0.72rem] uppercase tracking-[0.16em] text-slate-600">
-                    {member.role}
-                  </p>
-                </div>
-              </div>
-
-              <p className="text-[0.8rem] text-slate-700">
-                {member.bio}
-              </p>
-            </motion.div>
-          ) : null
-        )}
-      </div>
-
-      <div className="mt-4 flex justify-center gap-1.5">
-        {teamSlides.map((_, idx) => (
-          <button
-            key={idx}
-            type="button"
-            onClick={() => setActiveTeamIndex(idx)}
-            className={`h-1.5 w-1.5 rounded-full transition ${
-              idx === activeTeamIndex ? "bg-slate-900" : "bg-slate-400/70"
-            }`}
-          />
-        ))}
-      </div>
-    </MotionDiv>
-  </div>
-</div>
-
-            </MotionSection>
+                                            <Link
+                                                href={service.route}
+                                                className="relative mt-4 inline-flex items-center gap-1 text-[0.7rem] text-emerald-600 hover:text-emerald-500"
+                                            >
+                                                Learn more <span>↗</span>
+                                            </Link>
+                                        </MotionDiv>
+                                    ))}
+                            </div>
+                        </MotionSection>
 
 
 
 
 
-            {/* PROJECTS (unchanged) */}
-            <section className="relative flex items-center gap-6">
-      {/* OUTSIDE VERTICAL LABEL */}
-      <div className="flex h-[360px] items-center">
-        <span
-          className="select-none text-[1.2rem] font-medium uppercase tracking-[0.55em] text-slate-400"
-          style={{
-            writingMode: "vertical-rl",
-            transform: "rotate(180deg)",
-          }}
-        >
-          Our work
-        </span>
-      </div>
 
-      {/* MAIN SHOWCASE */}
-      <div className="relative flex-1 h-[360px] overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-md">
-        {/* subtle enhancement */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(16,185,129,0.12),_transparent_65%)]"
-        />
+                        {/* ABOUT – BIGGER, DEDICATED SECTION AFTER PROCESS */}
+                        <MotionSection
+                            id="about"
+                            variants={staggerContainer}
+                            initial="hidden"
+                            whileInView="show"
+                            viewport={{ once: true, amount: 0.25 }}
+                            className="relative overflow-hidden rounded-3xl border border-slate-200 shadow-md"
+                        >
 
-        {/* LEFT ARROW */}
-        <button
-          onClick={goPrevProject}
-          aria-label="Previous project"
-          className="
+                            <p className="text-xs uppercase tracking-[0.25em] text-slate-700 m-5">
+                                About Us
+                            </p>
+
+
+                            {/* Content */}
+                            <div className="relative z-10 px-5 py-8 md:px-8">
+                                <div className="grid gap-6 md:grid-cols-12 items-start">
+                                    {/* Card 1: About + Japanese concepts slider */}
+                                    <MotionDiv
+                                        variants={fadeInUp}
+                                        className="col-span-12 md:col-span-6 space-y-4 rounded-3xl border border-slate-700/60 bg-slate-900/80 px-5 py-5 shadow-md"
+                                    >
+                                        <div className="space-y-2">
+                                            <p className="text-xs uppercase tracking-[0.25em] text-emerald-200">
+                                                About & concepts
+                                            </p>
+                                            <h2 className="text-xl font-medium text-white">
+                                                The thinking behind StudiYo Miyawaki.
+                                            </h2>
+                                        </div>
+
+                                        <div className="mt-2">
+                                            {aboutSlides.map((slide, index) =>
+                                                index === activeAboutIndex ? (
+                                                    <motion.div
+                                                        key={slide.id}
+                                                        initial={{ opacity: 0, y: 12 }}
+                                                        animate={{ opacity: 1, y: 0 }}
+                                                        exit={{ opacity: 0, y: -12 }}
+                                                        transition={{ duration: 0.4, ease: "easeOut" }}
+                                                        className="space-y-2"
+                                                    >
+                                                        <p className="text-[0.7rem] uppercase tracking-[0.2em] text-emerald-200">
+                                                            {slide.tagline}
+                                                        </p>
+                                                        <p className="text-sm font-semibold text-slate-50">
+                                                            {slide.title}
+                                                        </p>
+                                                        <p className="text-[0.85rem] text-slate-200">
+                                                            {slide.body}
+                                                        </p>
+                                                    </motion.div>
+                                                ) : null
+                                            )}
+                                        </div>
+
+                                        <div className="mt-4 flex justify-center gap-1.5">
+                                            {aboutSlides.map((_, idx) => (
+                                                <button
+                                                    key={idx}
+                                                    type="button"
+                                                    onClick={() => setActiveAboutIndex(idx)}
+                                                    className={`h-1.5 w-1.5 rounded-full transition ${idx === activeAboutIndex ? "bg-emerald-300" : "bg-slate-500/60"
+                                                        }`}
+                                                />
+                                            ))}
+                                        </div>
+                                    </MotionDiv>
+
+                                    {/* Card 2: Team slider */}
+                                    <MotionDiv
+                                        variants={fadeInUp}
+                                        className="col-span-12 md:col-span-6 rounded-3xl border border-slate-200 bg-white px-5 py-5 shadow-md"
+                                    >
+                                        <div className="mb-3 space-y-1">
+                                            <p className="text-xs uppercase tracking-[0.25em] text-slate-600">
+                                                Team
+                                            </p>
+                                            <h2 className="text-sm font-semibold text-slate-900">
+                                                The people you&apos;ll work with.
+                                            </h2>
+                                        </div>
+
+                                        <div className="relative">
+                                            {teamSlides.map((member, index) =>
+                                                index === activeTeamIndex ? (
+                                                    <motion.div
+                                                        key={member.id}
+                                                        initial={{ opacity: 0, y: 12 }}
+                                                        animate={{ opacity: 1, y: 0 }}
+                                                        exit={{ opacity: 0, y: -12 }}
+                                                        transition={{ duration: 0.4, ease: "easeOut" }}
+                                                        className="flex flex-col gap-3"
+                                                    >
+                                                        <div className="flex items-center gap-3">
+                                                            <div className="h-14 w-14 overflow-hidden rounded-2xl bg-slate-200">
+                                                                <Image
+                                                                    src={member.image}
+                                                                    alt={member.name}
+                                                                    width={80}
+                                                                    height={80}
+                                                                    className="h-full w-full object-cover"
+                                                                />
+                                                            </div>
+                                                            <div>
+                                                                <p className="text-sm font-semibold text-slate-900">
+                                                                    {member.name}
+                                                                </p>
+                                                                <p className="text-[0.72rem] uppercase tracking-[0.16em] text-slate-600">
+                                                                    {member.role}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+
+                                                        <p className="text-[0.8rem] text-slate-700">
+                                                            {member.bio}
+                                                        </p>
+                                                    </motion.div>
+                                                ) : null
+                                            )}
+                                        </div>
+
+                                        <div className="mt-4 flex justify-center gap-1.5">
+                                            {teamSlides.map((_, idx) => (
+                                                <button
+                                                    key={idx}
+                                                    type="button"
+                                                    onClick={() => setActiveTeamIndex(idx)}
+                                                    className={`h-1.5 w-1.5 rounded-full transition ${idx === activeTeamIndex ? "bg-slate-900" : "bg-slate-400/70"
+                                                        }`}
+                                                />
+                                            ))}
+                                        </div>
+                                    </MotionDiv>
+                                </div>
+                            </div>
+
+                        </MotionSection>
+
+
+
+
+
+                        {/* PROJECTS (unchanged) */}
+                        <section className="relative flex items-center gap-6">
+                            {/* OUTSIDE VERTICAL LABEL */}
+                            <div className="flex h-[360px] items-center">
+                                <span
+                                    className="select-none text-[1.2rem] font-medium uppercase tracking-[0.55em] text-slate-400"
+                                    style={{
+                                        writingMode: "vertical-rl",
+                                        transform: "rotate(180deg)",
+                                    }}
+                                >
+                                    Our work
+                                </span>
+                            </div>
+
+                            {/* MAIN SHOWCASE */}
+                            <div className="relative flex-1 h-[360px] overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-md">
+                                {/* subtle enhancement */}
+                                <div
+                                    aria-hidden
+                                    className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(16,185,129,0.12),_transparent_65%)]"
+                                />
+
+                                {/* LEFT ARROW */}
+                                <button
+                                    onClick={goPrevProject}
+                                    aria-label="Previous project"
+                                    className="
             absolute left-4 top-1/2 -translate-y-1/2 z-20
             flex h-9 w-9 items-center justify-center
             rounded-full border border-slate-300
@@ -781,15 +778,15 @@ const goPrevProject = () => {
             hover:border-slate-400
             transition
           "
-        >
-          ←
-        </button>
+                                >
+                                    ←
+                                </button>
 
-        {/* RIGHT ARROW */}
-        <button
-          onClick={goNextProject}
-          aria-label="Next project"
-          className="
+                                {/* RIGHT ARROW */}
+                                <button
+                                    onClick={goNextProject}
+                                    aria-label="Next project"
+                                    className="
             absolute right-4 top-1/2 -translate-y-1/2 z-20
             flex h-9 w-9 items-center justify-center
             rounded-full border border-slate-300
@@ -798,199 +795,206 @@ const goPrevProject = () => {
             hover:border-slate-400
             transition
           "
-        >
-          →
-        </button>
+                                >
+                                    →
+                                </button>
 
-        {/* SLIDER */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeProject}
-            initial={{ opacity: 0, x: 80 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -80 }}
-            transition={{ duration: 0.6, ease: "easeInOut" }}
-            className="relative h-full w-full"
-          >
-            {/* BIG GIF VIEWER */}
-            <div className="relative h-full w-full bg-slate-100">
-              <Image
-                src={projects[activeProject].gif}
-                alt={projects[activeProject].title}
-                fill
-                className="object-cover"
-                priority
-              />
-
-              <span className="absolute left-5 top-5 rounded-full bg-emerald-500/90 px-3 py-1 text-[0.65rem] font-medium text-white backdrop-blur-sm">
-                Featured
-              </span>
-            </div>
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
-      {/* HELPER TEXT */}
-      <p className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-[0.65rem] text-slate-500">
-        Click on the arrows to see other projects.
-      </p>
-    </section>
+                                {/* SLIDER */}
+                                <AnimatePresence mode="wait">
+                                    <motion.div
+                                        key={activeProject}
+                                        initial={{ opacity: 0, x: 80 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        exit={{ opacity: 0, x: -80 }}
+                                        transition={{ duration: 0.6, ease: "easeInOut" }}
+                                        className="relative h-full w-full"
+                                    >
+                                        {/* BIG GIF VIEWER */}
+                                        <div className="relative h-full w-full bg-slate-100">
+                                            <video
+                                                key={projects[activeProject].gif}
+                                                className="h-full w-full object-cover"
+                                                autoPlay
+                                                muted
+                                                loop
+                                                playsInline
+                                            >
+                                                <source
+                                                    src={projects[activeProject].gif}
+                                                    type="video/mp4"
+                                                />
+                                            </video>
 
 
+                                            <span className="absolute left-5 top-5 rounded-full bg-emerald-500/90 px-3 py-1 text-[0.65rem] font-medium text-white backdrop-blur-sm">
+                                                Featured
+                                            </span>
+                                        </div>
+                                    </motion.div>
+                                </AnimatePresence>
+                            </div>
 
-
-
-
-            {/* TESTIMONIALS */}
-            <MotionSection
-  variants={staggerContainer}
-  initial="hidden"
-  whileInView="show"
-  viewport={{ once: true, amount: 0.25 }}
-  className="space-y-4"
->
-  {/* Subtle heading */}
-  <p className="text-xs uppercase tracking-[0.25em] text-slate-600">
-    Testimonials
-  </p>
-
-  {/* Slider wrapper */}
-  <div className="relative overflow-hidden">
-    <motion.div
-      animate={{ x: "-33.3333%" }}
-      transition={{ duration: 0.6, ease: "easeInOut" }}
-      key={startIndex}
-      className="flex gap-4"
-    >
-      {[0, 1, 2, 3].map((offset) => {
-        const t =
-          testimonials[(startIndex + offset) % testimonials.length];
-
-        return (
-          <div
-            key={t.name + offset}
-            className="min-w-[33.3333%]"
-          >
-            <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 shadow-md">
-              <div
-                aria-hidden
-                className="pointer-events-none absolute inset-0 bg-[url('/images/testimonials-bg.jpg')] bg-cover bg-center opacity-20 mix-blend-soft-light"
-              />
-              <p className="relative text-[0.8rem] leading-relaxed text-slate-700">
-                “{t.quote}”
-              </p>
-              <div className="relative mt-4 text-[0.7rem] text-slate-600">
-                <p className="font-medium text-slate-900">{t.name}</p>
-                <p>{t.role}</p>
-              </div>
-            </div>
-          </div>
-        );
-      })}
-    </motion.div>
-  </div>
-</MotionSection>
+                            {/* HELPER TEXT */}
+                            <p className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-[0.65rem] text-slate-500">
+                                Click on the arrows to see other projects.
+                            </p>
+                        </section>
 
 
 
 
-            
-            {/* CONTACT */}
-<MotionSection
-  id="contact"
-  variants={fadeInUp}
-  initial="hidden"
-  whileInView="show"
-  viewport={{ once: true, amount: 0.3 }}
-  className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white px-8 py-14 shadow-md md:px-16"
->
-  <div className="mx-auto max-w-4xl">
-    {/* Header */}
-    <div className="mb-10 max-w-xl space-y-3">
-      <p className="text-xs uppercase tracking-[0.25em] text-slate-600">
-        Contact
-      </p>
-      <h2 className="text-2xl font-medium text-slate-900">
-        Let’s start with the real version.
-      </h2>
-      <p className="text-[0.9rem] leading-relaxed text-slate-700">
-        You don’t need a perfect brief. Share context, constraints, or even
-        something half-formed. We’ll respond with a clear next step.
-      </p>
-    </div>
-
-    {/* Form */}
-    <form className="grid gap-6 md:grid-cols-2">
-      {/* Name */}
-      <div className="flex flex-col gap-1.5">
-        <label className="text-[0.75rem] font-medium text-slate-700">
-          Your Name
-        </label>
-        <input
-          type="text"
-          placeholder="Enter your name"
-          className="rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/30"
-        />
-      </div>
-
-      {/* Phone */}
-      <div className="flex flex-col gap-1.5">
-        <label className="text-[0.75rem] font-medium text-slate-700">
-          Phone Number
-        </label>
-        <input
-          type="tel"
-          placeholder="e.g., 998-877-6655"
-          className="rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/30"
-        />
-      </div>
-
-      {/* Email */}
-      <div className="md:col-span-2 flex flex-col gap-1.5">
-        <label className="text-[0.75rem] font-medium text-slate-700">
-          Email Address
-        </label>
-        <input
-          type="email"
-          placeholder="name@domain.com"
-          className="rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/30"
-        />
-      </div>
-
-      {/* Message */}
-      <div className="md:col-span-2 flex flex-col gap-1.5">
-        <label className="text-[0.75rem] font-medium text-slate-700">
-          Brief Message
-        </label>
-        <textarea
-          rows={5}
-          placeholder="What are you building? What problem are you trying to solve?"
-          className="rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/30"
-        />
-      </div>
-
-      {/* CTA */}
-      <div className="md:col-span-2 mt-2 flex items-center justify-between">
-        <p className="text-[0.7rem] text-slate-500">
-          Typical reply within 24–48 business hours.
-        </p>
-
-        <button
-          type="submit"
-          className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-8 py-3 text-[0.8rem] font-semibold text-white shadow-sm transition hover:bg-emerald-400"
-        >
-          Send inquiry
-          <span>↗</span>
-        </button>
-      </div>
-    </form>
-  </div>
-</MotionSection>
 
 
-          </div>
-        </div>
-      </motion.div>
-    </main>
-  );
+                        {/* TESTIMONIALS */}
+                        <MotionSection
+                            variants={staggerContainer}
+                            initial="hidden"
+                            whileInView="show"
+                            viewport={{ once: true, amount: 0.25 }}
+                            className="space-y-4"
+                        >
+                            {/* Subtle heading */}
+                            <p className="text-xs uppercase tracking-[0.25em] text-slate-600">
+                                Testimonials
+                            </p>
+
+                            {/* Slider wrapper */}
+                            <div className="relative overflow-hidden">
+                                <motion.div
+                                    animate={{ x: "-33.3333%" }}
+                                    transition={{ duration: 0.6, ease: "easeInOut" }}
+                                    key={startIndex}
+                                    className="flex gap-4"
+                                >
+                                    {[0, 1, 2, 3].map((offset) => {
+                                        const t =
+                                            testimonials[(startIndex + offset) % testimonials.length];
+
+                                        return (
+                                            <div
+                                                key={t.name + offset}
+                                                className="min-w-[33.3333%]"
+                                            >
+                                                <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 shadow-md">
+                                                    <div
+                                                        aria-hidden
+                                                        className="pointer-events-none absolute inset-0 bg-[url('/images/testimonials-bg.jpg')] bg-cover bg-center opacity-20 mix-blend-soft-light"
+                                                    />
+                                                    <p className="relative text-[0.8rem] leading-relaxed text-slate-700">
+                                                        “{t.quote}”
+                                                    </p>
+                                                    <div className="relative mt-4 text-[0.7rem] text-slate-600">
+                                                        <p className="font-medium text-slate-900">{t.name}</p>
+                                                        <p>{t.role}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </motion.div>
+                            </div>
+                        </MotionSection>
+
+
+
+
+
+                        {/* CONTACT */}
+                        <MotionSection
+                            id="contact"
+                            variants={fadeInUp}
+                            initial="hidden"
+                            whileInView="show"
+                            viewport={{ once: true, amount: 0.3 }}
+                            className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white px-8 py-14 shadow-md md:px-16"
+                        >
+                            <div className="mx-auto max-w-4xl">
+                                {/* Header */}
+                                <div className="mb-10 max-w-xl space-y-3">
+                                    <p className="text-xs uppercase tracking-[0.25em] text-slate-600">
+                                        Contact
+                                    </p>
+                                    <h2 className="text-2xl font-medium text-slate-900">
+                                        Let’s start with the real version.
+                                    </h2>
+                                    <p className="text-[0.9rem] leading-relaxed text-slate-700">
+                                        You don’t need a perfect brief. Share context, constraints, or even
+                                        something half-formed. We’ll respond with a clear next step.
+                                    </p>
+                                </div>
+
+                                {/* Form */}
+                                <form className="grid gap-6 md:grid-cols-2">
+                                    {/* Name */}
+                                    <div className="flex flex-col gap-1.5">
+                                        <label className="text-[0.75rem] font-medium text-slate-700">
+                                            Your Name
+                                        </label>
+                                        <input
+                                            type="text"
+                                            placeholder="Enter your name"
+                                            className="rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/30"
+                                        />
+                                    </div>
+
+                                    {/* Phone */}
+                                    <div className="flex flex-col gap-1.5">
+                                        <label className="text-[0.75rem] font-medium text-slate-700">
+                                            Phone Number
+                                        </label>
+                                        <input
+                                            type="tel"
+                                            placeholder="e.g., 998-877-6655"
+                                            className="rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/30"
+                                        />
+                                    </div>
+
+                                    {/* Email */}
+                                    <div className="md:col-span-2 flex flex-col gap-1.5">
+                                        <label className="text-[0.75rem] font-medium text-slate-700">
+                                            Email Address
+                                        </label>
+                                        <input
+                                            type="email"
+                                            placeholder="name@domain.com"
+                                            className="rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/30"
+                                        />
+                                    </div>
+
+                                    {/* Message */}
+                                    <div className="md:col-span-2 flex flex-col gap-1.5">
+                                        <label className="text-[0.75rem] font-medium text-slate-700">
+                                            Brief Message
+                                        </label>
+                                        <textarea
+                                            rows={5}
+                                            placeholder="What are you building? What problem are you trying to solve?"
+                                            className="rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/30"
+                                        />
+                                    </div>
+
+                                    {/* CTA */}
+                                    <div className="md:col-span-2 mt-2 flex items-center justify-between">
+                                        <p className="text-[0.7rem] text-slate-500">
+                                            Typical reply within 24–48 business hours.
+                                        </p>
+
+                                        <button
+                                            type="submit"
+                                            className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-8 py-3 text-[0.8rem] font-semibold text-white shadow-sm transition hover:bg-emerald-400"
+                                        >
+                                            Send inquiry
+                                            <span>↗</span>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </MotionSection>
+
+
+                    </div>
+                </div>
+            </motion.div>
+        </main>
+    );
 }
