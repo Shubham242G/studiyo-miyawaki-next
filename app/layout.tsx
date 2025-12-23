@@ -34,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${playfair.variable} ${geistMono.variable}text-slate-900 font-sans`}
+        className={`${geistSans.variable} ${playfair.variable} ${geistMono.variable} text-slate-900 font-sans`}
       >
         <Sidebar />
 
