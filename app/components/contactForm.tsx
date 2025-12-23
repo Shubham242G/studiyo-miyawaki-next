@@ -23,18 +23,24 @@ export function ContactFormSection({
       id="contact"
       className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white px-8 py-14 shadow-md md:px-16"
     >
-      <div className="mx-auto max-w-4xl">
+      {/* Gradient layer matching service cards */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#b36666]/15 via-transparent to-transparent"
+      />
+      
+      <div className="relative z-10 mx-auto max-w-4xl">
         {/* Header */}
         <div className="mb-10 max-w-xl space-y-3">
           <p className="text-xs uppercase tracking-[0.25em] font-semibold text-slate-600">
             Contact
           </p>
           <h2 className="text-2xl font-bold text-slate-900">
-            Let’s start with the real version.
+            Let's start with the real version.
           </h2>
           <p className="text-[0.9rem] leading-relaxed text-slate-700">
-            You don’t need a perfect brief. Share context, constraints, or even
-            something half-formed. We’ll respond with a clear next step.
+            You don't need a perfect brief. Share context, constraints, or even
+            something half-formed. We'll respond with a clear next step.
           </p>
         </div>
 

@@ -67,7 +67,7 @@ const services = [
     ],
   },
   {
-    title: "Personal Branding",
+    title: "Social media handling",
     description:
       "Signature personal websites for founders and professionals who want trust, clarity, and authority.",
     process: [
@@ -78,7 +78,7 @@ const services = [
     ],
   },
   {
-    title: "Performance Management",
+    title: "Performance Marketing",
     description:
       "Continuous performance, UX, and conversion optimization as your brand scales.",
     process: [
@@ -99,7 +99,7 @@ const testimonials = [
   },
   {
     name: "Dr. Ananya Verma",
-    role: "Founder, MedNLaw",
+    role: "Peesonal branding",
     quote:
       "The redesign removed anxiety from the experience. Trust increased instantly.",
   },
@@ -116,7 +116,7 @@ const testimonials = [
       "Every screen felt intentional. It didn’t feel templated.",
   },
   {
-    name: "Amit Jain",
+    name: "Gaurav Sharma",
     role: "Founder, Unsaathi",
     quote:
       "They think like product people, not trend chasers.",
@@ -137,6 +137,24 @@ export default function ServicesPage() {
 
   return (
     <main className="relative min-h-screen px-4 py-20 md:px-6 text-slate-900">
+
+      {/* ================= SERVICES BANNER ================= */}
+      <section className="relative max-w-6xl mx-auto mb-32 rounded-3xl overflow-hidden border border-slate-200 h-[260px]">
+        <div
+          className="absolute inset-4 bg-cover bg-center rounded-2xl"
+          style={{ backgroundImage: "url(/assets/images/aboutUs.jpg)" }}
+        />
+        <div className="absolute inset-4 bg-black/45 rounded-2xl" />
+
+        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center text-white">
+          <p className="text-xs uppercase tracking-widest">
+            Studio Miyawaki
+          </p>
+          <h1 className="mt-2 text-3xl md:text-4xl font-medium">
+            Services
+          </h1>
+        </div>
+      </section>
 
       {/* ================= SERVICES ================= */}
       <section className="max-w-6xl mx-auto mb-32">
@@ -168,18 +186,15 @@ export default function ServicesPage() {
 
       {/* ================= OUR WORK ================= */}
       <section className="relative max-w-6xl mx-auto mb-32 flex items-center gap-6">
-
-        {/* vertical label */}
         <div className="hidden md:flex h-[380px] items-center">
           <span
             className="select-none font-bold text-sm tracking-[0.45em] uppercase text-slate-400"
             style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
           >
-            Our Work
+            Project highlights
           </span>
         </div>
 
-        {/* video */}
         <div className="relative flex-1 h-[380px] rounded-3xl overflow-hidden border border-slate-200 bg-white shadow-lg">
           <AnimatePresence mode="wait">
             <motion.div

@@ -15,7 +15,7 @@ export function Sidebar() {
             <Link href="/pages/home" className="flex items-center gap-3 group">
               <div>
                 <p className="text-[0.75rem] font-semibold tracking-[0.26em] text-slate-900 uppercase">
-                  StudiYo Miyawaki
+                  Studio Miyawaki
                 </p>
                 <p className="text-[0.65rem] text-slate-500">
                   Web • SEO • Brand
