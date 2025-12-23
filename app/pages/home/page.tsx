@@ -129,7 +129,7 @@ const aboutSlides = [
         tagline: "Studio",
         title: "A small team, on purpose.",
         body:
-            "StudiYo Miyawaki is a compact studio that prefers a few deep projects over a crowded pipeline. The same people who join your first call stay with you through launch.",
+            "Studio Miyawaki is a compact studio that prefers a few deep projects over a crowded pipeline. The same people who join your first call stay with you through launch.",
     },
     {
         id: 1,
@@ -176,7 +176,7 @@ const teamSlides = [
         name: "Shubham Godiyal",
         role: "Web Developer",
         bio:
-            "Shubham leads development at StudiYo Miyawaki, turning messy ideas into fast, maintainable Next.js builds that feel calm to use and easy to extend.",
+            "Shubham leads development at Studio Miyawaki, turning messy ideas into fast, maintainable Next.js builds that feel calm to use and easy to extend.",
         image: "/assets/images/shubham.png",
     },
 
@@ -399,7 +399,6 @@ export default function Home() {
                                     variants={fadeIn}
                                     className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/90 px-3 py-1 text-[0.6rem] uppercase tracking-[0.25em] text-slate-900"
                                 >
-                                    Studio Miyawaki
                                     <span className="h-1 w-1 rounded-full bg-emerald-400" />
                                     Web • SEO • Brand
                                 </MotionSpan>
@@ -620,7 +619,7 @@ export default function Home() {
                                         </p>
 
                                         <h2 className="text-lg font-bold text-white">
-                                            The thinking behind StudiYo Miyawaki.
+                                            The thinking behind Studio Miyawaki.
                                         </h2>
                                     </div>
 
@@ -664,80 +663,74 @@ export default function Home() {
                                 </MotionDiv>
 
                                 {/* RIGHT — WHITE CARD */}
-                                <MotionDiv
-                                    variants={fadeInUp}
-                                    className="
-        col-span-12 md:col-span-8
-        h-full
-        flex flex-col
-        rounded-3xl
-        border border-slate-200
-        bg-white
-        px-8 py-8
-        shadow-md
-      "
-                                >
-                                    {/* HEADER */}
-                                    <div className="mb-5">
-                                        <p className="text-xs uppercase tracking-[0.3em] font-semibold text-slate-500">
-                                            Our team
-                                        </p>
-                                        <h2 className="mt-1 text-base font-bold text-slate-900">
-                                            The people you’ll work with.
-                                        </h2>
-                                    </div>
+                               <MotionDiv
+  variants={fadeInUp}
+  className="col-span-12 md:col-span-8 h-full flex flex-col rounded-3xl border border-slate-200 bg-white px-8 py-8 shadow-md"
+>
+  {/* HEADER */}
+  <div className="mb-5">
+    <p className="text-xs uppercase tracking-[0.3em] font-semibold text-slate-500">
+      Our team
+    </p>
+    <h2 className="mt-1 text-base font-bold text-slate-900">
+      The people you’ll work with.
+    </h2>
+  </div>
 
-                                    {/* SLIDER */}
-                                    <div className="relative flex-1 min-h-[420px]">
-                                        {teamSlides.map((member, index) =>
-                                            index === activeTeamIndex ? (
-                                                <motion.div
-                                                    key={member.id}
-                                                    initial={{ opacity: 0, y: 18 }}
-                                                    animate={{ opacity: 1, y: 0 }}
-                                                    transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                                                    className="flex h-full flex-col"
-                                                >
-                                                    {/* IMAGE */}
-                                                    <div className="relative mb-6 w-full flex-1 min-h-[360px] overflow-hidden rounded-3xl bg-slate-200">
-                                                        <Image
-                                                            src={member.image}
-                                                            alt={member.name}
-                                                            fill
-                                                            sizes="(min-width: 768px) 60vw, 100vw"
-                                                            className="object-cover object-top"
-                                                            priority
-                                                        />
-                                                    </div>
+  {/* SLIDER */}
+  <div className="relative flex-1 min-h-[420px]">
+    {teamSlides.map((member, index) =>
+      index === activeTeamIndex ? (
+        <motion.div
+          key={member.id}
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+          className="flex h-full flex-col"
+        >
+          {/* IMAGE */}
+          <div className="relative mb-6 w-full h-[360px] rounded-3xl overflow-hidden bg-white">
+            <Image
+              src={member.image}
+              alt={member.name}
+              fill
+              sizes="(min-width: 768px) 60vw, 100vw"
+              className="object-contain"
+              priority
+            />
+          </div>
 
-                                                    {/* NAME + ROLE */}
-                                                    <div className="text-center">
-                                                        <p className="text-lg font-semibold text-slate-900">
-                                                            {member.name}
-                                                        </p>
-                                                        <p className="mt-1 text-xs uppercase tracking-[0.25em] font-semibold text-slate-600">
-                                                            {member.role}
-                                                        </p>
-                                                    </div>
-                                                </motion.div>
-                                            ) : null
-                                        )}
-                                    </div>
+          {/* NAME + ROLE */}
+          <div className="text-center">
+            <p className="text-lg font-semibold text-slate-900">
+              {member.name}
+            </p>
+            <p className="mt-1 text-xs uppercase tracking-[0.25em] font-semibold text-slate-600">
+              {member.role}
+            </p>
+          </div>
+        </motion.div>
+      ) : null
+    )}
+  </div>
 
-                                    {/* DOT NAV */}
-                                    <div className="mt-6 flex justify-center gap-2">
-                                        {teamSlides.map((_, idx) => (
-                                            <button
-                                                key={idx}
-                                                onClick={() => setActiveTeamIndex(idx)}
-                                                className={`h-1.5 w-1.5 rounded-full transition ${idx === activeTeamIndex
-                                                        ? "bg-slate-900"
-                                                        : "bg-slate-400/60"
-                                                    }`}
-                                            />
-                                        ))}
-                                    </div>
-                                </MotionDiv>
+  {/* DOT NAV */}
+  <div className="mt-6 flex justify-center gap-2">
+    {teamSlides.map((_, idx) => (
+      <button
+        key={idx}
+        onClick={() => setActiveTeamIndex(idx)}
+        className={`h-1.5 w-1.5 rounded-full transition ${
+          idx === activeTeamIndex
+            ? "bg-slate-900"
+            : "bg-slate-400/60"
+        }`}
+      />
+    ))}
+  </div>
+</MotionDiv>
+
+
                             </div>
                         </MotionSection>
 

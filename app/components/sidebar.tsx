@@ -13,9 +13,6 @@ export function Sidebar() {
           <div className="relative flex h-full flex-col px-4 py-5">
             {/* Brand row */}
             <Link href="/pages/home" className="flex items-center gap-3 group">
-              <div className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-300 bg-white text-[0.6rem] font-semibold tracking-[0.28em] text-slate-900 shadow-sm group-hover:scale-[1.03] transition-transform">
-                SM
-              </div>
               <div>
                 <p className="text-[0.75rem] font-semibold tracking-[0.26em] text-slate-900 uppercase">
                   StudiYo Miyawaki
@@ -39,14 +36,6 @@ export function Sidebar() {
               <p className="text-[0.65rem] text-slate-400">Navigate</p>
 
               <Link
-                href="/pages/services"
-                className="group flex items-center justify-between rounded-full px-3 py-2 hover:scale-[1.02] transition-all"
-              >
-                <span className="font-medium">Services</span>
-                <span className="h-px w-6 bg-slate-300 group-hover:bg-slate-500 transition-all" />
-              </Link>
-
-              <Link
                 href="/pages/aboutUs"
                 className="group flex items-center justify-between rounded-full px-3 py-2 hover:scale-[1.02] transition-all"
               >
@@ -54,6 +43,13 @@ export function Sidebar() {
                 <span className="h-px w-6 bg-slate-300 group-hover:bg-slate-500 transition-all" />
               </Link>
 
+              <Link
+                href="/pages/services"
+                className="group flex items-center justify-between rounded-full px-3 py-2 hover:scale-[1.02] transition-all"
+              >
+                <span className="font-medium">Services</span>
+                <span className="h-px w-6 bg-slate-300 group-hover:bg-slate-500 transition-all" />
+              </Link>
               <Link
                 href="/pages/contact"
                 className="group flex items-center justify-between rounded-full px-3 py-2 hover:scale-[1.02] transition-all"
@@ -90,9 +86,6 @@ export function Sidebar() {
       <aside className="px-4 pt-6 pb-4 lg:hidden">
         <div className="relative flex flex-col rounded-3xl border border-slate-200 bg-white px-5 py-5 shadow-xl">
           <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-full border border-emerald-200/80 bg-emerald-500/10 text-[0.6rem] font-semibold tracking-[0.28em] text-emerald-700">
-              SM
-            </div>
             <div>
               <p className="text-[0.75rem] tracking-[0.25em] text-slate-900">
                 STUDIYO MIYAWAKI
@@ -107,11 +100,11 @@ export function Sidebar() {
             practices.
           </p>
           <nav className="mt-4 flex flex-wrap gap-3 text-[0.7rem] uppercase tracking-[0.16em] text-slate-600">
-            <Link href="/pages/services" className="hover:text-emerald-500">
-              Services
-            </Link>
             <Link href="/pages/aboutUs" className="hover:text-emerald-500">
               About
+            </Link>
+            <Link href="/pages/services" className="hover:text-emerald-500">
+              Services
             </Link>
             <Link href="/pages/contact" className="hover:text-emerald-500">
               Contact
