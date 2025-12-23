@@ -13,28 +13,28 @@ import { ContactFormSection } from "../../components/contactForm";
 
 const team = [
   {
-    name: "Shubham Godiyal",
-    role: "Development & Architecture",
-    bio: "Builds fast, maintainable web systems with clarity and performance.",
-    image: "/assets/images/shubham.jpg",
+    name: "Vatsala Singh",
+    role: "Project Manager",
+    bio: "Shapes language and search foundations clearly for humans and search engines.",
+    image: "/assets/images/vatsala.png",
   },
   {
-    name: "Vatsala Singh",
-    role: "Content & SEO",
-    bio: "Shapes language and search foundations clearly for humans and search engines.",
-    image: "/assets/images/vatsala.jpg",
+    name: "Shubham Godiyal",
+    role: "Web Developer",
+    bio: "Builds fast, maintainable web systems with clarity and performance.",
+    image: "/assets/images/shubham.png",
   },
   {
     name: "Ekumpreet Singh",
-    role: "Visual Design",
+    role: "Graphic Designer",
     bio: "Designs intentional visual systems across web and brand touchpoints.",
-    image: "/assets/images/ekam.jpg",
+    image: "/assets/images/ekam.png",
   },
   {
     name: "Manan Kapoor",
-    role: "Operations & Publishing",
+    role: "Social Media Analyst",
     bio: "Keeps launches smooth by structuring, preparing, and validating content with precision.",
-    image: "/assets/images/manan.jpg",
+    image: "/assets/images/manan.png",
   },
 ];
 
@@ -69,29 +69,45 @@ export default function AboutPage() {
 
   return (
     <main className="relative min-h-screen text-slate-900">
+
+      {/* ===== HEADER BANNER (ONLY CHANGE) ===== */}
+      <MotionDiv
+  variants={fadeInUp}
+  initial="hidden"
+  animate="show"
+  className="relative w-full h-[240px] md:h-[300px] mx-4 my-6 rounded-2xl overflow-hidden shadow-lg"
+>
+  {/* Background image */}
+  <div
+    className="absolute inset-0 bg-cover bg-center transform scale-105"
+    style={{ backgroundImage: "url(/assets/images/aboutUs.jpg)" }}
+  />
+
+  {/* Black overlay */}
+  <div className="absolute inset-0 bg-black/60" />
+
+  {/* Content */}
+  <div className="relative z-10 h-full px-6 flex items-center justify-between">
+    <div>
+      <p className="text-xs uppercase tracking-widest text-white/80">
+        About
+      </p>
+      <h1 className="mt-3 text-3xl font-medium text-white md:text-4xl">
+        A small studio, by choice.
+      </h1>
+    </div>
+
+    <Link
+      href="/"
+      className="hidden text-xs uppercase tracking-[0.25em] text-white/70 hover:text-white md:block"
+    >
+      Back to home ↗
+    </Link>
+  </div>
+</MotionDiv>
+      {/* ===== END HEADER BANNER ===== */}
+
       <div className="mx-auto max-w-6xl px-4 py-16 md:px-6">
-        {/* HEADER */}
-        <MotionDiv
-          variants={fadeInUp}
-          initial="hidden"
-          animate="show"
-          className="mb-16 flex items-end justify-between"
-        >
-          <div>
-            <p className="text-xs uppercase tracking-widest text-slate-500">
-              About
-            </p>
-            <h1 className="mt-3 text-3xl font-medium md:text-4xl">
-              A small studio, by choice.
-            </h1>
-          </div>
-          <Link
-            href="/"
-            className="hidden text-xs uppercase tracking-[0.25em] text-slate-500 hover:text-slate-900 md:block"
-          >
-            Back to home ↗
-          </Link>
-        </MotionDiv>
 
         {/* INTRO */}
         <MotionSection
@@ -133,8 +149,12 @@ export default function AboutPage() {
               <div className="text-6xl font-light text-stone-400 mb-4 group-hover:text-[#b36666]/70 transition-colors duration-300">
                 {card.kanji}
               </div>
-              <h3 className="text-xl font-medium text-stone-800 mb-2">{card.title}</h3>
-              <p className="text-stone-600 text-sm">{card.description}</p>
+              <h3 className="text-xl font-medium text-stone-800 mb-2">
+                {card.title}
+              </h3>
+              <p className="text-stone-600 text-sm">
+                {card.description}
+              </p>
             </motion.div>
           ))}
         </motion.div>
@@ -147,14 +167,13 @@ export default function AboutPage() {
           viewport={{ once: true, amount: 0.3 }}
           className="mt-32 grid items-center gap-20 md:grid-cols-12"
         >
-          {/* LEFT — LARGE IMAGE */}
           <MotionDiv variants={fadeInUp} className="md:col-span-7">
             <div className="relative h-[420px] w-full overflow-hidden rounded-3xl bg-slate-200 md:h-[520px]">
               <motion.img
                 key={member.image}
                 src={member.image}
                 alt={member.name}
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover object-top"
                 initial={{ opacity: 0, scale: 1.03 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
@@ -162,19 +181,19 @@ export default function AboutPage() {
             </div>
           </MotionDiv>
 
-          {/* RIGHT — TEXT PANEL */}
           <MotionDiv variants={fadeInUp} className="md:col-span-5 space-y-6">
             <div className="space-y-3 max-w-sm">
               <p className="text-xs uppercase tracking-[0.3em] text-slate-500">
                 Team
               </p>
-              <h2 className="text-2xl font-medium">The people behind the work.</h2>
+              <h2 className="text-2xl font-medium">
+                The people behind the work.
+              </h2>
               <p className="text-sm leading-relaxed text-slate-700">
                 A small, senior-leaning team focused on clarity and quality.
               </p>
             </div>
 
-            {/* SLIDING BIO */}
             <motion.div
               key={member.name}
               initial={{ opacity: 0, y: 16 }}
@@ -191,7 +210,6 @@ export default function AboutPage() {
               </p>
             </motion.div>
 
-            {/* NAV DOTS */}
             <div className="flex gap-2 pt-4">
               {team.map((_, i) => (
                 <button
@@ -208,10 +226,11 @@ export default function AboutPage() {
           </MotionDiv>
         </MotionSection>
 
-        {/* CONTACT FORM SECTION */}
+        {/* CONTACT */}
         <div className="mt-32">
           <ContactFormSection animated />
         </div>
+
       </div>
     </main>
   );

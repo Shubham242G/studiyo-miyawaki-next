@@ -166,18 +166,18 @@ const teamSlides = [
     {
         id: 0,
         name: "Vatsala Singh",
-        role: "Content & SEO",
+        role: "Project Manager",
         bio:
             "Vatsala shapes the words and search strategy so every page speaks clearly to humans while quietly pulling in the right kind of traffic from search.",
-        image: "/assets/images/vatsala.jpg",
+        image: "/assets/images/vatsala.png",
     },
     {
         id: 1,
         name: "Shubham Godiyal",
-        role: "Developer",
+        role: "Web Developer",
         bio:
             "Shubham leads development at StudiYo Miyawaki, turning messy ideas into fast, maintainable Next.js builds that feel calm to use and easy to extend.",
-        image: "/assets/images/shubham.jpg",
+        image: "/assets/images/shubham.png",
     },
 
     {
@@ -186,15 +186,15 @@ const teamSlides = [
         role: "Graphic Designer",
         bio:
             "Ekumpreet builds the visual language—logomarks, palettes, and layout details—so your site looks like one cohesive brand, not a stitched‑together template.",
-        image: "/assets/images/ekam.jpg",
+        image: "/assets/images/ekam.png",
     },
     {
         id: 3,
         name: "Manan Kapoor",
-        role: "Content Uploader",
+        role: "Social Media Analyst",
         bio:
             "Manan keeps launches smooth by preparing, structuring, and uploading content with care, so what goes live matches what was planned.",
-        image: "/assets/images/manan.jpg",
+        image: "/assets/images/manan.png",
     },
 ];
 
@@ -393,42 +393,28 @@ export default function Home() {
 
                             <div className="pointer-events-none absolute inset-0 bg-black/30 z-10" />
 
-                            <div className="relative z-20 grid gap-10 md:grid-cols-3 md:items-end">
-                                {/* Left: original content + brand title */}
-                                <div className="md:col-span-2 flex flex-col justify-between min-h-[280px] md:min-h-[340px] relative">
-                                    <div>
-                                        <MotionSpan
-                                            variants={fadeIn}
-                                            className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/90 px-3 py-1 text-[0.6rem] uppercase tracking-[0.25em] text-slate-900"
-                                        >
-                                            Studio Miyawaki
-                                            <span className="h-1 w-1 rounded-full bg-emerald-400" />
-                                            Web • SEO • Brand
-                                        </MotionSpan>
+                            <div className="relative z-20 min-h-[280px] md:min-h-[340px]">
+                                {/* Top-left badge (UNCHANGED POSITION) */}
+                                <MotionSpan
+                                    variants={fadeIn}
+                                    className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/90 px-3 py-1 text-[0.6rem] uppercase tracking-[0.25em] text-slate-900"
+                                >
+                                    Studio Miyawaki
+                                    <span className="h-1 w-1 rounded-full bg-emerald-400" />
+                                    Web • SEO • Brand
+                                </MotionSpan>
 
-                                        {/* Brand title block (new) */}
-                                        <div className="mt-6 space-y-2">
-                                            <h1 className="font-playfair text-[2.1rem] md:text-[2.5rem] lg:text-[2.8rem] leading-tight text-black">
-                                                Studio{" "}
-                                                <span className="italic text-black">
-                                                    Miyawaki
-                                                </span>
-                                            </h1>
-                                            <p className="max-w-md text-[0.85rem] text-black">
-                                                A Japanese‑inspired web studio for practices that grow like quiet
-                                                forests: dense with trust, calm in presentation, sharp in
-                                                performance.
-                                            </p>
-                                        </div>
-                                    </div>
+                                {/* PERFECTLY CENTERED TITLE + CTA */}
+                                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-[52%] flex flex-col items-center text-center space-y-4">
+                                    <h1 className="font-playfair text-[2.1rem] md:text-[2.5rem] lg:text-[2.8rem] leading-tight text-black">
+                                        Studio <span className="italic text-black">Miyawaki</span>
+                                    </h1>
 
-                                    {/* CTA – unchanged */}
                                     <motion.div
                                         variants={fadeInUp}
                                         initial="hidden"
                                         animate="show"
                                         transition={{ delay: 0.22 }}
-                                        className="mt-6 lg:ml-72 flex justify-center"
                                     >
                                         <Link href="/pages/contact">
                                             <motion.div
@@ -436,7 +422,7 @@ export default function Home() {
                                                 whileTap={{ scale: 0.98 }}
                                                 className="inline-flex items-center gap-2 rounded-full bg-white/95 px-12 py-2.5 text-[0.8rem] font-semibold text-slate-900 shadow-md shadow-slate-900/30 cursor-pointer"
                                             >
-                                                <span>Start your project </span>
+                                                <span>Start your project</span>
                                                 <span className="text-xs">↗</span>
                                             </motion.div>
                                         </Link>
@@ -444,6 +430,7 @@ export default function Home() {
                                 </div>
                             </div>
                         </section>
+
 
 
 
@@ -502,7 +489,7 @@ export default function Home() {
                                 />
 
                                 {/* Gradient overlay */}
-                                <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-br from-[#b36666]/40 via-black/30 to-black/50" />
+                                <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-br from-[#b36666]/60 via-black/50 to-black/40" />
 
                                 {/* Content */}
                                 <div className="relative z-20">
@@ -612,17 +599,19 @@ export default function Home() {
                             </p>
 
                             {/* CONTENT GRID */}
-                            <div className="grid items-center gap-8 md:grid-cols-12">
-                                {/* LEFT — BLACK CARD (SMALLER) */}
+                            <div className="grid items-stretch gap-8 md:grid-cols-12">
+                                {/* LEFT — BLACK CARD */}
                                 <MotionDiv
                                     variants={fadeInUp}
                                     className="
         col-span-12 md:col-span-4
+        h-full
         rounded-3xl
         border border-slate-700/60
         bg-slate-900/85
         px-6 py-6
         shadow-md
+        flex flex-col
       "
                                 >
                                     <div className="space-y-3">
@@ -635,7 +624,7 @@ export default function Home() {
                                         </h2>
                                     </div>
 
-                                    <div className="mt-4 min-h-[160px]">
+                                    <div className="mt-4 flex-1 min-h-[160px]">
                                         {aboutSlides.map((slide, index) =>
                                             index === activeAboutIndex ? (
                                                 <motion.div
@@ -674,19 +663,19 @@ export default function Home() {
                                     </div>
                                 </MotionDiv>
 
-                                {/* RIGHT — WHITE CARD (BIG, VISUAL FIRST) */}
+                                {/* RIGHT — WHITE CARD */}
                                 <MotionDiv
                                     variants={fadeInUp}
                                     className="
-    col-span-12 md:col-span-8
-    flex flex-col
-    rounded-3xl
-    border border-slate-200
-    bg-white
-    px-8 py-8
-    shadow-md
-    min-h-[620px]
-  "
+        col-span-12 md:col-span-8
+        h-full
+        flex flex-col
+        rounded-3xl
+        border border-slate-200
+        bg-white
+        px-8 py-8
+        shadow-md
+      "
                                 >
                                     {/* HEADER */}
                                     <div className="mb-5">
@@ -699,7 +688,7 @@ export default function Home() {
                                     </div>
 
                                     {/* SLIDER */}
-                                    <div className="relative flex-1 min-h-[460px]">
+                                    <div className="relative flex-1 min-h-[420px]">
                                         {teamSlides.map((member, index) =>
                                             index === activeTeamIndex ? (
                                                 <motion.div
@@ -709,14 +698,14 @@ export default function Home() {
                                                     transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                                                     className="flex h-full flex-col"
                                                 >
-                                                    {/* IMAGE — FIXED HEIGHT (NO % HEIGHTS) */}
-                                                    <div className="relative mb-6 w-full flex-1 min-h-[400px] overflow-hidden rounded-3xl bg-slate-200">
+                                                    {/* IMAGE */}
+                                                    <div className="relative mb-6 w-full flex-1 min-h-[360px] overflow-hidden rounded-3xl bg-slate-200">
                                                         <Image
                                                             src={member.image}
                                                             alt={member.name}
                                                             fill
                                                             sizes="(min-width: 768px) 60vw, 100vw"
-                                                            className="object-cover"
+                                                            className="object-cover object-top"
                                                             priority
                                                         />
                                                     </div>
@@ -742,16 +731,16 @@ export default function Home() {
                                                 key={idx}
                                                 onClick={() => setActiveTeamIndex(idx)}
                                                 className={`h-1.5 w-1.5 rounded-full transition ${idx === activeTeamIndex
-                                                        ? 'bg-slate-900'
-                                                        : 'bg-slate-400/60'
+                                                        ? "bg-slate-900"
+                                                        : "bg-slate-400/60"
                                                     }`}
                                             />
                                         ))}
                                     </div>
                                 </MotionDiv>
-
                             </div>
                         </MotionSection>
+
 
 
 
