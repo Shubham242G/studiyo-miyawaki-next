@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ContactFormSection } from "../../components/contactForm";
+import Link from "next/link";
 
 interface Project {
   title: string;
@@ -139,22 +140,35 @@ export default function ServicesPage() {
     <main className="relative min-h-screen px-4 py-20 md:px-6 text-slate-900">
 
       {/* ================= SERVICES BANNER ================= */}
-      <section className="relative max-w-6xl mx-auto mb-32 rounded-3xl overflow-hidden border border-slate-200 h-[260px]">
-        <div
-          className="absolute inset-4 bg-cover bg-center rounded-2xl"
-          style={{ backgroundImage: "url(/assets/images/aboutUs.jpg)" }}
-        />
-        <div className="absolute inset-4 bg-black/45 rounded-2xl" />
+      <section className="relative max-w-6xl mx-auto mb-32 rounded-3xl overflow-hidden h-[360px]">
+  <div
+    className="absolute inset-4 bg-cover bg-center rounded-2xl"
+    style={{ backgroundImage: "url(/assets/images/aboutUs.jpg)" }}
+  />
+  <div className="absolute inset-4 bg-black/45 rounded-2xl" />
 
-        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center text-white">
-          <p className="text-xs uppercase tracking-widest">
-            Studio Miyawaki
-          </p>
-          <h1 className="mt-2 text-3xl md:text-4xl font-medium">
-            Services
-          </h1>
-        </div>
-      </section>
+  <div className="relative z-20 h-full flex flex-col items-center justify-center text-center text-white">
+    <p className="text-xs uppercase tracking-widest">
+      Studio Miyawaki
+    </p>
+    <h1 className="mt-2 text-3xl md:text-4xl font-medium">
+      Services
+    </h1>
+
+<div className="text-slate-900 mt-10">
+  <Link
+      href="/pages/contact"
+      className="mt-6 rounded-full bg-white px-6 py-2.5
+                 text-sm font-medium text-slate-900
+                 transition hover:bg-white/90"
+    >
+      Contact Us
+    </Link>
+</div>
+    
+  </div>
+</section>
+
 
       {/* ================= SERVICES ================= */}
       <section className="max-w-6xl mx-auto mb-32">

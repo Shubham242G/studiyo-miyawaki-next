@@ -72,30 +72,46 @@ export default function AboutPage() {
 
       {/* ===== HERO HEADER ===== */}
       <MotionDiv
-        variants={fadeInUp}
-        initial="hidden"
-        animate="show"
-        className="relative w-full h-[280px] md:h-[360px] mx-4 my-6 rounded-2xl overflow-hidden shadow-lg"
-      >
-        {/* Background image */}
-        <div
-          className="absolute inset-0 bg-cover bg-center scale-105"
-          style={{ backgroundImage: "url(/assets/images/aboutUs.jpg)" }}
-        />
+  variants={fadeInUp}
+  initial="hidden"
+  animate="show"
+  className="relative max-w-6xl mx-auto mb-32 rounded-3xl overflow-hidden h-[360px] mx-4 my-6 shadow-lg"
+>
+  {/* Background image */}
+  <div
+    className="absolute inset-4 bg-cover bg-center rounded-2xl"
+    style={{ backgroundImage: "url(/assets/images/aboutUs.jpg)" }}
+  />
 
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-black/60" />
+  {/* Overlay */}
+  <div className="absolute inset-4 bg-black/45 rounded-2xl" />
 
-        {/* Centered content */}
-        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
-          <p className="text-xs uppercase tracking-[0.35em] text-white/80">
-            Studio Miyawaki
-          </p>
-          <h1 className="mt-3 text-4xl md:text-5xl font-semibold text-white">
-            About Us
-          </h1>
-        </div>
-      </MotionDiv>
+  {/* Centered content */}
+  <div className="relative z-20 h-full flex flex-col items-center justify-center text-center text-white px-6">
+    <p className="text-xs uppercase tracking-widest text-white">
+      Studio Miyawaki
+    </p>
+
+    <h1 className="mt-2 text-3xl md:text-4xl font-medium text-white">
+      About Us
+    </h1>
+
+    {/* CTA — ONLY ADDITION */}
+    <div className="text-slate-900 mt-10">
+  <Link
+      href="/pages/contact"
+      className="mt-6 rounded-full bg-white px-6 py-2.5
+                 text-sm font-medium text-slate-900
+                 transition hover:bg-white/90"
+    >
+      Contact Us
+    </Link>
+</div>
+  </div>
+</MotionDiv>
+
+
+
       {/* ===== END HERO HEADER ===== */}
 
       <div className="mx-auto max-w-6xl px-4 py-16 md:px-6">
