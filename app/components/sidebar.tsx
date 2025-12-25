@@ -21,11 +21,6 @@ export function Sidebar() {
                 height={150}
                 className="rounded-md"
               />
-              <div>
-                <p className="text-[0.75rem] font-semibold tracking-[0.26em] text-slate-900 uppercase">
-                  Studio Miyawaki
-                </p>
-              </div>
             </Link>
 
             {/* Divider */}
@@ -105,11 +100,6 @@ export function Sidebar() {
             height={150}
             className="rounded-md"
           />
-          <div>
-            <p className="text-[0.75rem] tracking-[0.25em] text-slate-900">
-              STUDIO MIYAWAKI
-            </p>
-          </div>
         </div>
 
         {/* Divider */}
