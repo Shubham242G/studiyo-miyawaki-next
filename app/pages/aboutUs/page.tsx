@@ -75,7 +75,7 @@ export default function AboutPage() {
   variants={fadeInUp}
   initial="hidden"
   animate="show"
-  className="relative max-w-6xl mx-auto mb-32 rounded-3xl overflow-hidden h-[360px] mx-4 my-6 shadow-lg"
+  className="relative max-w-6xl mx-auto mb-32 rounded-3xl overflow-hidden h-[360px] mx-4 my-6"
 >
   {/* Background image */}
   <div
@@ -114,7 +114,7 @@ export default function AboutPage() {
 
       {/* ===== END HERO HEADER ===== */}
 
-      <div className="mx-auto max-w-6xl px-4 py-16 md:px-6">
+      <div className="mx-auto max-w-6xl px-4  md:px-6">
 
         {/* INTRO (UNCHANGED CONTENT) */}
         <MotionSection

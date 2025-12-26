@@ -7,7 +7,7 @@ export default function WhatsAppFloat() {
   const [isHovered, setIsHovered] = useState(false)
 
   const phoneNumber = '918354907784' // India number: +91 8354907784
-  const message = "Hello! I'd like to know more about your legal services."
+  const message = "Hello! I'd like to know more about your web services."
 
   const handleClick = () => {
     const encodedMessage = encodeURIComponent(message)
