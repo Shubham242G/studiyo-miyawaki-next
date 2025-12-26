@@ -67,7 +67,7 @@ export function Sidebar() {
             <div className="mt-auto pt-6 text-[0.65rem] text-slate-500 leading-relaxed text-center">
               <div className="h-px w-full bg-slate-200 mb-3" />
               <p>
-                Gurgaon: 412, Emaar Colonande, Golf Course Extension Rd, Sec-66, Gurgaon-122018<br />
+                Gurgaon Office: 412, Emaar Colonande, Golf Course Extension Rd, Sec-66, Gurgaon-122018<br />
               </p>
               <p className="mt-1 text-slate-400">
                 © {new Date().getFullYear()}
