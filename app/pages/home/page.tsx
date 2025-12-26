@@ -396,12 +396,12 @@ export default function Home() {
                 {/* PERFECTLY CENTERED CONTENT */}
                 <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-[52%] flex flex-col items-center text-center space-y-5">
                   {/* TITLE — Studio & Miyawaki SAME STYLE */}
-                  <h1 className="uppercase font-semibold tracking-[0.26em] text-black text-[2.9rem] md:text-[3.4rem] lg:text-[3.9rem] leading-tight">
+                  <h1 className="uppercase font-semibold tracking-[0.26em] text-white text-[2.9rem] md:text-[3.4rem] lg:text-[3.9rem] leading-tight">
                     Studio Miyawaki
                   </h1>
 
                   {/* TAGLINE — italic + slightly bigger */}
-                  <p className="italic uppercase tracking-[0.26em] font-semibold text-black/90 text-[0.85rem] md:text-[0.9rem]">
+                  <p className="italic uppercase tracking-[0.26em] font-semibold text-white text-[0.85rem] md:text-[0.9rem]">
                     Planting Ideas, Growing Impact
                   </p>
 
@@ -416,7 +416,7 @@ export default function Home() {
                       <motion.div
                         whileHover={{ y: -2, scale: 1.03 }}
                         whileTap={{ scale: 0.98 }}
-                        className="inline-flex items-center gap-2 rounded-full bg-white/95 px-12 py-2.5 text-[0.8rem] font-semibold text-slate-900 shadow-md shadow-slate-900/30 cursor-pointer"
+                        className="inline-flex items-center gap-2 rounded-full bg-[#c12c28] px-12 py-2.5 text-[0.8rem] font-semibold text-black shadow-md shadow-slate-900/30 cursor-pointer"
                       >
                         <span>Start your project</span>
                         <span className="text-xs">↗</span>
