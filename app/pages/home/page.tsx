@@ -509,73 +509,84 @@ export default function Home() {
               </MotionDiv>
 
               {/* RIGHT – SERVICE CARDS */}
-              <div className="col-span-12 grid gap-4 md:col-span-8 md:grid-cols-2">
-                {[
-                  {
-                    title: "Web Development",
-                    description:
-                      "We design and build flagship marketing websites and founder hubs using Next.js, focused on speed, security, and long-term scalability. From clean information architecture to conversion-driven UI, every page is engineered to load fast, rank well, and evolve easily as your product, brand, or audience grows.",
-                    route: "/services/webDevelopment",
-                  },
-                  {
-                    title: "SEO Optimization",
-                    description:
-                      "Our SEO approach goes beyond keywords. We implement technical SEO foundations, smart information architecture, and on-page optimization aligned with real search intent — improving discoverability, performance, and qualified traffic.",
-                    route: "/services/seoOptimzation",
-                  },
-                  {
-                    title: "Social media handling",
-                    description:
-                      "We craft signature personal websites for founders, creators, and practitioners who want their story to feel authentic and intentional — building trust, authority, and long-term recognition.",
-                    route: "/services/personalBranding",
-                  },
-                  {
-                    title: "Performance Marketing",
-                    description:
-                      "Through ongoing audits, analytics dashboards, and structured iteration cycles, we refine speed, UX, accessibility, and conversion — keeping your site sharp as your brand scales.",
-                    route: "/services/performanceManagement",
-                  },
-                ].map((service, index) => (
-                  <MotionDiv
-                    key={service.title}
-                    variants={fadeInUp}
-                    whileHover={{ y: -5, scale: 1.02 }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 220,
-                      damping: 22,
-                    }}
-                    className={`relative flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 shadow-md ${
-                      index % 2 === 0
-                        ? "min-h-[240px]"
-                        : "min-h-[280px]"
-                    }`}
-                  >
-                    {/* Gradient layer */}
-                    <div
-                      aria-hidden
-                      className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#b36666]/15 via-transparent to-transparent"
-                    />
+<div className="col-span-12 grid gap-4 md:col-span-8 md:grid-cols-2">
+  {[
+    {
+      title: "Web Development",
+      description:
+        "We design and build flagship marketing websites and founder hubs using Next.js, focused on speed, security, and long-term scalability. From clean information architecture to conversion-driven UI, every page is engineered to load fast, rank well, and evolve easily as your product, brand, or audience grows.",
+      route: "/services/webDevelopment",
+    },
+    {
+      title: "SEO Optimization",
+      description:
+        "Our SEO approach goes beyond keywords. We implement technical SEO foundations, smart information architecture, and on-page optimization aligned with real search intent — improving discoverability, performance, and qualified traffic.",
+      route: "/services/seoOptimzation",
+    },
+    {
+      title: "Social media handling",
+      description:
+        "Signature personal websites for founders and professionals who want trust, clarity, and authority in their digital presence.",
+      route: "/services/personalBranding",
+    },
+    {
+      title: "Performance Marketing",
+      description:
+        "Through ongoing audits, analytics dashboards, and structured iteration cycles, we refine speed, UX, accessibility, and conversion — keeping your site sharp as your brand scales.",
+      route: "/services/performanceManagement",
+    },
+  ].map((service, index) => (
+    <MotionDiv
+      key={service.title}
+      variants={fadeInUp}
+      whileHover={{ y: -5, scale: 1.02 }}
+      transition={{
+        type: "spring",
+        stiffness: 220,
+        damping: 22,
+      }}
+      className={`relative flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 shadow-md ${
+        index % 2 === 0 ? "min-h-[240px]" : "min-h-[280px]"
+      }`}
+    >
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#b36666]/15 via-transparent to-transparent"
+      />
+      <div className="relative">
+        <p className="text-base font-bold text-slate-900">{service.title}</p>
+        <p className="mt-2 text-[0.75rem] leading-relaxed text-slate-700">
+          {service.description}
+        </p>
+      </div>
+    </MotionDiv>
+  ))}
 
-                    {/* Content */}
-                    <div className="relative">
-                      <p className="text-base font-bold text-slate-900">
-                        {service.title}
-                      </p>
-                      <p className="mt-2 text-[0.75rem] leading-relaxed text-slate-700">
-                        {service.description}
-                      </p>
-                    </div>
+  {/* 👇 5th service - FULL WIDTH across entire container */}
+  <MotionDiv
+    variants={fadeInUp}
+    whileHover={{ y: -5, scale: 1.02 }}
+    transition={{
+      type: "spring",
+      stiffness: 220,
+      damping: 22,
+    }}
+    className="md:col-span-2 col-span-full relative flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 shadow-md min-h-[280px]"
+  >
+    <div
+      aria-hidden
+      className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#b36666]/15 via-transparent to-transparent"
+    />
+    <div className="relative">
+      <p className="text-base font-bold text-slate-900">Podcast production</p>
+      <p className="mt-2 text-[0.75rem] leading-relaxed text-slate-700">
+        Signature podcast systems for creators and professionals who want to build massive reach, drive deep engagement, and establish undeniable authority through professionally produced audio content that resonates, converts listeners into loyal fans, and positions you as the go-to voice in your niche.
+      </p>
+    </div>
+  </MotionDiv>
+</div>
 
-                    <Link
-                      href={service.route}
-                      className="relative mt-4 inline-flex items-center gap-1 text-[0.7rem] font-semibold text-[#b36666] hover:opacity-80"
-                    >
-                      Learn more <span>↗</span>
-                    </Link>
-                  </MotionDiv>
-                ))}
-              </div>
+
             </MotionSection>
 
             {/* ABOUT – BIGGER, DEDICATED SECTION AFTER PROCESS */}

@@ -89,6 +89,18 @@ const services = [
       "Long-term governance",
     ],
   },
+  {
+    title: "Personal branding",
+    description:
+      "Signature personal brand systems for founders and professionals who want to build lasting trust with their audience, establish crystal-clear messaging that resonates, and project undeniable authority across all platforms and interactions.",
+    process: [
+      "Positioning clarity",
+      "Narrative structure", 
+      "Visual identity",
+      "Authority refinement",
+    ],
+},
+
 ];
 
 const testimonials = [
@@ -177,25 +189,38 @@ export default function ServicesPage() {
         </h2>
 
         <div className="grid gap-8 md:grid-cols-2">
-          {services.map((service) => (
-            <div
-              key={service.title}
-              className="p-8 rounded-3xl border border-slate-200 bg-[#faf7f5] shadow-sm"
-            >
-              <h3 className="text-xl font-semibold mb-3">
-                {service.title}
-              </h3>
-              <p className="text-sm text-slate-700 mb-4 leading-relaxed">
-                {service.description}
-              </p>
-              <ul className="text-xs text-slate-600 space-y-1 list-disc list-inside">
-                {service.process.map((step) => (
-                  <li key={step}>{step}</li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
+  {services.slice(0, 4).map((service, index) => (
+    <div
+      key={service.title}
+      className="p-8 rounded-3xl border border-slate-200 bg-[#faf7f5] shadow-sm"
+    >
+      <h3 className="text-xl font-semibold mb-3">{service.title}</h3>
+      <p className="text-sm text-slate-700 mb-4 leading-relaxed">
+        {service.description}
+      </p>
+      <ul className="text-xs text-slate-600 space-y-1 list-disc list-inside">
+        {service.process.map((step) => (
+          <li key={step}>{step}</li>
+        ))}
+      </ul>
+    </div>
+  ))}
+  
+  {/* 👇 5th service spans BOTH columns */}
+  {services[4] && (
+    <div className="md:col-span-2 p-8 rounded-3xl border border-slate-200 bg-[#faf7f5] shadow-sm">
+      <h3 className="text-xl font-semibold mb-3">{services[4].title}</h3>
+      <p className="text-sm text-slate-700 mb-4 leading-relaxed">
+        {services[4].description}
+      </p>
+      <ul className="text-xs text-slate-600 space-y-1 list-disc list-inside">
+        {services[4].process.map((step) => (
+          <li key={step}>{step}</li>
+        ))}
+      </ul>
+    </div>
+  )}
+</div>
       </section>
 
       {/* ================= OUR WORK ================= */}
