@@ -24,6 +24,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Studio Miyawaki",
   description: "Premium web services studio for modern brands.",
+  icons: {
+    icon: "/miyawaki-final-logo.jpg",
+  },
 };
 
 export default function RootLayout({
