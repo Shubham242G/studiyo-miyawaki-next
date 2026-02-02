@@ -109,13 +109,13 @@ button {
    ===================================================== */
 
 /* Background utilities */
-.bg-base {
+/* .bg-base {
   background-color: rgb(var(--bg-base));
 }
 
 .bg-muted {
   background-color: rgb(var(--bg-muted));
-}
+} */
 
 /* Text utilities */
 .text-primary {

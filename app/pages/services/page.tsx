@@ -149,7 +149,7 @@ export default function ServicesPage() {
   }, []);
 
   return (
-    <main className="relative min-h-screen px-4 py-20 md:px-6 text-slate-900">
+    <main className="relative min-h-screen px-4 py-20 md:px-6 text-black-900">
 
       {/* ================= SERVICES BANNER ================= */}
       <section className="relative max-w-6xl mx-auto mb-32 rounded-3xl overflow-hidden h-[360px]">

@@ -30,12 +30,6 @@ const team = [
     bio: "Designs intentional visual systems across web and brand touchpoints.",
     image: "/assets/images/ekam.png",
   },
-  {
-    name: "Manan Kapoor",
-    role: "Social Media Analyst",
-    bio: "Keeps launches smooth by structuring, preparing, and validating content with precision.",
-    image: "/assets/images/manan.png",
-  },
 ];
 
 const philosophyCards = [
